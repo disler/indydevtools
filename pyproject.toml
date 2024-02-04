@@ -9,6 +9,9 @@ packages = [{include = "indy_dev_tools"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 
+[tool.poetry.scripts]
+idt = "indy_dev_tools.main:main"
+
 
 [build-system]
 requires = ["poetry-core"]

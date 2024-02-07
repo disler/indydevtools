@@ -5,9 +5,17 @@ description = ""
 authors = ["qwukker <minor7addfloortom@gmail.com>"]
 readme = "README.md"
 packages = [{include = "indy_dev_tools"}]
+exclude = ["scripts/*"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pydantic = "^2.6.0"
+python-dotenv = "^1.0.1"
+openai = "^1.11.0"
+typer = "^0.9.0"
+platformdirs = "^4.2.0"
+pyyaml = "^6.0.1"
+requests = "^2.31.0"
 
 [tool.poetry.scripts]
 idt = "indy_dev_tools.main:main"

@@ -3,12 +3,13 @@
 
 ## Capabilities
 - Titles
-  - `idt yt titles create -t <video_title> -r <rough_draft_title>`
+  - `idt yt titles create -r <rough_draft_title> -s <script_file.txt>`
 - Transcription
   - `idt yt script transcribe -f <video_file> -t`
     - -t: also create a script only .txt file
+    - qqq probably want to switch this and have the -t flag be the default and -j be the flag for json
 - Thumbnails
-  - `idt yt thumbnails create -p <prompt>`
+  - `idt yt thumb create -p <prompt>`
 - Resize
   - `idt yt thumb rescale -f <image file path>`
 
@@ -17,6 +18,7 @@
 [] Implement thumbnails.iterate
 [x] Add whisperx transcribe functionality
 [x] Add resize fucntionality
+[+] Make every function isolated and reusable
 
 ## Table of Contents
 - [IndyDevTools](#indydevtools)

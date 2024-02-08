@@ -49,6 +49,7 @@ def rescale(
         output_file = f"{base}_resized{ext}"
 
     rescale_image(image_file_path, output_file, width, height)
+
     print(f"Image rescaled to {width}x{height} and saved to {output_file}")
 
 

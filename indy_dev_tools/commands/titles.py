@@ -1,11 +1,19 @@
 import typer
+from indy_dev_tools.modules.create_title import create_title
 
 app = typer.Typer()
 
 
 @app.command()
-def create(user_name: str):
-    print(f"Creating user: {user_name}")
+def create(
+    rough_draft_title: str = typer.Option(None, "-r", "--rough-draft-title"),
+    script_file: str = typer.Option(None, "-s", "--script-file"),
+    count: int = typer.Option(3, "-c", "--count"),
+):
+    print(f"Rough Draft Title: {rough_draft_title}")
+    print(f"Script File: {script_file}")
+
+    create_title(count, rough_draft_title, script_file)
 
 
 @app.command()

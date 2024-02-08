@@ -5,6 +5,8 @@ from openai.types.images_response import ImagesResponse
 import os
 import requests
 from indy_dev_tools.modules.idt_config import load_config
+from indy_dev_tools.modules.resize_image import rescale_image
+from indy_dev_tools.modules.create_image import create_image
 from indy_dev_tools.models import IdtConfig
 
 app = typer.Typer()
@@ -21,29 +23,33 @@ def create(
     Create an image with the specified prompt and download it.
     """
     print(f"Creating image with prompt: {prompt}")
+    create_image(prompt)
 
-    openai.api_key = config.yt.openai_api_key
 
-    response: ImagesResponse = openai.images.generate(
-        model="dall-e-3",
-        prompt=prompt,
-        n=1,
-        size="1792x1024",
-        quality="standard",  # or 'hd'
-    )
+@app.command()
+def rescale(
+    image_file_path: str = typer.Option(
+        ..., "--image_file_path", "-f", help="The path to the input image file."
+    ),
+    width: int = typer.Option(
+        1280, "--width", "-w", help="The width to rescale the image to."
+    ),
+    height: int = typer.Option(
+        720, "--height", "-h", help="The height to rescale the image to."
+    ),
+    output_file: str = typer.Option(
+        None, "--output", "-o", help="The path to the output image file."
+    ),
+):
+    """
+    Rescale an image to the specified width and height.
+    """
+    if not output_file:
+        base, ext = os.path.splitext(image_file_path)
+        output_file = f"{base}_resized{ext}"
 
-    image_url = response.data[0].url
-    print(f"Image URL: {image_url}")
-
-    # Download the image
-    output_dir = config.yt.output_dir if config.yt and config.yt.output_dir else "."
-    image_path = os.path.join(output_dir, f"{prompt.replace(' ', '_')}.png")
-    with requests.get(image_url, stream=True) as r:
-        r.raise_for_status()
-        with open(image_path, "wb") as f:
-            for chunk in r.iter_content(chunk_size=8192):
-                f.write(chunk)
-    print(f"Image downloaded to {image_path}")
+    rescale_image(image_file_path, output_file, width, height)
+    print(f"Image rescaled to {width}x{height} and saved to {output_file}")
 
 
 @app.command()

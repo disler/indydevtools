@@ -27,24 +27,40 @@ DEFAULT_CONFIGURATION = IdtConfig(
     )
 )
 
+config_in_memory = None
+
 
 def load_config() -> IdtConfig:
     """Loads the YAML configuration file."""
+
+    global config_in_memory
+
+    if config_in_memory:
+        print(f"Returning in-memory configuration.")
+        return config_in_memory
+
+    print(f"Loading configuration from {config_file_path}...")
+
     try:
+
         config_file = Path(config_file_path)
         if config_file.exists():
             with open(config_file, "r") as file:
                 config_data = yaml.safe_load(file)
                 if config_data:
-                    return IdtConfig.model_validate(config_data)
+                    config_in_memory = IdtConfig.model_validate(config_data)
+                    return config_in_memory
                 else:
-                    return DEFAULT_CONFIGURATION
+                    config_in_memory = DEFAULT_CONFIGURATION
+                    return config_in_memory
         else:
             write_config(DEFAULT_CONFIGURATION)
-            return DEFAULT_CONFIGURATION
+            config_in_memory = DEFAULT_CONFIGURATION
+            return config_in_memory
     except Exception as e:
         print(f"Error loading configuration: {e}")
-        return DEFAULT_CONFIGURATION
+        config_in_memory = DEFAULT_CONFIGURATION
+        return config_in_memory
 
 
 def write_config(data: IdtConfig):

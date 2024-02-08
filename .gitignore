@@ -1,3 +1,4 @@
 .aider*
 .venv
 .env*
+*.pyc

@@ -1,8 +1,27 @@
 # IndyDevTools
 > An Agentic Engineering toolbox for independent developers that are transforming into Agentic Engineers.
 
+## Capabilities
+- Titles
+  - `idt yt titles create -t <video_title> -r <rough_draft_title>`
+- Transcription
+  - `idt yt script transcribe -f <video_file> -t`
+    - -t: also create a script only .txt file
+- Thumbnails
+  - `idt yt thumbnails create -p <prompt>`
+- Resize
+  - `idt yt thumb rescale -f <image file path>`
+
+## Next
+[qqq] Add cli args into thumbnails.create
+[] Implement thumbnails.iterate
+[x] Add whisperx transcribe functionality
+[x] Add resize fucntionality
+
 ## Table of Contents
 - [IndyDevTools](#indydevtools)
+  - [Capabilities](#capabilities)
+  - [Next](#next)
   - [Table of Contents](#table-of-contents)
   - [Principles](#principles)
   - [*Start From Gold* CLI API](#start-from-gold-cli-api)
@@ -21,6 +40,9 @@
   - Every tool in this toolbox is an app that creates on your behalf.
   - Every tool will boost your productivity by utilize great design and the incredible generation abilities of LLMs.
   - Every tool is powered by LLM technology.
+- **Do one thing and do it well**
+  - Every function and cli command will do one thing and do it well.
+  - Every function is composable and has concrete inputs and outputs for use in different contexts.
 - **Simple, single configuration file**
   - One config file to control all the tools.
 - **Many agentic tools, one top level command**

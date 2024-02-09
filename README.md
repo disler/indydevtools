@@ -13,17 +13,62 @@
 - Resize
   - `idt yt thumb rescale -f <image file path>`
 
+What's we need
+-> multi-agent tool
+-> explicit use of principles
+  - everything is a function
+  - use the right tool (agent) for the job
+  - agent > code > manual input
+  - follow crud in order -> create, read > update, delete
+
+```mermaid CURRENT GRAPH
+
+graph LR;
+    completeVideo("Complete Video")
+    transcription("Transcription <br/> idt yt script transcribe -f [video_file] -t")
+    titles("Titles <br/> idt yt titles create -r [rough_draft_title] -s [script_file.txt]")
+    thumbnails("Thumbnails <br/> idt yt thumb create -p [prompt]")
+    descriptions("Descriptions <br/> idt yt desc create -s [script_file.txt]")
+    resize("Resize Thumbnail <br/> idt yt thumb rescale -f [image file path]")
+
+    completeVideo -->|Video File Path| transcription
+    transcription -->|Script File| titles
+    transcription -->|Script File| thumbnails
+    transcription -->|Script File| descriptions
+    thumbnails -->|Thumbnail| resize
+```
+
 ## Next
-[qqq] Add cli args into thumbnails.create
-[] Implement thumbnails.iterate
+[x] Add title generation
 [x] Add whisperx transcribe functionality
 [x] Add resize fucntionality
 [+] Make every function isolated and reusable
+[] Add logging so we can see where the log is coming from (what file + function)
+  - https://chat.openai.com/c/d2ae52f4-0706-4cec-b047-3364bea3bd05
+[] Add 'stop after' flag to transcribe which is number of seconds to transcribe
+[] Add an autogen agent flow that creates 'key themes takeaways' piped into a json gpt4 call to gather results
+[] Add descriptions generated from the script `idt yt desc create -s <script_file.txt>`
+
+[] Add top level 'generate-metadata' point at file and let it run
+[] Add count into 
+  - `thumb create`
+  - `title create`
+  - `desc create`
+[] Revamp flow graph to be simpler 
+  [] we dont need script for everything
+  [] drop cli args
+  [] add end states -> description -> 'final review' -> video upload
+[] Film, aim for a concise, short 15m vid, focus on principles, how they translate into real code and provide real value, then talk about whats next.
+
+## Production
+[] Implement `thumb iterate` to improve on an image
+[] Versions directory
 
 ## Table of Contents
 - [IndyDevTools](#indydevtools)
   - [Capabilities](#capabilities)
   - [Next](#next)
+  - [Production](#production)
   - [Table of Contents](#table-of-contents)
   - [Principles](#principles)
   - [*Start From Gold* CLI API](#start-from-gold-cli-api)

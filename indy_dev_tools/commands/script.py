@@ -6,7 +6,7 @@ import os
 import requests
 from indy_dev_tools.models import IdtConfig, Transcription
 from indy_dev_tools.modules.idt_config import load_config
-from indy_dev_tools.modules.transcribe import transcribe_file
+from indy_dev_tools.modules.create_transcription import create_transcription
 
 app = typer.Typer()
 config: IdtConfig = load_config()
@@ -28,22 +28,8 @@ def transcribe(
     duration_limit = (
         int(duration_limit_in_sec) if duration_limit_in_sec is not None else None
     )
-    transcript: Transcription = transcribe_file(
+    transcript: Transcription = create_transcription(
         file,
         duration_limit_in_seconds=duration_limit,
+        create_json_file=create_json_file,
     )
-    output_dir = config.yt.output_dir
-    file_base_name = os.path.splitext(os.path.basename(file))[0]
-    output_json_file = os.path.join(output_dir, file_base_name + ".json")
-    output_text_file = os.path.join(output_dir, "script_" + file_base_name + ".txt")
-
-    # Always write the transcript text to a file
-    with open(output_text_file, "w") as f:
-        f.write(transcript.entire_script)
-        print(f"Transcription text written to {output_text_file}")
-
-    # Only write the transcript to a JSON file if the flag is present
-    if create_json_file:
-        with open(output_json_file, "w") as f:
-            f.write(transcript.model_dump_json())
-            print(f"Transcription json written to {output_json_file}")

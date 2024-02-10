@@ -2,12 +2,27 @@
 > An Agentic Engineering toolbox for independent developers that are transforming into Agentic Engineers.
 
 ## Capabilities
+- Generate Metadata
+  - `idt yt gen-meta -f <video_file> -t <rough_draft_title> -k <seo_keywords> -p <thumbnail_prompt>`
+    - `-f`: The file to transcribe
+    - `-t`: The rough draft title
+    - `-tp`: The thumbnail prompt
+    - `-k` (optional): The SEO keywords
+  - Cmd
+    ```bash
+    poetry run idt yt gen-meta \
+      -f "./mock_yt_content/aud.m4a" \
+      -r "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)" \
+      -tp "An engineer of the future is surrounded by transparent windows, they wear a headset and are coding on a transparent screen. They're surrounded by AI agents that are doing the work for them. Use dark colors, green light and yellow light as primary colors." \
+      -k "llm agents, apple vision pro, youtube automation"
+    ```
 - Transcription
   - `idt yt script transcribe -f <video_file | audio_file> -s <maximum seconds to transcribe> -j`
     - `-f`: The file to transcribe
     - `-s` (optional): The maximum number of seconds to transcribe
     - `-j` (optional): Create a .json file with the transcription, segments, and words
   - `poetry run idt yt script transcribe -f "./mock_yt_content/aud.m4a" -s 60 -j`
+
 - Titles
   - `idt yt titles create -r <rough_draft_title> -s <script_file.txt>`
     - `-r`: The rough draft title
@@ -43,13 +58,14 @@
   - `thumb create`
   - `title create`
   - `desc create`
-
-[] Add a 'research' step autogen agent flow that creates 'key themes takeaways' piped into a json gpt4 call to gather results
-
+[] 
 
 
 
 ## Production
+[] Add seo keywords 
+[] Add a 'research' step autogen agent flow that creates 'key themes takeaways' piped into a json gpt4 call to gather results
+[] Create SEO Research Agent `idt yt script research -t <topics> -n <number of results>`
 [] Add top level 'generate-metadata' point at file and let it run end to end
 [] Add logging so we can see where the log is coming from (what file + function)
   - https://chat.openai.com/c/d2ae52f4-0706-4cec-b047-3364bea3bd05

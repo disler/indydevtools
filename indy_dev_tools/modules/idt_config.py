@@ -38,7 +38,8 @@ def load_config() -> IdtConfig:
     if config_in_memory:
         return config_in_memory
 
-    print(f"Loading configuration from {config_file_path}...")
+    print(f"Loading configuration file")
+    # print(f"Loading configuration from {config_file_path}...")
 
     try:
 

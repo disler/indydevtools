@@ -12,8 +12,10 @@ from indy_dev_tools.modules.idt_config import load_config
 config: IdtConfig = load_config()
 
 
-def transcribe_file(
-    video_path: str, duration_limit_in_seconds: int = None
+def create_transcription(
+    video_path: str,
+    duration_limit_in_seconds: int = None,
+    create_json_file: bool = False,
 ) -> Transcription:
     """Transcribes a video using Faster Whisper and returns a pydantic Transcription object.
 
@@ -21,6 +23,8 @@ def transcribe_file(
         video_path (str): The path to the video file to transcribe.
         duration_limit_in_seconds (int, optional): The maximum duration in seconds to process. Defaults to None.
     """
+
+    print(f"create_transcription()")
 
     model_size = "large-v3"
     # model_size = "medium.en"
@@ -85,4 +89,13 @@ def transcribe_file(
         words=words,
     )
 
-    return transcript
+    # Always write the transcript text to a file
+    with open(config.yt.script_file_path, "w") as f:
+        f.write(transcript.entire_script)
+        print(f"Transcription text written to {config.yt.script_file_path}")
+
+    # Only write the transcript to a JSON file if the flag is present
+    if create_json_file:
+        with open(config.yt.script_json_file_path, "w") as f:
+            f.write(transcript.model_dump_json())
+            print(f"Transcription json written to {config.yt.script_json_file_path}")

@@ -1,25 +1,45 @@
 from exa_py import Exa
-from typing import Optional
+from typing import List
+import os
+from dotenv import load_dotenv
+from indy_dev_tools.models import Research
+
+load_dotenv()  # Load environment variables
 
 
-def create_research(draft_title: str, seo_keywords: Optional[str]):
+def create_research(seo_keywords: List[str]) -> List[Research]:
+    # Load the Exa API key from .env file
+    exa_api_key = os.getenv("EXA_API_KEY")
 
-    # instantiate the Exa client
-    exa = Exa("YOUR API KEY")
+    # Instantiate the Exa client with the API key from .env
+    exa = Exa(exa_api_key)
 
-    query = draft_title if draft_title else "Research Topic"
-    if seo_keywords:
-        query += f" {seo_keywords}"
+    research_objects = []
 
-    # advanced search with content highlights
-    results = exa.search_and_contents(query, include_highlights=True)
+    for keyword in seo_keywords:
+        query = keyword if keyword else "General Research"
 
-    print("Results:", results)
+        # Advanced search with content highlights for each keyword
+        results = exa.search_and_contents(query, highlights=True, num_results=2)
 
-    pass
+        highlights = []
+        # Extract highlights from each result and append to all_highlights
+        for result in results.results:
+            highlights.extend(result.highlights)
+            print(f"Results for {keyword}: {result.url}")
+            print(f"Highlights for {keyword}: {result.highlights}")
+
+        # Create a Research object for each keyword and its highlights
+        research_obj = Research(seo_keyword=keyword, highlights=highlights)
+        research_objects.append(research_obj)
+
+    # Optionally, process or save the research_objects list here
+    return research_objects
 
 
 if __name__ == "__main__":
-    create_research(
-        "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)"
+    research_list = create_research(
+        ["Apple Vision Pro", "Youtube Automation Tools", "llm coding"]
     )
+    for research in research_list:
+        print(f"Keyword: {research.seo_keyword}, Highlights: {research.highlights}")

@@ -25,7 +25,8 @@ def main():
         typer.echo("indy_dev_tools yt config")
         raise typer.Exit(code=1)
 
-    print(f"Loaded config: {config.model_dump_json(indent=2)}")
+    print(f"Loaded config")
+    # print(f"Loaded config: {config.model_dump_json(indent=2)}")
 
     app()
 

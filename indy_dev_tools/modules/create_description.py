@@ -29,10 +29,10 @@ You follow these rules to a tee to deliver the best youtube video descriptions o
 def create_description(
     count: int,
     script_file_path: str,
-    seo_keywords: Optional[List[str]] = None,
+    seo_keywords: Optional[str] = None,
     draft_title: Optional[str] = None,
 ):
-    print(f"Beginning description creation with count: {count}")
+    print(f"create_description()")
 
     with open(script_file_path, "r") as file:
         script_content = file.read()
@@ -40,8 +40,8 @@ def create_description(
     cap_refs = {"script": script_content}
 
     if seo_keywords:
-        print(f"Using SEO keywords: {', '.join(seo_keywords)}")
-        cap_refs["seo_keywords"] = ", ".join(seo_keywords)
+        print(f"Using SEO keywords: {seo_keywords}")
+        cap_refs["seo_keywords"] = seo_keywords
 
     if draft_title:
         print(f"Using draft title: {draft_title}")
@@ -63,10 +63,7 @@ def create_description(
     )
 
     # dump response to file using config.yt.output_dir
-    if config.yt.output_dir:
-        output_path = os.path.join(config.yt.output_dir, "description_response.json")
-        with open(output_path, "w") as file:
-            print(f"Writing response to {output_path}")
+    if config.yt.description_file_path:
+        with open(config.yt.description_file_path, "w") as file:
+            print(f"Writing response to {config.yt.description_file_path}")
             file.write(response)
-
-    return response

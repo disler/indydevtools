@@ -1,7 +1,9 @@
 from PIL import Image
 
 
-def rescale_image(image_path: str, output_path: str, width: int, height: int):
+def resize_image(
+    image_path: str, width: int = 1280, height: int = 720, output_path: str = ""
+):
     """
     Rescales an image from one ratio to another (1792x1024 to 1280x720) and saves it.
 
@@ -9,6 +11,10 @@ def rescale_image(image_path: str, output_path: str, width: int, height: int):
       image_path: Path to the input image.
       output_path: Path to save the rescaled image.
     """
+
+    if output_path == "":
+        output_path = image_path
+
     with Image.open(image_path) as img:
 
         # Rescale using bicubic interpolation for better quality

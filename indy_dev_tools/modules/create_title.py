@@ -43,11 +43,20 @@ VIDEO_ELEMENTS:
 config: IdtConfig = load_config()
 
 
-def create_title(count: int, draft_title: Optional[str], path_to_script: Optional[str]):
+def create_title(
+    count: int,
+    draft_title: Optional[str],
+    path_to_script: Optional[str],
+    seo_keywords: Optional[str] = None,
+):
 
-    print(f"Beginning title creation with count: {count}")
+    print(f"create_title()")
 
     cap_refs = {}
+
+    if seo_keywords:
+        print(f"Using SEO keywords: {seo_keywords}")
+        cap_refs["seo_keywords"] = seo_keywords
 
     if draft_title:
         print(f"Using draft title: {draft_title}")
@@ -75,10 +84,9 @@ def create_title(count: int, draft_title: Optional[str], path_to_script: Optiona
     )
 
     # dump response to file using config.yt.output_dir
-    if config.yt.output_dir:
-        output_path = os.path.join(config.yt.output_dir, "title_response.json")
-        with open(output_path, "w") as file:
-            print(f"Writing response to {output_path}")
+    if config.yt.title_file_path:
+        with open(config.yt.title_file_path, "w") as file:
+            print(f"Writing response to {config.yt.title_file_path}")
             file.write(response)
 
     return response

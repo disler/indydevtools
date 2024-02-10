@@ -5,8 +5,8 @@ from openai.types.images_response import ImagesResponse
 import os
 import requests
 from indy_dev_tools.modules.idt_config import load_config
-from indy_dev_tools.modules.resize_image import rescale_image
-from indy_dev_tools.modules.create_thumbnail import create_image
+from indy_dev_tools.modules.resize_image import resize_image
+from indy_dev_tools.modules.create_thumbnail import create_thumbnail
 from indy_dev_tools.models import IdtConfig
 
 app = typer.Typer()
@@ -26,7 +26,7 @@ def create(
     Create an image with the specified prompt and download it.
     """
     print(f"Creating {count} image(s) with prompt: {prompt}")
-    create_image(prompt, count)
+    create_thumbnail(prompt, count)
 
 
 @app.command()
@@ -51,7 +51,7 @@ def rescale(
         base, ext = os.path.splitext(image_file_path)
         output_file = f"{base}_resized{ext}"
 
-    rescale_image(image_file_path, output_file, width, height)
+    resize_image(image_file_path, width, height, output_file)
 
     print(f"Image rescaled to {width}x{height} and saved to {output_file}")
 

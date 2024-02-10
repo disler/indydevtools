@@ -12,8 +12,15 @@ from indy_dev_tools.modules.idt_config import load_config
 config: IdtConfig = load_config()
 
 
-def transcribe_file(video_path: str) -> Transcription:
-    """Transcribes a video using Faster Whisper and returns a pydantic Transcription object."""
+def transcribe_file(
+    video_path: str, duration_limit_in_seconds: int = None
+) -> Transcription:
+    """Transcribes a video using Faster Whisper and returns a pydantic Transcription object.
+
+    Args:
+        video_path (str): The path to the video file to transcribe.
+        duration_limit_in_seconds (int, optional): The maximum duration in seconds to process. Defaults to None.
+    """
 
     model_size = "large-v3"
     # model_size = "medium.en"
@@ -31,6 +38,7 @@ def transcribe_file(video_path: str) -> Transcription:
     entire_script = ""
     segments: List[TranscriptWord] = []
     words: List[TranscriptWord] = []
+    processed_duration = 0
 
     for segment in raw_segments:
 
@@ -57,6 +65,16 @@ def transcribe_file(video_path: str) -> Transcription:
         segments.append(_segment)
 
         entire_script += text + " "
+
+        processed_duration = end
+        if (
+            duration_limit_in_seconds is not None
+            and processed_duration > duration_limit_in_seconds
+        ):
+            print(
+                f"Duration limit of {duration_limit_in_seconds} seconds reached. Stopping transcription."
+            )
+            break
 
     # clean up script, remove double spaces and trim start and end
     entire_script = entire_script.strip().replace("  ", " ")

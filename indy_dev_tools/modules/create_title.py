@@ -4,9 +4,11 @@ from indy_dev_tools.models import IdtConfig
 from indy_dev_tools.modules.idt_config import load_config
 import os
 
-CREATE_TITLE_PROMPT = """You are a content creator working with Mr. Beast to create the best Youtube Content on the planet. You care deeply about your craft, your community and the output of your work.
+from indy_dev_tools.modules.prompts import ULTIMATE_YT_CREATOR_INSTRUCTION
 
-You follow this rules to a tee to deliver the best youtube video titles on the planet:
+CREATE_TITLE_PROMPT = """{ULTIMATE_YT_CREATOR_INSTRUCTION}
+
+You follow these rules to a tee to deliver the best youtube video titles on the planet:
 
 - You focus exclusively on creating the best possible title for your next video.
 - Create {count} titles for your next video. 
@@ -58,6 +60,9 @@ def create_title(count: int, draft_title: Optional[str], path_to_script: Optiona
             cap_refs["script"] = script
 
     prompt = CREATE_TITLE_PROMPT.replace("{count}", str(count))
+    prompt = prompt.replace(
+        "{ULTIMATE_YT_CREATOR_INSTRUCTION}", ULTIMATE_YT_CREATOR_INSTRUCTION
+    )
 
     prompt = make_cap_refs(prompt, cap_refs)
 
@@ -66,12 +71,11 @@ def create_title(count: int, draft_title: Optional[str], path_to_script: Optiona
     response = prompt_json_response(
         prompt,
         openai_key=config.yt.openai_api_key,
-        instructions="You work with Mr. Beast to create the best Youtube Content on the planet. You care deeply about your craft, your community and the output of your work.",
+        instructions=ULTIMATE_YT_CREATOR_INSTRUCTION,
     )
 
     # dump response to file using config.yt.output_dir
     if config.yt.output_dir:
-        print(f"Saving response to {config.yt.output_dir}")
         output_path = os.path.join(config.yt.output_dir, "title_response.json")
         with open(output_path, "w") as file:
             print(f"Writing response to {output_path}")

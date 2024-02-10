@@ -6,7 +6,7 @@ import os
 import requests
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.resize_image import rescale_image
-from indy_dev_tools.modules.create_image import create_image
+from indy_dev_tools.modules.create_thumbnail import create_image
 from indy_dev_tools.models import IdtConfig
 
 app = typer.Typer()
@@ -17,13 +17,16 @@ config: IdtConfig = load_config()
 def create(
     prompt: str = typer.Option(
         ..., "--prompt", "-p", help="The prompt to create thumbnail with."
-    )
+    ),
+    count: int = typer.Option(
+        1, "--count", "-c", help="The number of thumbnails to create."
+    ),
 ):
     """
     Create an image with the specified prompt and download it.
     """
-    print(f"Creating image with prompt: {prompt}")
-    create_image(prompt)
+    print(f"Creating {count} image(s) with prompt: {prompt}")
+    create_image(prompt, count)
 
 
 @app.command()

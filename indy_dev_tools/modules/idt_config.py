@@ -36,7 +36,6 @@ def load_config() -> IdtConfig:
     global config_in_memory
 
     if config_in_memory:
-        print(f"Returning in-memory configuration.")
         return config_in_memory
 
     print(f"Loading configuration from {config_file_path}...")

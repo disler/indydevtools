@@ -2,16 +2,67 @@
 > An Agentic Engineering toolbox for independent developers that are transforming into Agentic Engineers.
 
 ## Capabilities
+- Transcription
+  - `idt yt script transcribe -f <video_file | audio_file> -s <maximum seconds to transcribe> -j`
+    - `-f`: The file to transcribe
+    - `-s` (optional): The maximum number of seconds to transcribe
+    - `-j` (optional): Create a .json file with the transcription, segments, and words
+  - `poetry run idt yt script transcribe -f "./mock_yt_content/aud.m4a" -s 60 -j`
 - Titles
   - `idt yt titles create -r <rough_draft_title> -s <script_file.txt>`
-- Transcription
-  - `idt yt script transcribe -f <video_file> -t`
-    - -t: also create a script only .txt file
-    - qqq probably want to switch this and have the -t flag be the default and -j be the flag for json
+    - `-r`: The rough draft title
+    - `-s` (optional): The script file to use
+    - `-n` (optional, default `1`): The number of titles to generate
+  - `poetry run idt yt titles create -r "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)" -s "./mock_yt_content/script_aud.txt"`
+- Descriptions
+  - `idt yt desc create -s <script_file.txt> -r <rough_draft_title> -k <seo_keywords> -c <count>`
+    - `-s`: The script file to use
+    - `-r` (optional): The rough draft title
+    - `-k` (optional): The SEO keywords
+    - `-c` (optional, default `1`): The number of descriptions to generate
+  - `poetry run idt yt desc create -s "./mock_yt_content/script_aud.txt" -r "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)" -k "web development, HTML, CSS" -c 3`
+  - `poetry run idt yt desc create -s "./mock_yt_content/script_aud.txt" -r "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)" -c 3`
 - Thumbnails
-  - `idt yt thumb create -p <prompt>`
+  - `idt yt thumb create -p <prompt> -c <count>`
+    - `-p`: The prompt to use
+    - `-c` (optional, default `1`): The number of thumbnails to generate
+  - `poetry run idt yt thumb create -p "An engineer of the future is surrounded by transparent windows, they wear a headset and are coding on a transparent screen. They're surrounded by AI agents that are doing the work for them. Use dark colors, green light and yellow light as primary colors." -c 3`
 - Resize
   - `idt yt thumb rescale -f <image file path>`
+
+
+
+## Next
+[x] Add title generation
+[x] Add whisperx transcribe functionality
+[x] Add resize fucntionality
+[+] Make every function isolated and reusable
+[+] Add descriptions generated from the script `idt yt desc create -s <script_file.txt> -n`
+[+] Add 'stop after' flag to transcribe which is number of seconds to transcribe
+[+] Add count into 
+  - `thumb create`
+  - `title create`
+  - `desc create`
+
+[] Add a 'research' step autogen agent flow that creates 'key themes takeaways' piped into a json gpt4 call to gather results
+
+
+
+
+## Production
+[] Add top level 'generate-metadata' point at file and let it run end to end
+[] Add logging so we can see where the log is coming from (what file + function)
+  - https://chat.openai.com/c/d2ae52f4-0706-4cec-b047-3364bea3bd05
+[] Add 'tone' to description to reduce buzzwordyness
+[] Revamp flow graph to be simpler 
+  [] we dont need script for everything
+  [] drop cli args
+  [] add end states -> description -> 'final review' -> video upload
+[] Implement `thumb iterate` to improve on an image
+[] Versions directory
+
+
+
 
 What's we need
 -> multi-agent tool
@@ -20,6 +71,11 @@ What's we need
   - use the right tool (agent) for the job
   - agent > code > manual input
   - follow crud in order -> create, read > update, delete
+
+
+
+
+
 
 ```mermaid CURRENT GRAPH
 
@@ -38,31 +94,6 @@ graph LR;
     thumbnails -->|Thumbnail| resize
 ```
 
-## Next
-[x] Add title generation
-[x] Add whisperx transcribe functionality
-[x] Add resize fucntionality
-[+] Make every function isolated and reusable
-[] Add logging so we can see where the log is coming from (what file + function)
-  - https://chat.openai.com/c/d2ae52f4-0706-4cec-b047-3364bea3bd05
-[] Add 'stop after' flag to transcribe which is number of seconds to transcribe
-[] Add an autogen agent flow that creates 'key themes takeaways' piped into a json gpt4 call to gather results
-[] Add descriptions generated from the script `idt yt desc create -s <script_file.txt>`
-
-[] Add top level 'generate-metadata' point at file and let it run
-[] Add count into 
-  - `thumb create`
-  - `title create`
-  - `desc create`
-[] Revamp flow graph to be simpler 
-  [] we dont need script for everything
-  [] drop cli args
-  [] add end states -> description -> 'final review' -> video upload
-[] Film, aim for a concise, short 15m vid, focus on principles, how they translate into real code and provide real value, then talk about whats next.
-
-## Production
-[] Implement `thumb iterate` to improve on an image
-[] Versions directory
 
 ## Table of Contents
 - [IndyDevTools](#indydevtools)

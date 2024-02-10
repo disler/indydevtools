@@ -58,7 +58,7 @@ def rescale(
 
 @app.command()
 def iterate(item: str):
-    print(f"Deleting item: {item}")
+    print(f"Iterating on thumbnail... : {item}")
 
 
 if __name__ == "__main__":

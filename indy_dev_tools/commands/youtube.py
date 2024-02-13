@@ -1,6 +1,7 @@
 import typer
 from indy_dev_tools.commands import thumbnails, titles, script, descriptions
 from indy_dev_tools.models import IdtConfig
+from indy_dev_tools.modules.file_util import get_path_to_files_with_sound
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules import (
     create_thumbnail,
@@ -21,6 +22,32 @@ app.add_typer(titles.app, name="titles", help="Generate video titles.")
 app.add_typer(script.app, name="script", help="Transcribe videos.")
 app.add_typer(descriptions.app, name="desc", help="Generate video descriptions.")
 
+import typer
+
+app = typer.Typer()
+
+import inquirer
+
+
+@app.command()
+def input():
+    # Raw string input using Typer
+    name = typer.prompt("Enter your name")
+    typer.echo(f"Hello, {name}!")
+
+    questions = [
+        inquirer.List(
+            "size",
+            message="What size do you need?",
+            choices=["Jumbo", "Large", "Standard", "Medium", "Small", "Micro"],
+        ),
+        inquirer.inquirer.inquirer.prompt(
+            "what size do you need?",
+        ),
+    ]
+    answers = inquirer.prompt(questions)
+    typer.echo(f"You selected: {answers}")
+
 
 @app.command()
 def config():
@@ -28,36 +55,62 @@ def config():
 
 
 @app.command()
-def gen_with_user_input():
-    path_to_audio_or_video = typer.prompt("Path to the audio or video file")
-    if not path_to_audio_or_video or len(path_to_audio_or_video) < 5:
-        typer.echo("Invalid input for the file path.")
-        raise typer.Abort()
+def gen_meta2():
 
-    rough_draft_title = typer.prompt("Rough draft title")
-    if not rough_draft_title or len(rough_draft_title) < 5:
-        typer.echo("Invalid input for the rough draft title.")
-        raise typer.Abort()
+    operating_dir = config_file.yt.output_dir
 
-    thumbnail_prompt = typer.prompt("Prompt for generating the thumbnail")
-    if not thumbnail_prompt or len(thumbnail_prompt) < 5:
-        typer.echo("Invalid input for the thumbnail prompt.")
-        raise typer.Abort()
+    # Generate the list of audio or video files
+    path_to_movie_or_audio_files = get_path_to_files_with_sound(operating_dir)
+    file_choices = [file for file in path_to_movie_or_audio_files]
 
-    seo_keywords = typer.prompt("SEO keywords", default="")
-    if seo_keywords and len(seo_keywords) < 5:
-        typer.echo("Invalid input for SEO keywords.")
-        raise typer.Abort()
+    if not len(file_choices or []):
+        print(f"No audio or video files found in: {operating_dir}")
+        return
 
-    count = typer.prompt("Count", default="3", type=int)
+    questions = [
+        inquirer.List(
+            "file_path",
+            message="Select the path to the audio or video file",
+            choices=file_choices,
+        ),
+        inquirer.Text("rough_draft_title", message="Rough draft title"),
+        inquirer.Text(
+            "thumbnail_prompt", message="Prompt for generating the thumbnail"
+        ),
+        inquirer.Text("seo_keywords", message="SEO keywords", default=""),
+        inquirer.Text("count", message="Count", default="3"),
+    ]
 
-    gen_meta(
-        path_to_audio_or_video=path_to_audio_or_video,
-        rough_draft_title=rough_draft_title,
-        thumbnail_prompt=thumbnail_prompt,
-        seo_keywords=seo_keywords,
-        count=count,
+    answers = inquirer.prompt(questions)
+
+    if not answers:
+        print("No input provided.")
+        return
+
+    print("answers", answers)
+
+    path_to_audio_or_video = answers["file_path"]
+    rough_draft_title = answers["rough_draft_title"]
+    thumbnail_prompt = answers["thumbnail_prompt"]
+    seo_keywords = answers["seo_keywords"]
+    count = int(answers["count"])
+
+    # Print everything
+    print(
+        f"Path to audio or video: {path_to_audio_or_video}\n"
+        f"Rough draft title: {rough_draft_title}\n"
+        f"Thumbnail prompt: {thumbnail_prompt}\n"
+        f"SEO keywords: {seo_keywords}\n"
+        f"Count: {count}"
     )
+
+    # gen_meta(
+    #     path_to_audio_or_video=path_to_audio_or_video,
+    #     rough_draft_title=rough_draft_title,
+    #     thumbnail_prompt=thumbnail_prompt,
+    #     seo_keywords=seo_keywords,
+    #     count=count,
+    # )
 
 
 @app.command()

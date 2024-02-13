@@ -11,6 +11,13 @@ from indy_dev_tools.models import IdtConfig
 config: IdtConfig = load_config()
 
 
+def create_thumbnail_from_generated_prompt(count: int):
+
+    thumbnail_prompts = []
+
+    config.yt.thumbnail_prompt_file_path
+
+
 def create_thumbnail(count: int, prompt: str):
 
     print(f"create_thumbnail()")

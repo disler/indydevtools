@@ -29,7 +29,35 @@ def config():
 
 @app.command()
 def gen_with_user_input():
-    typer.echo("Generating meta with user input")
+    path_to_audio_or_video = typer.prompt("Path to the audio or video file")
+    if not path_to_audio_or_video or len(path_to_audio_or_video) < 5:
+        typer.echo("Invalid input for the file path.")
+        raise typer.Abort()
+
+    rough_draft_title = typer.prompt("Rough draft title")
+    if not rough_draft_title or len(rough_draft_title) < 5:
+        typer.echo("Invalid input for the rough draft title.")
+        raise typer.Abort()
+
+    thumbnail_prompt = typer.prompt("Prompt for generating the thumbnail")
+    if not thumbnail_prompt or len(thumbnail_prompt) < 5:
+        typer.echo("Invalid input for the thumbnail prompt.")
+        raise typer.Abort()
+
+    seo_keywords = typer.prompt("SEO keywords", default="")
+    if seo_keywords and len(seo_keywords) < 5:
+        typer.echo("Invalid input for SEO keywords.")
+        raise typer.Abort()
+
+    count = typer.prompt("Count", default="3", type=int)
+
+    gen_meta(
+        path_to_audio_or_video=path_to_audio_or_video,
+        rough_draft_title=rough_draft_title,
+        thumbnail_prompt=thumbnail_prompt,
+        seo_keywords=seo_keywords,
+        count=count,
+    )
 
 
 @app.command()

@@ -5,13 +5,13 @@ from indy_dev_tools.modules.idt_config import load_config
 config: IdtConfig = load_config()
 
 def create_hashtags(
-    count: int,
     rough_draft_title: str,
     seo_keywords: str,
 ) -> List[str]:
     # Split the title and keywords into a list of words, remove duplicates, and format as hashtags
-    words = set(rough_draft_title.split() + seo_keywords.split())
-    hashtags = [f"#{word}" for word in words if word]
+    combined_keywords = f"{rough_draft_title}, {seo_keywords}"
+    keywords_list = [keyword.strip() for keyword in combined_keywords.split(',') if keyword.strip()]
+    hashtags = [f"#{keyword.replace(' ', '')}" for keyword in keywords_list]
 
     # Write the hashtags to a file if a path is provided
     if config.yt.hashtags_file_path:

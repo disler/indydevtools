@@ -7,6 +7,7 @@ from indy_dev_tools.modules import (
     create_description,
     resize_image,
     create_formatted_references,
+    create_hashtags,
 )
 from indy_dev_tools.modules.idt_config import load_config
 
@@ -57,6 +58,6 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
         resize_image.resize_image(config_file.yt.make_thumbnail_file_path(i, ext="png"))
 
     # Generate Hashtags
-    create_hashtags.create_hashtags(
+    hashtags = create_hashtags.create_hashtags(
         input_data.count, input_data.rough_draft_title, input_data.seo_keywords
     )

@@ -13,9 +13,10 @@ config: IdtConfig = load_config()
 
 def create_thumbnail_from_generated_prompt(count: int):
 
-    thumbnail_prompts = []
+    with open(config.yt.thumbnail_prompt_file_path, 'r') as file:
+        thumbnail_prompts = file.readlines()
 
-    config.yt.thumbnail_prompt_file_path
+    # Rest of the function implementation would go here, using thumbnail_prompts
 
 
 def create_thumbnail(count: int, prompt: str):

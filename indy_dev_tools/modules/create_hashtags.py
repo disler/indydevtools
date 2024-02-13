@@ -34,16 +34,21 @@ def create_hashtags(
         instructions="Respond with a JSON structure: { 'hashtags': '<comma-separated list of hashtags>' }"
         instructions="Generate a comma-separated list of hashtags."
     )
+def create_hashtags(
+    rough_draft_title: str,
+    seo_keywords: str,
+) -> List[str]:
+    # ... (rest of the function)
 
     # Assuming the response JSON structure contains a field 'hashtags' with the comma-separated list
     parsed_response = HashTagItems.model_validate_json(response)
     hashtags_list = parsed_response.hashtags.split(',')
-    hashtags = [hashtag.strip() for hashtag in hashtags_list if hashtag.strip()]
+    hashtags = parsed_response.hashtags
 
     # Write the hashtags to a file if a path is provided
     if config.yt.hashtags_file_path:
         with open(config.yt.hashtags_file_path, "w") as file:
             print(f"Writing hashtags to {config.yt.hashtags_file_path}")
-            file.write("\n".join(hashtags))
+            file.write(hashtags)
 
     return hashtags

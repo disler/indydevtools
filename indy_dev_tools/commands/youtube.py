@@ -89,6 +89,8 @@ def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references
             "seo_keywords", message="SEO keywords comma separated", default=""
         ),
         inquirer.Text("count", message="Count", default="3"),
+        inquirer.Confirm("skip_transcription", message="Skip transcription?", default=False),
+        inquirer.Text("transcription_length", message="Transcription length (in seconds)", default="120"),
     ]
 
     if get_references:
@@ -107,6 +109,8 @@ def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references
     references = answers.get("references")
     seo_keywords = answers.get("seo_keywords")
     count = int(answers.get("count", 0) or 0)
+    skip_transcription = answers.get("skip_transcription", False)
+    transcription_length = int(answers.get("transcription_length", 120) or 120)
 
     # required: path_to_audio_or_video, rough_draft_title, seo_keywords, count
     if not path_to_audio_or_video:
@@ -141,6 +145,8 @@ def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references
             references=references,
             seo_keywords=seo_keywords,
             count=count,
+            skip_transcription=skip_transcription,
+            transcription_length=transcription_length,
         )
     )
 

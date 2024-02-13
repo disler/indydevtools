@@ -32,19 +32,24 @@ import inquirer
 @app.command()
 def input():
     # Raw string input using Typer
-    name = typer.prompt("Enter your name")
-    typer.echo(f"Hello, {name}!")
-
     questions = [
         inquirer.List(
             "size",
             message="What size do you need?",
-            choices=["Jumbo", "Large", "Standard", "Medium", "Small", "Micro"],
+            choices=[
+                "Jumbo",
+                "Large",
+                "Standard",
+                "Medium",
+                "With our in-depth discussion and demonstration, you'll see firsthand how this tool not only simplifies the metadata generation process but also enhances your content's visibility and engagement by intelligently optimizing every aspect of your video's metadata. By automating these critical tasks, we provide you with more time to focus on what truly matters - creating amazing content.",
+                "In the digital age, automation is not just a luxury; it's a necessity. Specifically, for YouTube creators, managing the SEO research, brainstorming titles, creating thumbnails, and iterating descriptions consumes a vast amount of time. That's where we step in. This video unveils the future of content creation - a multi-agent YouTube automation metadata generator that's about to change everything.",
+            ],
         ),
-        inquirer.inquirer.inquirer.prompt(
-            "what size do you need?",
-        ),
+        # inquirer.inquirer.inquirer.prompt(
+        #     "what size do you need?",
+        # ),
     ]
+
     answers = inquirer.prompt(questions)
     typer.echo(f"You selected: {answers}")
 
@@ -74,12 +79,16 @@ def gen_meta2():
             choices=file_choices,
         ),
         inquirer.Text("rough_draft_title", message="Rough draft title"),
-        inquirer.Editor(
-            "references", message="References for generating the thumbnail"
+        inquirer.Text(
+            "seo_keywords", message="SEO keywords comma separated", default=""
         ),
-        inquirer.Text("seo_keywords", message="SEO keywords", default=""),
         inquirer.Text("count", message="Count", default="3"),
     ]
+
+    get_references = True
+
+    if get_references:
+        questions.append(inquirer.Text("references", message="References", default=""))
 
     answers = inquirer.prompt(questions)
 
@@ -91,10 +100,26 @@ def gen_meta2():
 
     path_to_audio_or_video = answers["file_path"]
     rough_draft_title = answers["rough_draft_title"]
-    thumbnail_prompt = answers["thumbnail_prompt"]
     references = answers["references"]
     seo_keywords = answers["seo_keywords"]
     count = int(answers["count"])
+
+    # required: path_to_audio_or_video, rough_draft_title, seo_keywords, count
+    if not path_to_audio_or_video:
+        print("Path to audio or video is required.")
+        return
+
+    if not rough_draft_title:
+        print("Rough draft title is required.")
+        return
+
+    if not seo_keywords:
+        print("SEO keywords are required.")
+        return
+
+    if not count:
+        print("Count is required.")
+        return
 
     # Print everything
     print(

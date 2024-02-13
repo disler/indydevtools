@@ -8,6 +8,9 @@ class ReferenceItems(BaseModel):
     references: str
 
 
+class HashTagItems(BaseModel):
+    hashtags: str
+
 class ThumbnailPromptItem(BaseModel):
     thumbnail_prompt: str
     explanation: str

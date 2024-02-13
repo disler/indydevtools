@@ -1,5 +1,6 @@
 from typing import List
 from indy_dev_tools.models import IdtConfig
+from indy_dev_tools.models import IdtConfig, HashTagItems
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.llm import prompt_json_response
 from indy_dev_tools.modules.prompts import ULTIMATE_YT_CREATOR_INSTRUCTION
@@ -30,11 +31,13 @@ def create_hashtags(
     response = prompt_json_response(
         prompt,
         openai_key=config.yt.openai_api_key,
+        instructions="Respond with a JSON structure: { 'hashtags': '<comma-separated list of hashtags>' }"
         instructions="Generate a comma-separated list of hashtags."
     )
 
     # Assuming the response JSON structure contains a field 'hashtags' with the comma-separated list
-    hashtags_list = response['hashtags'].split(',')
+    parsed_response = HashTagItems.model_validate_json(response)
+    hashtags_list = parsed_response.hashtags.split(',')
     hashtags = [hashtag.strip() for hashtag in hashtags_list if hashtag.strip()]
 
     # Write the hashtags to a file if a path is provided

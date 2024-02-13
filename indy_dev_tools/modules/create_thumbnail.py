@@ -6,17 +6,19 @@ import os
 import requests
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.resize_image import resize_image
-from indy_dev_tools.models import IdtConfig
+from indy_dev_tools.models import IdtConfig, HighQualityThumbnailPrompts
+import inquirer
 
 config: IdtConfig = load_config()
 
 
 def create_thumbnail_from_generated_prompt(count: int):
 
-    with open(config.yt.thumbnail_prompt_file_path, 'r') as file:
-        thumbnail_prompts = file.readlines()
+    with open(config.yt.thumbnail_prompt_file_path, "r") as file:
+        thumbnail_prompts = HighQualityThumbnailPrompts.model_validate_json(file.read())
 
     # Rest of the function implementation would go here, using thumbnail_prompts
+    print("thumbnail_prompts", thumbnail_prompts)
 
 
 def create_thumbnail(count: int, prompt: str):
@@ -50,3 +52,7 @@ def create_thumbnail(count: int, prompt: str):
                     f.write(chunk)
 
         print(f"Image downloaded to {image_path}")
+
+
+if __name__ == "__main__":
+    create_thumbnail_from_generated_prompt(2)

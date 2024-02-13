@@ -8,6 +8,7 @@ class IdtYoutube(BaseModel):
     openai_api_key: Optional[str]
     output_dir: Optional[str]
     config_file_path: Optional[str]
+    thumbnail_prompt_file_path: Optional[str] = None
 
     @property
     def script_file_path(self) -> str:
@@ -61,3 +62,6 @@ class Transcription(BaseModel):
 class Research(BaseModel):
     seo_keyword: str
     highlights: List[str]
+    @property
+    def thumbnail_prompt_file_path(self) -> str:
+        return os.path.join(self.output_dir, "thumbnail_prompt.txt")

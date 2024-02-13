@@ -49,6 +49,9 @@ def create_title(
     path_to_script: Optional[str],
     seo_keywords: Optional[str] = None,
 ):
+    """
+    Create a titles for a youtube video given a draft title, script, and SEO keywords.
+    """
 
     print(f"create_title()")
 

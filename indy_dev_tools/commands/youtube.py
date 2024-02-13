@@ -1,6 +1,6 @@
 import typer
 from indy_dev_tools.commands import thumbnails, titles, script, descriptions
-from indy_dev_tools.models import IdtConfig
+from indy_dev_tools.models import IdtConfig, GenerateMetadataInput
 from indy_dev_tools.modules.file_util import get_path_to_files_with_sound
 from indy_dev_tools.modules.generate_metadata_flow import generate_metadata_flow
 from indy_dev_tools.modules.idt_config import load_config
@@ -153,11 +153,13 @@ def gen_meta(
     typer.echo("Generating meta data")
 
     generate_metadata_flow(
-        path_to_audio_or_video,
-        rough_draft_title,
-        thumbnail_prompt,
-        seo_keywords,
-        count,
+        GenerateMetadataInput(
+            path_to_audio_or_video,
+            rough_draft_title,
+            thumbnail_prompt,
+            seo_keywords,
+            count,
+        )
     )
 
 

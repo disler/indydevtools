@@ -8,8 +8,10 @@ class ThumbnailPromptItem(BaseModel):
     thumbnail_prompt: str
     explanation: str
 
+
 class HighQualityThumbnailPrompts(BaseModel):
     high_quality_thumbnail_prompts: List[ThumbnailPromptItem]
+
 
 class IdtYoutube(BaseModel):
     openai_api_key: Optional[str]
@@ -72,6 +74,15 @@ class Transcription(BaseModel):
 class Research(BaseModel):
     seo_keyword: str
     highlights: List[str]
+
     @property
     def thumbnail_prompt_file_path(self) -> str:
         return os.path.join(self.output_dir, "thumbnail_prompt.txt")
+
+
+class GenerateMetadataInput(BaseModel):
+    path_to_audio_or_video: str
+    rough_draft_title: str
+    thumbnail_prompt: str
+    seo_keywords: str
+    count: int

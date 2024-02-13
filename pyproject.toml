@@ -19,6 +19,7 @@ requests = "^2.31.0"
 faster-whisper = "^0.10.0"
 pillow = "^10.2.0"
 exa-py = "^1.0.8"
+inquirer = "^3.2.3"
 
 [tool.poetry.scripts]
 idt = "indy_dev_tools.main:main"

@@ -1,5 +1,13 @@
 # IndyDevTools
-> An Agentic Engineering toolbox for independent developers that are transforming into Agentic Engineers.
+> An Agentic Engineering toolbox for developers powered by LLM Agents to solve problems autonomously.
+>
+> Applications: Youtube Metadata Generation
+
+## Principles
+1. > USE THE RIGHT TOOL (AGENT) FOR THE JOB
+2. > EVERYTHING IS A FUNCTION
+3. > GREAT QUESTIONS YIELD GREAT ANSWERS
+4. > !!!
 
 ## Capabilities
 - Generate Metadata
@@ -94,30 +102,36 @@ What's we need
 
 
 ```mermaid CURRENT GRAPH
-
-graph LR;
-    completeVideo("Complete Video")
-    transcription("Transcription <br/> idt yt script transcribe -f [video_file] -t")
-    titles("Titles <br/> idt yt titles create -r [rough_draft_title] -s [script_file.txt]")
-    thumbnails("Thumbnails <br/> idt yt thumb create -p [prompt]")
-    descriptions("Descriptions <br/> idt yt desc create -s [script_file.txt]")
-    resize("Resize Thumbnail <br/> idt yt thumb rescale -f [image file path]")
-
-    completeVideo -->|Video File Path| transcription
-    transcription -->|Script File| titles
-    transcription -->|Script File| thumbnails
-    transcription -->|Script File| descriptions
-    thumbnails -->|Thumbnail| resize
+graph LR
+    Z[Rendered YouTube Video] --> A[Generate Youtube Metadata]
+    B(Transcribe - CODE)
+    B --> C{Script Ready}
+    C --> D(Generate Title - LLM AGENT)
+    C --> E(Generate Description - LLM AGENT)
+    A --> F(Generate Thumbnails - LLM AGENT)
+    F --> G(Resize Thumbnails - CODE)
+    A --> B
+    D -->  H{Title Ready}
+    E --> I{Description Ready}
+    F --> J{Thumbnails Ready}
+    G --> K{Resized Thumbnails Ready}
+    L[[Review for Upload - MANUAL INPUT]]
+    H --> L
+    I --> L
+    J --> L
+    K --> L
+    L --> M[Upload to YouTube]
 ```
 
 
 ## Table of Contents
 - [IndyDevTools](#indydevtools)
+  - [Principles](#principles)
   - [Capabilities](#capabilities)
   - [Next](#next)
   - [Production](#production)
   - [Table of Contents](#table-of-contents)
-  - [Principles](#principles)
+  - [Guidelines \& Sub Principles](#guidelines--sub-principles)
   - [*Start From Gold* CLI API](#start-from-gold-cli-api)
     - [Youtube Generate Metadata `idt yt generate-meta`](#youtube-generate-metadata-idt-yt-generate-meta)
   - [The Configuration File](#the-configuration-file)
@@ -127,7 +141,7 @@ graph LR;
   - [Local Dev Commands (excluded from dist)](#local-dev-commands-excluded-from-dist)
   - [Resources](#resources)
 
-## Principles
+## Guidelines & Sub Principles
 - **Heavy Agentic Engineering Bias**
   - Every tool asks and answers the question: *how can AI agents do this for me?*
   - Every tool utilizes an intuitive, step by step CLI that asks for the minimum amount of information to get started.

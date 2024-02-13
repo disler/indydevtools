@@ -17,15 +17,24 @@ config: IdtConfig = load_config()
 
 @app.command()
 def create_prompt(
-    draft_title: str = typer.Option(..., "--draft-title", "-d", help="The draft title of the video."),
-    seo_keywords: str = typer.Option(..., "--seo-keywords", "-k", help="SEO keywords to be included in the thumbnail prompt."),
-    count: int = typer.Option(1, "--count", "-c", help="The number of thumbnail prompts to create."),
-    art_style: str = typer.Option(None, "--art-style", "-a", help="The art style to be used in the thumbnail."),
+    rough_draft_title: str = typer.Option(None, "-r", "--rough-draft-title"),
+    seo_keywords: str = typer.Option(
+        None,
+        "--seo-keywords",
+        "-k",
+        help="SEO keywords to be included in the thumbnail prompt.",
+    ),
+    count: int = typer.Option(
+        1, "--count", "-c", help="The number of thumbnail prompts to create."
+    ),
+    art_style: str = typer.Option(
+        None, "--art-style", "-a", help="The art style to be used in the thumbnail."
+    ),
 ):
     """
     Create a prompt for generating a thumbnail.
     """
-    create_thumbnail_prompt(count, draft_title, seo_keywords, art_style)
+    create_thumbnail_prompt(count, rough_draft_title, seo_keywords, art_style)
 
 
 @app.command()

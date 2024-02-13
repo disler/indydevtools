@@ -17,8 +17,18 @@ def create_thumbnail_from_generated_prompt(count: int):
     with open(config.yt.thumbnail_prompt_file_path, "r") as file:
         thumbnail_prompts = HighQualityThumbnailPrompts.model_validate_json(file.read())
 
-    # Rest of the function implementation would go here, using thumbnail_prompts
-    print("thumbnail_prompts", thumbnail_prompts)
+    prompt_choices = [
+        {"name": prompt.thumbnail_prompt, "value": prompt}
+        for prompt in thumbnail_prompts.high_quality_thumbnail_prompts
+    ]
+    questions = [
+        inquirer.List('selected_prompt',
+                      message="Select a thumbnail prompt",
+                      choices=prompt_choices,
+                      ),
+    ]
+    selected_prompt = inquirer.prompt(questions)['selected_prompt']
+    create_thumbnail(count, selected_prompt.thumbnail_prompt)
 
 
 def create_thumbnail(count: int, prompt: str):

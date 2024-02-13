@@ -92,7 +92,7 @@ def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references
     ]
 
     if get_references:
-        questions.append(inquirer.Text("references", message="References", default=""))
+        questions.append(inquirer.Editor("references", message="References"))
 
     answers = inquirer.prompt(questions)
 
@@ -134,13 +134,15 @@ def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references
         f"Count: {count}"
     )
 
-    # gen_meta(
-    #     path_to_audio_or_video=path_to_audio_or_video,
-    #     rough_draft_title=rough_draft_title,
-    #     thumbnail_prompt=thumbnail_prompt,
-    #     seo_keywords=seo_keywords,
-    #     count=count,
-    # )
+    generate_metadata_flow(
+        GenerateMetadataInput(
+            path_to_audio_or_video=path_to_audio_or_video,
+            rough_draft_title=rough_draft_title,
+            references=references,
+            seo_keywords=seo_keywords,
+            count=count,
+        )
+    )
 
 
 @app.command(help="Generate using cli flags")
@@ -149,21 +151,25 @@ def gen_meta(
         ..., "--file", "-f", help="Path to the audio or video file."
     ),
     rough_draft_title: str = typer.Option(..., "-r", "--rough-draft-title"),
-    thumbnail_prompt: str = typer.Option(
-        ..., "--thumb-prompt", "-tp", help="Prompt for generating the thumbnail."
+    references: str = typer.Option(
+        None, "--references", "-rf", help="Links for watchers to reference."
     ),
     seo_keywords: str = typer.Option(None, "-k", "--seo-keywords"),
     count: int = typer.Option(3, "-c", "--count"),
+    skip_transcription: bool = typer.Option(False, "-st", "--skip-transcription"),
+    transcription_length: int = typer.Option(120, "-tl", "--transcription-length"),
 ):
     typer.echo("Generating meta data")
 
     generate_metadata_flow(
         GenerateMetadataInput(
-            path_to_audio_or_video,
-            rough_draft_title,
-            thumbnail_prompt,
-            seo_keywords,
-            count,
+            path_to_audio_or_video=path_to_audio_or_video,
+            rough_draft_title=rough_draft_title,
+            references=references,
+            seo_keywords=seo_keywords,
+            count=count,
+            skip_transcription=skip_transcription,
+            transcription_length=transcription_length,
         )
     )
 

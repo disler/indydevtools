@@ -60,7 +60,7 @@ def config():
 
 
 @app.command()
-def gen_meta2():
+def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references")):
 
     operating_dir = config_file.yt.output_dir
 
@@ -84,8 +84,6 @@ def gen_meta2():
         ),
         inquirer.Text("count", message="Count", default="3"),
     ]
-
-    get_references = True
 
     if get_references:
         questions.append(inquirer.Text("references", message="References", default=""))

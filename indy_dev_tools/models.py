@@ -4,6 +4,13 @@ from pydantic import BaseModel
 from typing import List
 
 
+class ThumbnailPromptItem(BaseModel):
+    thumbnail_prompt: str
+    explanation: str
+
+class HighQualityThumbnailPrompts(BaseModel):
+    high_quality_thumbnail_prompts: List[ThumbnailPromptItem]
+
 class IdtYoutube(BaseModel):
     openai_api_key: Optional[str]
     output_dir: Optional[str]

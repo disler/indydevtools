@@ -74,8 +74,8 @@ def gen_meta2():
             choices=file_choices,
         ),
         inquirer.Text("rough_draft_title", message="Rough draft title"),
-        inquirer.Text(
-            "thumbnail_prompt", message="Prompt for generating the thumbnail"
+        inquirer.Editor(
+            "references", message="References for generating the thumbnail"
         ),
         inquirer.Text("seo_keywords", message="SEO keywords", default=""),
         inquirer.Text("count", message="Count", default="3"),
@@ -92,6 +92,7 @@ def gen_meta2():
     path_to_audio_or_video = answers["file_path"]
     rough_draft_title = answers["rough_draft_title"]
     thumbnail_prompt = answers["thumbnail_prompt"]
+    references = answers["references"]
     seo_keywords = answers["seo_keywords"]
     count = int(answers["count"])
 
@@ -99,7 +100,7 @@ def gen_meta2():
     print(
         f"Path to audio or video: {path_to_audio_or_video}\n"
         f"Rough draft title: {rough_draft_title}\n"
-        f"Thumbnail prompt: {thumbnail_prompt}\n"
+        f"References: {references}\n"
         f"SEO keywords: {seo_keywords}\n"
         f"Count: {count}"
     )

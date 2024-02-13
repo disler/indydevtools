@@ -14,21 +14,24 @@ config: IdtConfig = load_config()
 
 def create_thumbnail_from_generated_prompt(count: int):
 
+    print(f"create_thumbnail_from_generated_prompt()")
+
     with open(config.yt.thumbnail_prompt_file_path, "r") as file:
         thumbnail_prompts = HighQualityThumbnailPrompts.model_validate_json(file.read())
 
     prompt_choices = [
-        {"name": prompt.thumbnail_prompt, "value": prompt}
+        prompt.thumbnail_prompt
         for prompt in thumbnail_prompts.high_quality_thumbnail_prompts
     ]
     questions = [
-        inquirer.List('selected_prompt',
-                      message="Select a thumbnail prompt",
-                      choices=prompt_choices,
-                      ),
+        inquirer.List(
+            "selected_prompt",
+            message="Select a thumbnail prompt",
+            choices=prompt_choices,
+        ),
     ]
-    selected_prompt = inquirer.prompt(questions)['selected_prompt']
-    create_thumbnail(count, selected_prompt.thumbnail_prompt)
+    selected_prompt = inquirer.prompt(questions)["selected_prompt"]
+    create_thumbnail(count, selected_prompt)
 
 
 def create_thumbnail(count: int, prompt: str):

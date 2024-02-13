@@ -58,6 +58,6 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
         resize_image.resize_image(config_file.yt.make_thumbnail_file_path(i, ext="png"))
 
     # Generate Hashtags
-    hashtags = create_hashtags.create_hashtags(
-        input_data.count, input_data.rough_draft_title, input_data.seo_keywords
+    create_hashtags.create_hashtags(
+        input_data.rough_draft_title, input_data.seo_keywords
     )

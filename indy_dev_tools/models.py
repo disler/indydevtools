@@ -10,6 +10,8 @@ class ReferenceItems(BaseModel):
 
 class HashTagItems(BaseModel):
     hashtags: str
+    top_three: str
+
 
 class ThumbnailPromptItem(BaseModel):
     thumbnail_prompt: str
@@ -47,7 +49,7 @@ class IdtYoutube(BaseModel):
 
     @property
     def hashtags_file_path(self) -> str:
-        return os.path.join(self.output_dir, "hashtags.txt")
+        return os.path.join(self.output_dir, "hashtags.json")
 
     @property
     def formatted_references_file_path(self) -> str:

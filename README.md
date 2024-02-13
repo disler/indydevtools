@@ -7,7 +7,26 @@
 1. > USE THE RIGHT TOOL (AGENT) FOR THE JOB
 2. > EVERYTHING IS A FUNCTION
 3. > GREAT QUESTIONS YIELD GREAT ANSWERS
-4. > !!!
+4. > Create reusable building blocks
+
+
+
+## What's left?
+[] draft dir
+[] final dir
+[] curate titles
+[] curate desc
+[] compose description
+[] /final/desc.txt: 
+[] /final/title.txt: 
+[] /final/thumbnail.png: 
+[] /final/tags.txt: 
+[] test full process
+[] productionization
+
+
+
+
 
 ## Capabilities
 - Generate Metadata
@@ -127,6 +146,7 @@ graph LR
 ## Table of Contents
 - [IndyDevTools](#indydevtools)
   - [Principles](#principles)
+  - [What's left?](#whats-left)
   - [Capabilities](#capabilities)
   - [Next](#next)
   - [Production](#production)

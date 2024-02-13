@@ -1,36 +1,41 @@
 import typer
-from indy_dev_tools.commands import thumbnails, titles, script, descriptions
+from indy_dev_tools.commands import (
+    thumbnails,
+    titles,
+    script,
+    descriptions,
+    references,
+    hashtags,
+)
 from indy_dev_tools.models import IdtConfig, GenerateMetadataInput
 from indy_dev_tools.modules.file_util import get_path_to_files_with_sound
 from indy_dev_tools.modules.generate_metadata_flow import generate_metadata_flow
 from indy_dev_tools.modules.idt_config import load_config
-from indy_dev_tools.modules import (
-    create_thumbnail,
-    create_title,
-    create_transcription,
-    create_description,
-    resize_image,
-)
+import inquirer
 
 
 config_file: IdtConfig = load_config()
 
 app = typer.Typer()
 app.add_typer(
-    thumbnails.app, name="thumb", help="Generate thumbnails for your content."
+    thumbnails.app,
+    name="thumb",
+    help="Subcommands to generate thumbnails for your content.",
 )
-app.add_typer(titles.app, name="titles", help="Generate video titles.")
-app.add_typer(script.app, name="script", help="Transcribe videos.")
-app.add_typer(descriptions.app, name="desc", help="Generate video descriptions.")
+app.add_typer(titles.app, name="titles", help="Subcommands to generate video titles.")
+app.add_typer(script.app, name="script", help="Subcommands to granscribe videos.")
+app.add_typer(
+    descriptions.app, name="desc", help="Subcommands to generate video descriptions."
+)
+app.add_typer(
+    references.app, name="refs", help="Subcommands to format references for videos."
+)
+app.add_typer(
+    hashtags.app, name="tags", help="Subcommands to generate tags for videos."
+)
 
-import typer
 
-app = typer.Typer()
-
-import inquirer
-
-
-@app.command()
+@app.command(help="Test Input")
 def input():
     # Raw string input using Typer
     questions = [
@@ -55,12 +60,12 @@ def input():
     typer.echo(f"You selected: {answers}")
 
 
-@app.command()
+@app.command(help="Dump config file to console.")
 def config():
     print(config_file.model_dump_json(indent=2))
 
 
-@app.command()
+@app.command(help="Generate with user input")
 def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references")):
 
     operating_dir = config_file.yt.output_dir
@@ -97,11 +102,11 @@ def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references
 
     print("answers", answers)
 
-    path_to_audio_or_video = answers["file_path"]
-    rough_draft_title = answers["rough_draft_title"]
-    references = answers["references"]
-    seo_keywords = answers["seo_keywords"]
-    count = int(answers["count"])
+    path_to_audio_or_video = answers.get("file_path")
+    rough_draft_title = answers.get("rough_draft_title")
+    references = answers.get("references")
+    seo_keywords = answers.get("seo_keywords")
+    count = int(answers.get("count", 0) or 0)
 
     # required: path_to_audio_or_video, rough_draft_title, seo_keywords, count
     if not path_to_audio_or_video:
@@ -138,7 +143,7 @@ def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references
     # )
 
 
-@app.command()
+@app.command(help="Generate using cli flags")
 def gen_meta(
     path_to_audio_or_video: str = typer.Option(
         ..., "--file", "-f", help="Path to the audio or video file."

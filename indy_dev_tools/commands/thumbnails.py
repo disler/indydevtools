@@ -6,7 +6,10 @@ import os
 import requests
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.resize_image import resize_image
-from indy_dev_tools.modules.create_thumbnail import create_thumbnail
+from indy_dev_tools.modules.create_thumbnail import (
+    create_thumbnail,
+    create_thumbnail_from_generated_prompt,
+)
 from indy_dev_tools.models import IdtConfig
 from indy_dev_tools.modules.create_thumbnail import create_thumbnail
 from indy_dev_tools.modules.create_thumbnail_prompt import create_thumbnail_prompt
@@ -14,10 +17,14 @@ from indy_dev_tools.modules.create_thumbnail_prompt import create_thumbnail_prom
 app = typer.Typer()
 config: IdtConfig = load_config()
 
+
 @app.command()
 def create_from_prompt(
     count: int = typer.Option(
-        1, "--count", "-c", help="The number of thumbnails to create from a selected prompt."
+        1,
+        "--count",
+        "-c",
+        help="The number of thumbnails to create from a selected prompt.",
     ),
 ):
     """

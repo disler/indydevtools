@@ -14,6 +14,15 @@ config: IdtConfig = load_config()
 
 
 @app.command()
+def create_prompt():
+    """
+    Create a prompt for generating a thumbnail.
+    """
+    print("Creating a prompt for generating a thumbnail.")
+    print("Prompt created.")
+
+
+@app.command()
 def create(
     prompt: str = typer.Option(
         ..., "--prompt", "-p", help="The prompt to create thumbnail with."

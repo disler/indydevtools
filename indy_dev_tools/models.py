@@ -4,6 +4,10 @@ from pydantic import BaseModel
 from typing import List
 
 
+class ReferenceItems(BaseModel):
+    references: str
+
+
 class ThumbnailPromptItem(BaseModel):
     thumbnail_prompt: str
     explanation: str
@@ -20,7 +24,7 @@ class IdtYoutube(BaseModel):
 
     @property
     def thumbnail_prompt_file_path(self) -> str:
-        return os.path.join(self.output_dir, "thumbnail_prompt.txt")
+        return os.path.join(self.output_dir, "thumbnail_prompt.json")
 
     @property
     def script_file_path(self) -> str:
@@ -37,6 +41,14 @@ class IdtYoutube(BaseModel):
     @property
     def description_file_path(self) -> str:
         return os.path.join(self.output_dir, "descriptions.json")
+
+    @property
+    def hashtags_file_path(self) -> str:
+        return os.path.join(self.output_dir, "hashtags.txt")
+
+    @property
+    def formatted_references_file_path(self) -> str:
+        return os.path.join(self.output_dir, "formatted_references.txt")
 
     def make_thumbnail_file_path(self, count: int, ext="png") -> str:
         return os.path.join(self.output_dir, f"thumbnail_{count}.{ext}")
@@ -77,12 +89,12 @@ class Research(BaseModel):
 
     @property
     def thumbnail_prompt_file_path(self) -> str:
-        return os.path.join(self.output_dir, "thumbnail_prompt.txt")
+        return os.path.join(self.output_dir, "thumbnail_prompt.json")
 
 
 class GenerateMetadataInput(BaseModel):
     path_to_audio_or_video: str
     rough_draft_title: str
-    thumbnail_prompt: str
+    references: str
     seo_keywords: str
     count: int

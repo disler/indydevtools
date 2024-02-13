@@ -14,6 +14,17 @@ from indy_dev_tools.modules.create_thumbnail_prompt import create_thumbnail_prom
 app = typer.Typer()
 config: IdtConfig = load_config()
 
+@app.command()
+def create_from_prompt(
+    count: int = typer.Option(
+        1, "--count", "-c", help="The number of thumbnails to create from a selected prompt."
+    ),
+):
+    """
+    Create thumbnails from a generated prompt.
+    """
+    create_thumbnail_from_generated_prompt(count)
+
 
 @app.command()
 def create_prompt(

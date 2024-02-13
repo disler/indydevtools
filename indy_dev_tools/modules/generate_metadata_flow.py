@@ -1,10 +1,12 @@
 from indy_dev_tools.models import IdtConfig, GenerateMetadataInput
 from indy_dev_tools.modules import (
+    create_thumbnail_prompt,
     create_thumbnail,
     create_title,
     create_transcription,
     create_description,
     resize_image,
+    create_formatted_references,
 )
 from indy_dev_tools.modules.idt_config import load_config
 
@@ -18,6 +20,14 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
         duration_limit_in_seconds=120,
         create_json_file=True,
     )
+
+    # Format references
+    if input_data.references:
+        create_formatted_references.create_formatted_references(
+            input_data.references,
+            input_data.rough_draft_title,
+            input_data.seo_keywords,
+        )
 
     # Generate titles
     create_title.create_title(
@@ -34,9 +44,19 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
         seo_keywords=input_data.seo_keywords,
     )
 
+    # Generate thumbnail prompt
+    create_thumbnail_prompt.create_thumbnail_prompt(
+        input_data.count, input_data.rough_draft_title, input_data.seo_keywords
+    )
+
     # Generate thumbnails
-    create_thumbnail.create_thumbnail(input_data.count, input_data.thumbnail_prompt)
+    create_thumbnail.create_thumbnail_from_generated_prompt(input_data.count)
 
     # Assuming there's a function for resizing in create_thumbnails
     for i in range(input_data.count):
         resize_image.resize_image(config_file.yt.make_thumbnail_file_path(i, ext="png"))
+
+    # Generate Hashtags
+    create_hashtags.create_hashtags(
+        input_data.count, input_data.rough_draft_title, input_data.seo_keywords
+    )

@@ -28,6 +28,11 @@ def config():
 
 
 @app.command()
+def gen_with_user_input():
+    typer.echo("Generating meta with user input")
+
+
+@app.command()
 def gen_meta(
     path_to_audio_or_video: str = typer.Option(
         ..., "--file", "-f", help="Path to the audio or video file."
@@ -43,7 +48,7 @@ def gen_meta(
 
     # Transcribe 120 seconds to create the script
     create_transcription.create_transcription(
-        path_to_audio_or_video, duration_limit_in_seconds=120, create_json_file=True
+        path_to_audio_or_video, duration_limit_in_seconds=220, create_json_file=True
     )
 
     # Generate titles

@@ -5,11 +5,10 @@ app = typer.Typer()
 
 @app.command()
 def format_references(
-    references: str = typer.Argument(..., help="The references to format.")
+    references: str = typer.Argument(..., help="The references to format."),
+    rough_draft_title: str = typer.Argument(..., help="The rough draft title of the video."),
+    seo_keywords: str = typer.Argument(..., help="The SEO keywords for the video.")
 ):
-    # Assuming rough_draft_title and seo_keywords are to be input by the user as well.
-    rough_draft_title = typer.prompt("Enter the rough draft title")
-    seo_keywords = typer.prompt("Enter the SEO keywords")
     create_formatted_references(references, rough_draft_title, seo_keywords)
 
 if __name__ == "__main__":

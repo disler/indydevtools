@@ -8,18 +8,24 @@ from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.resize_image import resize_image
 from indy_dev_tools.modules.create_thumbnail import create_thumbnail
 from indy_dev_tools.models import IdtConfig
+from indy_dev_tools.modules.create_thumbnail import create_thumbnail
+from indy_dev_tools.modules.create_thumbnail_prompt import create_thumbnail_prompt
 
 app = typer.Typer()
 config: IdtConfig = load_config()
 
 
 @app.command()
-def create_prompt():
+def create_prompt(
+    draft_title: str = typer.Option(..., "--draft-title", "-d", help="The draft title of the video."),
+    seo_keywords: str = typer.Option(..., "--seo-keywords", "-k", help="SEO keywords to be included in the thumbnail prompt."),
+    count: int = typer.Option(1, "--count", "-c", help="The number of thumbnail prompts to create."),
+    art_style: str = typer.Option(None, "--art-style", "-a", help="The art style to be used in the thumbnail."),
+):
     """
     Create a prompt for generating a thumbnail.
     """
-    print("Creating a prompt for generating a thumbnail.")
-    print("Prompt created.")
+    create_thumbnail_prompt(count, draft_title, seo_keywords, art_style)
 
 
 @app.command()

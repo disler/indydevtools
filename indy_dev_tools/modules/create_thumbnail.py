@@ -40,28 +40,8 @@ def create_thumbnail(count: int, prompt: str):
 
     openai.api_key = config.yt.openai_api_key
 
+    from indy_dev_tools.modules.llm import prompt_image
+
     for i in range(count):
         image_path = config.yt.make_thumbnail_file_path(i)
-
-        response: ImagesResponse = openai.images.generate(
-            model="dall-e-3",
-            prompt=prompt,
-            n=1,
-            size="1792x1024",
-            quality="standard",  # or 'hd'
-        )
-
-        image_data = response.data[0]
-        image_url = image_data.url
-
-        with requests.get(image_url, stream=True) as r:
-
-            r.raise_for_status()
-
-            with open(image_path, "wb") as f:
-
-                for chunk in r.iter_content(chunk_size=8192):
-
-                    f.write(chunk)
-
-        print(f"Image downloaded to {image_path}")
+        prompt_image(prompt, image_path)

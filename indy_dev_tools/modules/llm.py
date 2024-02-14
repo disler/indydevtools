@@ -56,3 +56,29 @@ Example bash command:
         response_format={"type": "json_object"},
     )
     return response.choices[0].message.content
+import requests
+from openai.types.images_response import ImagesResponse
+
+def prompt_image(prompt: str, file_path: str, model: str = 'dall-e-3', size: str = '1792x1024', quality: str = 'standard'):
+    """
+    Generate an image from a prompt using the OpenAI API and save it to the specified file path.
+    """
+    openai.api_key = openai_key
+
+    response: ImagesResponse = openai.images.generate(
+        model=model,
+        prompt=prompt,
+        n=1,
+        size=size,
+        quality=quality,
+    )
+
+    image_data = response.data[0]
+    image_url = image_data.url
+
+    with requests.get(image_url, stream=True) as r:
+        r.raise_for_status()
+        with open(file_path, "wb") as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+    print(f"Image downloaded to {file_path}")

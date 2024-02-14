@@ -12,7 +12,8 @@
 
 
 ## What's left?
-[] revamp readme
+[] test flow
+[] revamp readme, with clean simple setup guide (talk about dumping config file to change base search dir)
 [] productionization
 [] deploy to pypi
 

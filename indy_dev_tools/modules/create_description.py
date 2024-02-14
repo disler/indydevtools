@@ -32,7 +32,9 @@ def create_description(
     seo_keywords: Optional[str] = None,
     draft_title: Optional[str] = None,
 ):
-    print(f"create_description()")
+    print(
+        f"create_description(count={count}, script_file_path={script_file_path}, seo_keywords={seo_keywords}, draft_title={draft_title})"
+    )
 
     with open(script_file_path, "r") as file:
         script_content = file.read()

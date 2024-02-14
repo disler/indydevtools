@@ -12,17 +12,14 @@
 
 
 ## What's left?
-[] test composers
-  [] /final/desc.txt: 
-  [] /final/title.txt: 
-  [] /final/thumbnail.png: 
-  [] /final/tags.txt: 
-[] test full process
-[] improve 'help'
 [] revamp readme
 [] productionization
 [] deploy to pypi
 
+
+## Potential Improvements
+- Implement 'iterate' functions to improve on existing titles, description, and thumbnails
+- Solid logging framework
 
 ## New Gen Prompt Command for testing
 ```
@@ -79,21 +76,6 @@ poetry run idt yt gen-meta \
   - `poetry run idt yt thumb create -p "An engineer of the future is surrounded by transparent windows, they wear a headset and are coding on a transparent screen. They're surrounded by AI agents that are doing the work for them. Use dark colors, green light and yellow light as primary colors." -c 3`
 - Resize
   - `idt yt thumb rescale -f <image file path>`
-
-
-
-## Next
-[x] Add title generation
-[x] Add whisperx transcribe functionality
-[x] Add resize fucntionality
-[+] Make every function isolated and reusable
-[+] Add descriptions generated from the script `idt yt desc create -s <script_file.txt> -n`
-[+] Add 'stop after' flag to transcribe which is number of seconds to transcribe
-[+] Add count into 
-  - `thumb create`
-  - `title create`
-  - `desc create`
-[] 
 
 
 
@@ -155,9 +137,9 @@ graph LR
 - [IndyDevTools](#indydevtools)
   - [Principles](#principles)
   - [What's left?](#whats-left)
+  - [Potential Improvements](#potential-improvements)
   - [New Gen Prompt Command for testing](#new-gen-prompt-command-for-testing)
   - [Capabilities](#capabilities)
-  - [Next](#next)
   - [Production](#production)
   - [Table of Contents](#table-of-contents)
   - [Guidelines \& Sub Principles](#guidelines--sub-principles)

@@ -28,7 +28,7 @@ def transcribe(
     duration_limit = (
         int(duration_limit_in_sec) if duration_limit_in_sec is not None else None
     )
-    transcript: Transcription = create_transcription(
+    Transcription = create_transcription(
         file,
         duration_limit_in_seconds=duration_limit,
         create_json_file=create_json_file,

@@ -8,6 +8,10 @@ from indy_dev_tools.modules import (
     resize_image,
     create_formatted_references,
     create_hashtags,
+    compose_description,
+    compose_hashtags,
+    compose_title,
+    compose_thumbnail,
 )
 from indy_dev_tools.modules.idt_config import load_config
 
@@ -22,6 +26,8 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
             duration_limit_in_seconds=input_data.transcription_length,
             create_json_file=True,
         )
+    else:
+        print("Skip Transcription Flag Present: Skipping transcription...")
 
     # Format references
     if input_data.references:
@@ -56,11 +62,22 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
         input_data.count, input_data.rough_draft_title, input_data.seo_keywords
     )
 
-    # Generate thumbnails
+    # Generate thumbnails - technically this is a create & compose step
     create_thumbnail.create_thumbnail_from_generated_prompt(input_data.count)
 
     # Assuming there's a function for resizing in create_thumbnails
     for i in range(input_data.count):
         resize_image.resize_image(config_file.yt.make_thumbnail_file_path(i, ext="png"))
 
-    # Add composers here qqq
+    # Everything is generated - now handle selection and composing of final assets
+    # Compose the final set of hashtags for use in metadata
+    compose_hashtags.compose_hashtags()
+
+    # Compose the final description incorporating all necessary elements
+    compose_description.compose_description()
+
+    # Compose the final titles based on generated data and input parameters
+    compose_title.compose_titles()
+
+    # Compose the final thumbnail from generated assets
+    compose_thumbnail.compose_thumbnail()

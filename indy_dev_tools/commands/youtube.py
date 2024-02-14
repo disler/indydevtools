@@ -23,7 +23,7 @@ app.add_typer(
     help="Subcommands to generate thumbnails for your content.",
 )
 app.add_typer(titles.app, name="titles", help="Subcommands to generate video titles.")
-app.add_typer(script.app, name="script", help="Subcommands to granscribe videos.")
+app.add_typer(script.app, name="script", help="Subcommands to transcribe videos.")
 app.add_typer(
     descriptions.app, name="desc", help="Subcommands to generate video descriptions."
 )
@@ -35,38 +35,20 @@ app.add_typer(
 )
 
 
-@app.command(help="Test Input")
-def input():
-    # Raw string input using Typer
-    questions = [
-        inquirer.List(
-            "size",
-            message="What size do you need?",
-            choices=[
-                "Jumbo",
-                "Large",
-                "Standard",
-                "Medium",
-                "With our in-depth discussion and demonstration, you'll see firsthand how this tool not only simplifies the metadata generation process but also enhances your content's visibility and engagement by intelligently optimizing every aspect of your video's metadata. By automating these critical tasks, we provide you with more time to focus on what truly matters - creating amazing content.",
-                "In the digital age, automation is not just a luxury; it's a necessity. Specifically, for YouTube creators, managing the SEO research, brainstorming titles, creating thumbnails, and iterating descriptions consumes a vast amount of time. That's where we step in. This video unveils the future of content creation - a multi-agent YouTube automation metadata generator that's about to change everything.",
-            ],
-        ),
-        # inquirer.inquirer.inquirer.prompt(
-        #     "what size do you need?",
-        # ),
-    ]
-
-    answers = inquirer.prompt(questions)
-    typer.echo(f"You selected: {answers}")
-
-
-@app.command(help="Dump config file to console.")
+@app.command(help="Dump your config file to console.")
 def config():
     print(config_file.model_dump_json(indent=2))
 
 
-@app.command(help="Generate with user input")
-def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references")):
+@app.command(help="Generate youtube metadata using a step by step interface")
+def gen_meta_auto(
+    get_references: bool = typer.Option(
+        False,
+        "-r",
+        "--get-references",
+        help="Collect references (links) for the video.",
+    ),
+):
 
     operating_dir = config_file.yt.output_dir
 
@@ -89,8 +71,14 @@ def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references
             "seo_keywords", message="SEO keywords comma separated", default=""
         ),
         inquirer.Text("count", message="Count", default="3"),
-        inquirer.Confirm("skip_transcription", message="Skip transcription?", default=False),
-        inquirer.Text("transcription_length", message="Transcription length (in seconds)", default="120"),
+        inquirer.Confirm(
+            "skip_transcription", message="Skip transcription?", default=False
+        ),
+        inquirer.Text(
+            "transcription_length",
+            message="Transcription length (in seconds)",
+            default="120",
+        ),
     ]
 
     if get_references:
@@ -101,8 +89,6 @@ def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references
     if not answers:
         print("No input provided.")
         return
-
-    print("answers", answers)
 
     path_to_audio_or_video = answers.get("file_path")
     rough_draft_title = answers.get("rough_draft_title")
@@ -151,7 +137,7 @@ def gen_meta2(get_references: bool = typer.Option(False, "-r", "--get-references
     )
 
 
-@app.command(help="Generate using cli flags")
+@app.command(help="Generate youtube metadata using cli flags")
 def gen_meta(
     path_to_audio_or_video: str = typer.Option(
         ..., "--file", "-f", help="Path to the audio or video file."

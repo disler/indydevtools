@@ -53,7 +53,9 @@ def create_title(
     Create a titles for a youtube video given a draft title, script, and SEO keywords.
     """
 
-    print(f"create_title()")
+    print(
+        f"create_title(count={count}, draft_title={draft_title}, path_to_script={path_to_script}, seo_keywords={seo_keywords})"
+    )
 
     cap_refs = {}
 

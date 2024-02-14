@@ -27,5 +27,5 @@ def compose_titles():
 
     final_titles = "\n".join(selected_titles)
 
-    with open(config_file.yt.final_title_file_path, "r") as file:
+    with open(config_file.yt.final_title_file_path, "w") as file:
         file.write(final_titles)

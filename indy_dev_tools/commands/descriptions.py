@@ -7,30 +7,30 @@ app = typer.Typer()
 
 @app.command(help="Compose a description given a completed draft directory.")
 def compose():
-    print("Composing description")
-
     compose_description()
 
 
-@app.command()
+@app.command(help="Create a new description for a video.")
 def create(
-    script_file: str = typer.Option(..., "-s", "--script-file"),
-    rough_draft_title: str = typer.Option(None, "-r", "--rough-draft-title"),
-    seo_keywords: str = typer.Option(None, "-k", "--seo-keywords"),
-    count: int = typer.Option(3, "-c", "--count"),
+    script_file: str = typer.Option(
+        ..., "-s", "--script-file", help="The path to the script file."
+    ),
+    rough_draft_title: str = typer.Option(
+        None, "-r", "--rough-draft-title", help="The rough draft title of the video."
+    ),
+    seo_keywords: str = typer.Option(
+        None,
+        "-k",
+        "--seo-keywords",
+        help="SEO keywords to be included in the description.",
+    ),
+    count: int = typer.Option(
+        3, "-c", "--count", help="The number of descriptions to generate."
+    ),
 ):
-    print(f"Rough Draft Title: {rough_draft_title}")
-    print(f"Script File: {script_file}")
-    print(f"SEO Keywords: {seo_keywords}")
-
-    seo_keywords_list = seo_keywords.split(",") if seo_keywords else None
-    create_description(count, script_file, seo_keywords_list, rough_draft_title)
+    create_description(count, script_file, seo_keywords, rough_draft_title)
 
 
-@app.command()
+@app.command(help="Iterate over the description to improve it.")
 def iterate(prompt: str, description: str):
     print(f"iterating description: {description}")
-
-
-if __name__ == "__main__":
-    app()

@@ -1,7 +1,13 @@
 import typer
+from indy_dev_tools.modules.compose_hashtags import compose_hashtags
 from indy_dev_tools.modules.create_hashtags import create_hashtags
 
 app = typer.Typer()
+
+
+@app.command(help="Compose the final set of hashtags for a video.")
+def compose():
+    compose_hashtags()
 
 
 @app.command(

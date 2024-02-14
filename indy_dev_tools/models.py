@@ -36,7 +36,7 @@ class HighQualityDescriptions(BaseModel):
 class TitleItems(BaseModel):
     title: str
     explanation: str
-    score: str
+    score: float
 
 
 class HighQualityTitles(BaseModel):

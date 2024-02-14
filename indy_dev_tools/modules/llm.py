@@ -2,6 +2,9 @@ from typing import Dict
 import openai
 import sys
 
+import requests
+from openai.types.images_response import ImagesResponse
+
 
 def make_cap_refs(prompt: str, refs: Dict[str, str]) -> str:
     """
@@ -56,10 +59,16 @@ Example bash command:
         response_format={"type": "json_object"},
     )
     return response.choices[0].message.content
-import requests
-from openai.types.images_response import ImagesResponse
 
-def prompt_image(prompt: str, file_path: str, model: str = 'dall-e-3', size: str = '1792x1024', quality: str = 'standard'):
+
+def prompt_image(
+    prompt: str,
+    file_path: str,
+    openai_key: str,
+    model: str = "dall-e-3",
+    size: str = "1792x1024",
+    quality: str = "standard",
+):
     """
     Generate an image from a prompt using the OpenAI API and save it to the specified file path.
     """

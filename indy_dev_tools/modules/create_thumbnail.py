@@ -8,6 +8,7 @@ from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.resize_image import resize_image
 from indy_dev_tools.models import IdtConfig, HighQualityThumbnailPrompts
 import inquirer
+from indy_dev_tools.modules.llm import prompt_image
 
 config: IdtConfig = load_config()
 
@@ -38,10 +39,7 @@ def create_thumbnail(count: int, prompt: str):
 
     print(f"create_thumbnail(count={count}, prompt={prompt})")
 
-    openai.api_key = config.yt.openai_api_key
-
-    from indy_dev_tools.modules.llm import prompt_image
-
     for i in range(count):
         image_path = config.yt.make_thumbnail_file_path(i)
-        prompt_image(prompt, image_path)
+        prompt_image(prompt, config.yt.openai_api_key, image_path)
+        print(f"Image downloaded to {image_path}")

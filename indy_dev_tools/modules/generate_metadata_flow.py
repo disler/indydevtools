@@ -16,11 +16,12 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
     config_file: IdtConfig = load_config()
 
     # Transcribe 120 seconds to create the script
-    create_transcription.create_transcription(
-        input_data.path_to_audio_or_video,
-        duration_limit_in_seconds=120,
-        create_json_file=True,
-    )
+    if not input_data.skip_transcription:
+        create_transcription.create_transcription(
+            input_data.path_to_audio_or_video,
+            duration_limit_in_seconds=input_data.transcription_length,
+            create_json_file=True,
+        )
 
     # Format references
     if input_data.references:
@@ -45,6 +46,11 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
         seo_keywords=input_data.seo_keywords,
     )
 
+    # Generate Hashtags
+    create_hashtags.create_hashtags(
+        input_data.rough_draft_title, input_data.seo_keywords
+    )
+
     # Generate thumbnail prompt
     create_thumbnail_prompt.create_thumbnail_prompt(
         input_data.count, input_data.rough_draft_title, input_data.seo_keywords
@@ -57,7 +63,4 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
     for i in range(input_data.count):
         resize_image.resize_image(config_file.yt.make_thumbnail_file_path(i, ext="png"))
 
-    # Generate Hashtags
-    create_hashtags.create_hashtags(
-        input_data.rough_draft_title, input_data.seo_keywords
-    )
+    # Add composers here qqq

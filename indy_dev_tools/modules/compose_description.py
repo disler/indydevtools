@@ -12,6 +12,8 @@ import inquirer
 
 def compose_description():
 
+    print(f"compose_description()")
+
     config_file: IdtConfig = load_config()
 
     with open(config_file.yt.description_file_path, "r") as file:
@@ -35,17 +37,17 @@ def compose_description():
 
     # Create inquirer checkbox prompts for each section of the description
     hook_question = [
-        inquirer.List("hook", message="Select a hook", choices=hook_options),
+        inquirer.Checkbox("hook", message="Select a hook", choices=hook_options),
     ]
     first_para_question = [
-        inquirer.List(
+        inquirer.Checkbox(
             "first_paragraph",
             message="Select the first paragraph",
             choices=first_para_options,
         ),
     ]
     second_para_question = [
-        inquirer.List(
+        inquirer.Checkbox(
             "second_paragraph",
             message="Select the second paragraph",
             choices=second_para_options,
@@ -53,10 +55,26 @@ def compose_description():
     ]
 
     # Prompt the user to select one hook, one first paragraph, and one second paragraph
-    selected_hook = inquirer.prompt(hook_question).get("hook", [])[0]
-    selected_first_para = inquirer.prompt(first_para_question).get("first_paragraph", [])[0]
-    selected_second_para = inquirer.prompt(second_para_question).get("second_paragraph", [])[0]
+    selected_hook = "\n\n".join(inquirer.prompt(hook_question).get("hook", []))
+    selected_first_para = "\n\n".join(
+        inquirer.prompt(first_para_question).get("first_paragraph", [])
+    )
+    selected_second_para = "\n\n".join(
+        inquirer.prompt(second_para_question).get("second_paragraph", [])
+    )
 
-    print("selected_hook", selected_hook)
-    print("selected_first_para", selected_first_para)
-    print("selected_second_para", selected_second_para)
+    final_description = f"""{selected_hook}
+
+{selected_first_para}
+
+{selected_second_para}
+
+{references}
+
+{hashtags.top_three}
+
+"""
+
+    # write the final description to the file
+    with open(config_file.yt.final_description_file_path, "w") as file:
+        file.write(final_description)

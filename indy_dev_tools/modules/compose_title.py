@@ -15,8 +15,7 @@ def compose_titles():
     config_file: IdtConfig = load_config()
 
     with open(config_file.yt.title_file_path, "r") as file:
-        titles_json = file.read()
-    titles = HighQualityTitles.model_validate_json(titles_json)
+        titles = HighQualityTitles.model_validate_json(file.read())
 
     title_options = [title.title for title in titles.high_quality_titles]
     title_question = [
@@ -27,11 +26,6 @@ def compose_titles():
     selected_titles = inquirer.prompt(title_question).get("title", [])
 
     final_titles = "\n".join(selected_titles)
-
-    with open(config_file.yt.final_title_file_path, "w") as file:
-        hashtags = HighQualityTitles.model_validate_json(file.read())
-
-    final_titles = ""
 
     with open(config_file.yt.final_title_file_path, "r") as file:
         file.write(final_titles)

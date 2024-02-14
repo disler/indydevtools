@@ -11,16 +11,12 @@
 
 
 
-## What's left?
-[] draft dir
-[] final dir
-[] curate titles
-[] curate desc
-[] compose description
-[] /final/desc.txt: 
-[] /final/title.txt: 
-[] /final/thumbnail.png: 
-[] /final/tags.txt: 
+##**** What's left?
+[] test composers
+  [] /final/desc.txt: 
+  [] /final/title.txt: 
+  [] /final/thumbnail.png: 
+  [] /final/tags.txt: 
 [] test full process
 [] productionization
 
@@ -146,7 +142,6 @@ graph LR
 ## Table of Contents
 - [IndyDevTools](#indydevtools)
   - [Principles](#principles)
-  - [What's left?](#whats-left)
   - [Capabilities](#capabilities)
   - [Next](#next)
   - [Production](#production)

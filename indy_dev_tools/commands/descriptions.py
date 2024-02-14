@@ -1,7 +1,15 @@
 import typer
 from indy_dev_tools.modules.create_description import create_description
+from indy_dev_tools.modules.compose_description import compose_description
 
 app = typer.Typer()
+
+
+@app.command(help="Compose a description given a completed draft directory.")
+def compose():
+    print("Composing description")
+
+    compose_description()
 
 
 @app.command()

@@ -35,17 +35,17 @@ def compose_description():
 
     # Create inquirer checkbox prompts for each section of the description
     hook_question = [
-        inquirer.Checkbox("hook", message="Select a hook", choices=hook_options),
+        inquirer.List("hook", message="Select a hook", choices=hook_options),
     ]
     first_para_question = [
-        inquirer.Checkbox(
+        inquirer.List(
             "first_paragraph",
             message="Select the first paragraph",
             choices=first_para_options,
         ),
     ]
     second_para_question = [
-        inquirer.Checkbox(
+        inquirer.List(
             "second_paragraph",
             message="Select the second paragraph",
             choices=second_para_options,
@@ -53,13 +53,9 @@ def compose_description():
     ]
 
     # Prompt the user to select one hook, one first paragraph, and one second paragraph
-    selected_hook = inquirer.prompt(hook_question).get("hook", "")
-    selected_first_para = inquirer.prompt(first_para_question).get(
-        "first_paragraph", ""
-    )
-    selected_second_para = inquirer.prompt(second_para_question).get(
-        "second_paragraph", ""
-    )
+    selected_hook = inquirer.prompt(hook_question).get("hook", [])[0]
+    selected_first_para = inquirer.prompt(first_para_question).get("first_paragraph", [])[0]
+    selected_second_para = inquirer.prompt(second_para_question).get("second_paragraph", [])[0]
 
     print("selected_hook", selected_hook)
     print("selected_first_para", selected_first_para)

@@ -26,15 +26,16 @@ def compose_description():
         references = ReferenceItems.model_validate(file.read())
 
     # Prepare the options for the inquirer checkbox prompt
-    hook_options = [
-        f"hook: {desc.hook}" for desc in descriptions.high_quality_descriptions
-    ]
-    first_para_options = [
-        f"first_para: {desc.first_paragraph}" for desc in descriptions.high_quality_descriptions
-    ]
-    second_para_options = [
-        f"second_para: {desc.second_paragraph}" for desc in descriptions.high_quality_descriptions
-    ]
+def compose_description():
+
+    config_file: IdtConfig = load_config()
+
+    with open(config_file.yt.description_file_path, "r") as file:
+        descriptions = HighQualityDescriptions.model_validate(file.read())
+
+    hook_options = [desc.hook for desc in descriptions.high_quality_descriptions]
+    first_para_options = [desc.first_paragraph for desc in descriptions.high_quality_descriptions]
+    second_para_options = [desc.second_paragraph for desc in descriptions.high_quality_descriptions]
 
     # Create inquirer checkbox prompts for each section of the description
     hook_question = [
@@ -53,9 +54,9 @@ def compose_description():
     selected_second_para = inquirer.prompt(second_para_question)
 
     # Extract the selected descriptions
-    final_hook = selected_hook['hook'][0].split(": ", 1)[1] if selected_hook['hook'] else ""
-    final_first_para = selected_first_para['first_paragraph'][0].split(": ", 1)[1] if selected_first_para['first_paragraph'] else ""
-    final_second_para = selected_second_para['second_paragraph'][0].split(": ", 1)[1] if selected_second_para['second_paragraph'] else ""
+    final_hook = selected_hook['hook'][0] if selected_hook['hook'] else ""
+    final_first_para = selected_first_para['first_paragraph'][0] if selected_first_para['first_paragraph'] else ""
+    final_second_para = selected_second_para['second_paragraph'][0] if selected_second_para['second_paragraph'] else ""
 
     # TODO: Implement the logic to use the selected description parts
     # This could involve writing to a file, returning the values, or further processing

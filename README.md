@@ -11,7 +11,7 @@
 
 
 
-##**** What's left?
+## What's left?
 [] test composers
   [] /final/desc.txt: 
   [] /final/title.txt: 
@@ -21,7 +21,16 @@
 [] productionization
 
 
-
+## New Gen Prompt Command for testing
+```
+poetry run idt yt gen-meta \
+      -f "./mock_yt_content/aud.m4a" \
+      -r "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)" \
+      -rf "- LLM News URL: https://docs.exa.ai/reference/getting-started
+- CrewAI: https://github.com/joaomdmoura/crewAI" \
+      -k "llm agents, apple vision pro, youtube automation" \
+      -tl 60
+```
 
 
 ## Capabilities
@@ -142,6 +151,8 @@ graph LR
 ## Table of Contents
 - [IndyDevTools](#indydevtools)
   - [Principles](#principles)
+  - [What's left?](#whats-left)
+  - [New Gen Prompt Command for testing](#new-gen-prompt-command-for-testing)
   - [Capabilities](#capabilities)
   - [Next](#next)
   - [Production](#production)

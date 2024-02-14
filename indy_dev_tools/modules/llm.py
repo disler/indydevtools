@@ -5,11 +5,7 @@ import sys
 
 def make_cap_refs(prompt: str, refs: Dict[str, str]) -> str:
     """
-    Loop through refs and attach them to the bottom of prompt after \n\n.
-    Upper case the key and then \n\n and then the value.
-    Do the same for each key value pair in refs.
-
-
+    Attach capitalized references to the prompt.
     """
 
     for key, value in refs.items():

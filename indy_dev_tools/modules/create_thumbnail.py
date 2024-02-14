@@ -14,7 +14,7 @@ config: IdtConfig = load_config()
 
 def create_thumbnail_from_generated_prompt(count: int):
 
-    print(f"create_thumbnail_from_generated_prompt()")
+    print(f"create_thumbnail_from_generated_prompt(count={count})")
 
     with open(config.yt.thumbnail_prompt_file_path, "r") as file:
         thumbnail_prompts = HighQualityThumbnailPrompts.model_validate_json(file.read())
@@ -36,11 +36,13 @@ def create_thumbnail_from_generated_prompt(count: int):
 
 def create_thumbnail(count: int, prompt: str):
 
-    print(f"create_thumbnail()")
+    print(f"create_thumbnail(count={count}, prompt={prompt})")
 
     openai.api_key = config.yt.openai_api_key
 
     for i in range(count):
+        image_path = config.yt.make_thumbnail_file_path(i)
+
         response: ImagesResponse = openai.images.generate(
             model="dall-e-3",
             prompt=prompt,
@@ -51,8 +53,6 @@ def create_thumbnail(count: int, prompt: str):
 
         image_data = response.data[0]
         image_url = image_data.url
-
-        image_path = config.yt.make_thumbnail_file_path(i)
 
         with requests.get(image_url, stream=True) as r:
 
@@ -65,7 +65,3 @@ def create_thumbnail(count: int, prompt: str):
                     f.write(chunk)
 
         print(f"Image downloaded to {image_path}")
-
-
-if __name__ == "__main__":
-    create_thumbnail_from_generated_prompt(2)

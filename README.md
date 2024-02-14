@@ -18,7 +18,10 @@
   [] /final/thumbnail.png: 
   [] /final/tags.txt: 
 [] test full process
+[] improve 'help'
+[] revamp readme
 [] productionization
+[] deploy to pypi
 
 
 ## New Gen Prompt Command for testing

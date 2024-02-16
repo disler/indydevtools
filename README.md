@@ -20,7 +20,7 @@
         - [`yt titles` Commands](#yt-titles-commands)
         - [`yt script` Commands](#yt-script-commands)
         - [`yt desc` Commands](#yt-desc-commands)
-        - [`yt hashtags` Commands](#yt-hashtags-commands)
+        - [`yt tags` Commands](#yt-tags-commands)
         - [`yt refs` Commands](#yt-refs-commands)
         - [`yt thumb` Commands](#yt-thumb-commands)
       - [Application Flow Diagram](#application-flow-diagram)
@@ -118,6 +118,12 @@
 ##### `yt desc` Commands
   - `idt yt desc compose`
     - Compose a description given a completed draft directory.
+    - Inputs
+      - `<config.yt.operating_dir>/draft/descriptions.json`
+      - `<config.yt.operating_dir>/draft/hashtags.json`
+      - `<config.yt.operating_dir>/draft/references.txt` (optional)
+    - Outputs
+      - The finalized description ready for youtube in `<config.yt.operating_dir>/final/description.txt`
   - `idt yt desc create -s <script_file> -r? <rough_draft_title> -c? <count> -k? <seo_keywords>`
     - Create a new description for a video.
     - Inputs
@@ -129,7 +135,7 @@
       - A file with the generated descriptions in `<config.yt.operating_dir>/drafts/descriptions.json`
   - `idt yt desc iterate <prompt> <description>`
     - Iterate over the description to improve it. (Note: This command is currently not implemented.)
-##### `yt hashtags` Commands
+##### `yt tags` Commands
 ##### `yt refs` Commands
 ##### `yt thumb` Commands
 
@@ -174,6 +180,7 @@ yt:
 
 
 ## Improvements
+- [] Add support for Gemini models
 - [] Create 'Trending' agents to find topics that are trending based on a few keywords
   - `idt yt trending -k <keywords> -n <number of results>`
 - [] Create SEO Keyword Agent that can generate SEO keywords for a video based on a topic or the script
@@ -182,6 +189,8 @@ yt:
   - https://chat.openai.com/c/d2ae52f4-0706-4cec-b047-3364bea3bd05
 - [] Add 'tone' to description to reduce buzzwordyness
 - [] Implement `thumb iterate` to improve an image
+- [] Implement `desc iterate` to improve a description
+- [] Implement `titles iterate` to improve a description
 
 
 

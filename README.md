@@ -76,12 +76,12 @@
     - Outputs
       - A file with the generated titles in `<config.yt.operating_dir>/drafts/titles.json`
 ##### `yt script` Commands
-  - `idt yt script transcribe -f <video_file> -j? <create_json_file> -s? <duration_limit_in_sec>`
+  - `idt yt script transcribe --file <video_file> --json? <create_json_file> --seconds? <duration_limit_in_sec>`
     - Transcribe the audio of a video file into text.
     - Inputs
-      - `-f`: The path to the video file to transcribe.
-      - `-j` (optional, default `False`): Create a JSON file with the transcript.
-      - `-s` (optional): The maximum number of seconds of the video to process.
+      - `--file`: The path to the video file to transcribe.
+      - `--json` (optional, default `False`): Create an additional JSON file of the transcript with segments and word timestamps.
+      - `--seconds` (optional, default `120`): The maximum seconds to process.
     - Outputs
       - A transcript of the video's audio. If `-j` is used, a JSON file with the transcript will be created in the `<config.yt.operating_dir>/transcripts` directory.
 ##### `yt desc` Commands

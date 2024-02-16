@@ -1,21 +1,43 @@
 # IndyDevTools
-> An Agentic Engineering toolbox for developers powered by LLM Agents to solve problems autonomously.
+> An Opinionated Agentic Engineering toolbox for developers powered by LLM Agents to solve problems autonomously.
 >
 > Applications: 
 >   - Youtube Metadata Generation
 
 ## Principles
-1. > USE THE RIGHT TOOL (AGENT) FOR THE JOB
-2. > EVERYTHING IS A FUNCTION
-3. > GREAT QUESTIONS YIELD GREAT ANSWERS
-4. > CREATE REUSABLE BUILDING BLOCKS
+> Principles drive decisions, decisions drive actions, actions drive results.
+> Understanding the principles behind a tool will help you understand how to use it, and how to use it effectively.
 
-## Setup
+### > USE THE RIGHT TOOL (AGENT) FOR THE JOB
+- Every tool in this toolbox consists of one or more agents designed to solve a specific set of problems.
+- Agent > Code > Manual Input
+- CRUD/2 -> Prefer Create, Read over Update, Delete when using AI Agents
+
+### > EVERYTHING IS A FUNCTION
+- Every tool in this toolbox is a function that takes inputs and returns outputs.
+- Every function can be called on it's own in isolation, or used in combination with other functions to create a more complex process.
+- By treating every critical unit of code as a function, we can create a library of reusable building blocks that can be used to solve many problems.
+
+### > GREAT QUESTIONS YIELD GREAT ANSWERS
+- At the core of every product, there is a question that it attempts to answer.
+- The quality of the answer is directly proportional to the quality of the question.
+- IndyDevTools attempts to answer the question: **"What's the best way to build multi-agent systems that can solve problems autonomously on my behalf?"**
+- The harsh truth is that the answer to your question is buried in questions, experiments, failed attempts, and iterations. IndyDevTools is an ongoing experiment to answer the question of how to build multi-agent systems that can solve problems autonomously on your behalf.
+
+### > CREATE REUSABLE BUILDING BLOCKS
+- In the age of AI where code, data, and models are becoming a commodity, the most valuable thing you can create is a reusable building block that can be used to solve many problems.
+- Build small, composable, and reusable functions that can be used together, or only one at a time.
+
+## Tools
+### Youtube Metadata Generation (`idt yt`)
+- This tool generates the metadata for a youtube video.
+
+#### Get Started
 1. Install IndyDevTools
     ```bash
     pip install indydevtools
     ```
-2. Create the configuration file
+2. View the configuration file
     ```bash
     idt yt config
     ```
@@ -36,10 +58,9 @@
     ```bash
     idt yt gen-meta-auto
     ```
-7. See [Commands](#commands) for more information
+7. See [Commands](#yt-commands) for more information
 
-## Commands
-### Youtube Metadata Generation (`idt yt`)
+#### `yt` Commands
   - `idt yt --help` 
     - view all available commands
   - `idt yt config`
@@ -55,103 +76,7 @@
       - A file with the generated titles in `<config.yt.operating_dir>/drafts/titles.json`
   - qqq
 
-****
-## What's left?
-- [] add 'requires' errors for commands that require draft/* file to already exist. 
-- [] test flow
-- [] revamp readme, with clean simple setup guide (talk about dumping config file to change base search dir)
-- [] productionization
-- [] deploy to pypi
-
-
-## New Gen Prompt Command for testing
-```
-poetry run idt yt gen-meta \
-      -f "./mock_yt_content/aud.m4a" \
-      -r "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)" \
-      -rf "- LLM News URL: https://docs.exa.ai/reference/getting-started
-- CrewAI: https://github.com/joaomdmoura/crewAI" \
-      -k "llm agents, apple vision pro, youtube automation" \
-      -tl 60
-```
-
-
-## Capabilities
-- Generate Metadata
-  - `idt yt gen-meta -f <video_file> -t <rough_draft_title> -k <seo_keywords> -p <thumbnail_prompt>`
-    - `-f`: The file to transcribe
-    - `-t`: The rough draft title
-    - `-tp`: The thumbnail prompt
-    - `-k` (optional): The SEO keywords
-  - Cmd
-    ```bash
-    poetry run idt yt gen-meta \
-      -f "./mock_yt_content/aud.m4a" \
-      -r "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)" \
-      -tp "An engineer of the future is surrounded by transparent windows, they wear a headset and are coding on a transparent screen. They're surrounded by AI agents that are doing the work for them. Use dark colors, green light and yellow light as primary colors." \
-      -k "llm agents, apple vision pro, youtube automation"
-    ```
-- Transcription
-  - `idt yt script transcribe -f <video_file | audio_file> -s <maximum seconds to transcribe> -j`
-    - `-f`: The file to transcribe
-    - `-s` (optional): The maximum number of seconds to transcribe
-    - `-j` (optional): Create a .json file with the transcription, segments, and words
-  - `poetry run idt yt script transcribe -f "./mock_yt_content/aud.m4a" -s 60 -j`
-
-- Titles
-  - `idt yt titles create -r <rough_draft_title> -s <script_file.txt>`
-    - `-r`: The rough draft title
-    - `-s` (optional): The script file to use
-    - `-n` (optional, default `1`): The number of titles to generate
-  - `poetry run idt yt titles create -r "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)" -s "./mock_yt_content/script_aud.txt"`
-- Descriptions
-  - `idt yt desc create -s <script_file.txt> -r <rough_draft_title> -k <seo_keywords> -c <count>`
-    - `-s`: The script file to use
-    - `-r` (optional): The rough draft title
-    - `-k` (optional): The SEO keywords
-    - `-c` (optional, default `1`): The number of descriptions to generate
-  - `poetry run idt yt desc create -s "./mock_yt_content/script_aud.txt" -r "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)" -k "web development, HTML, CSS" -c 3`
-  - `poetry run idt yt desc create -s "./mock_yt_content/script_aud.txt" -r "Using Apple Vision Pro to code AI Agent powered Youtube Automation Tooling (LLM Proof Of Concept)" -c 3`
-- Thumbnails
-  - `idt yt thumb create -p <prompt> -c <count>`
-    - `-p`: The prompt to use
-    - `-c` (optional, default `1`): The number of thumbnails to generate
-  - `poetry run idt yt thumb create -p "An engineer of the future is surrounded by transparent windows, they wear a headset and are coding on a transparent screen. They're surrounded by AI agents that are doing the work for them. Use dark colors, green light and yellow light as primary colors." -c 3`
-- Resize
-  - `idt yt thumb rescale -f <image file path>`
-
-
-
-## Production
-[] Add seo keywords 
-[] Add a 'research' step autogen agent flow that creates 'key themes takeaways' piped into a json gpt4 call to gather results
-[] Create SEO Research Agent `idt yt script research -t <topics> -n <number of results>`
-[] Add top level 'generate-metadata' point at file and let it run end to end
-[] Add logging so we can see where the log is coming from (what file + function)
-  - https://chat.openai.com/c/d2ae52f4-0706-4cec-b047-3364bea3bd05
-[] Add 'tone' to description to reduce buzzwordyness
-[] Revamp flow graph to be simpler 
-  [] we dont need script for everything
-  [] drop cli args
-  [] add end states -> description -> 'final review' -> video upload
-[] Implement `thumb iterate` to improve on an image
-[] Versions directory
-
-
-
-
-What's we need
--> multi-agent tool
--> explicit use of principles
-  - everything is a function
-  - use the right tool (agent) for the job
-  - agent > code > manual input
-  - follow crud in order -> create, read > update, delete
-
-
-
-
-
+#### Application Flow Diagram
 
 ```mermaid CURRENT GRAPH
 graph LR
@@ -175,24 +100,53 @@ graph LR
     L --> M[Upload to YouTube]
 ```
 
+****
+
+## The Configuration File
+> The configuration file is the primary source of truth for all the tools in the IndyDevTools suite.
+
+### Structure
+```yaml
+yt:
+  config_file_path: <path to this config file for you to open and edit>
+  openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
+  operating_dir: <Path to your rendered video/audio, also the output path where the assets that will be generated>
+```
+
+
+
+
+## Improvements
+[] Create 'Trending' agents to find topics that are trending based on a few keywords
+  - `idt yt trending -k <keywords> -n <number of results>`
+[] Create SEO Keyword Agent that can generate SEO keywords for a video based on a topic or the script
+  - `idt yt script research -t <topic> -s <script file> -n <number of results>`
+[] Add logging so we can see where the log is coming from (what file + function)
+  - https://chat.openai.com/c/d2ae52f4-0706-4cec-b047-3364bea3bd05
+[] Add 'tone' to description to reduce buzzwordyness
+[] Implement `thumb iterate` to improve an image
+
+
 
 ## Table of Contents
 - [IndyDevTools](#indydevtools)
   - [Principles](#principles)
-  - [Setup](#setup)
-  - [Commands](#commands)
+    - [\> USE THE RIGHT TOOL (AGENT) FOR THE JOB](#-use-the-right-tool-agent-for-the-job)
+    - [\> EVERYTHING IS A FUNCTION](#-everything-is-a-function)
+    - [\> GREAT QUESTIONS YIELD GREAT ANSWERS](#-great-questions-yield-great-answers)
+    - [\> CREATE REUSABLE BUILDING BLOCKS](#-create-reusable-building-blocks)
+  - [Tools](#tools)
     - [Youtube Metadata Generation (`idt yt`)](#youtube-metadata-generation-idt-yt)
-  - [What's left?](#whats-left)
-  - [New Gen Prompt Command for testing](#new-gen-prompt-command-for-testing)
-  - [Capabilities](#capabilities)
-  - [Production](#production)
+      - [Get Started](#get-started)
+      - [`yt` Commands](#yt-commands)
+      - [Application Flow Diagram](#application-flow-diagram)
+  - [The Configuration File](#the-configuration-file)
+    - [Structure](#structure)
+  - [Improvements](#improvements)
   - [Table of Contents](#table-of-contents)
   - [Guidelines \& Sub Principles](#guidelines--sub-principles)
   - [*Start From Gold* CLI API](#start-from-gold-cli-api)
     - [Youtube Generate Metadata `idt yt generate-meta`](#youtube-generate-metadata-idt-yt-generate-meta)
-  - [The Configuration File](#the-configuration-file)
-    - [Structure](#structure)
-  - [Goal \& Architecture](#goal--architecture)
   - [Questions to answer](#questions-to-answer)
   - [Local Dev Commands (excluded from dist)](#local-dev-commands-excluded-from-dist)
   - [Resources](#resources)
@@ -256,63 +210,10 @@ graph LR
     - SEO keyword generator(seo_keywords,) -> `seo_keywords`
 
 
-
-
-
-## The Configuration File
-> The configuration file is the single source of truth for all the tools in the IndyDevTools suite.
->
-> Located `~/.indydevtools/config.yml`
-
-### Structure
-```yaml
-yt:
-  config_file_path: <path to this config file for you to open and edit>
-  openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
-  operating_dir: <Path to your rendered video/audio, also the output path where the assets that will be generated>
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Goal & Architecture
-- Goal
-    - Reduce time spent building YT Meta
-        - Title
-        - Thumbnail
-        - Description
-        - Resources
-        - Chapters
-        - SEO Keywords???
-    - Beginning of IndyDevTools.
-    - Well tested?
-- Architecture
-    - single yml file for configuration
-    - a simple step by step cli that asks for:
-        - rough draft title
-        - seo
-        - location of video
-    - and that’s it - you can the ‘edit’ the configuration file or choose to start generating immediately
-
-
-
 ## Questions to answer
 - Using the open-core business model - how can I separate the paid version from the free version without leaking pro functionality?
 
 ## Local Dev Commands (excluded from dist)
-- run locally
-  - `poetry run idt`
-- test versions
-  - `poetry run python scripts/run_tox.py`
 - publish to test pypi
   - `poetry run python scripts/publish_testpypi.py`
 - publish to pypi

@@ -325,7 +325,13 @@ yt:
   - `pip install indydevtools`
 
 ## Resources
-- Chat with async + parralelzation + threading
+- IndyDevTools PyPi
+  - https://pypi.org/project/indydevtools/
+- IndyDevTools TestPyPi
+  - https://test.pypi.org/project/indydevtools/
+- IndyDevTools Repo
+  - https://github.com/disler/indydevtools
+- Chat with async + parallelization + threading
   - https://chat.openai.com/c/73d1859d-fb3a-430e-9e04-be68b4d8a7bd
 - Typer Docs For Multi Sub Commands
   - https://typer.tiangolo.com/tutorial/subcommands/add-typer/

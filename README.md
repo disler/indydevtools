@@ -3,8 +3,9 @@
 >
 > Applications: 
 >   - Youtube Metadata Generation
-
-![IndyDevTools Logo](/imgs/indydevtools.png)
+<p align="center">
+  <img src="/imgs/indydevtools.png" alt="IndyDevTools Logo" width="1280"/>
+</p>
 
 ## Table of Contents
 - [IndyDevTools](#indydevtools)

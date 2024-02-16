@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "indydevtools"
-version = "0.1.5"
+version = "0.1.7"
 description = "An Opinionated Agentic Engineering toolbox for developers powered by LLM Agents to solve problems autonomously."
 authors = ["IndyDevDan <agentic@indydevdan.com>"]
 readme = "README.md"

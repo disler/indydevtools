@@ -65,6 +65,7 @@
     - view all available commands
   - `idt yt config`
     - Dump the configuration file to the console, creates the file if it doesn't exist
+##### `yt titles` Commands
   - `idt yt titles create -r <rough_draft_title> -s? <script_file.txt> -c? <count> -k? <seo_keywords>`
     - Generate a title for a youtube video
     - Inputs
@@ -74,7 +75,11 @@
       - `-k` (optional): The SEO keywords
     - Outputs
       - A file with the generated titles in `<config.yt.operating_dir>/drafts/titles.json`
-  - qqq
+##### `yt script` Commands
+##### `yt desc` Commands
+##### `yt hashtags` Commands
+##### `yt refs` Commands
+##### `yt thumb` Commands
 
 #### Application Flow Diagram
 
@@ -139,6 +144,12 @@ yt:
     - [Youtube Metadata Generation (`idt yt`)](#youtube-metadata-generation-idt-yt)
       - [Get Started](#get-started)
       - [`yt` Commands](#yt-commands)
+        - [`yt titles` Commands](#yt-titles-commands)
+        - [`yt script` Commands](#yt-script-commands)
+        - [`yt desc` Commands](#yt-desc-commands)
+        - [`yt hashtags` Commands](#yt-hashtags-commands)
+        - [`yt refs` Commands](#yt-refs-commands)
+        - [`yt thumb` Commands](#yt-thumb-commands)
       - [Application Flow Diagram](#application-flow-diagram)
   - [The Configuration File](#the-configuration-file)
     - [Structure](#structure)

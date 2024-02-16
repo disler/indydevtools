@@ -74,7 +74,23 @@
       - `-k` (optional): The SEO keywords
     - Outputs
       - A file with the generated titles in `<config.yt.operating_dir>/drafts/titles.json`
-  - qqq
+  - `idt yt titles iterate -t <title_id> -i <iterations>`
+    - Improve a title for a youtube video
+    - Inputs
+      - `-t`: The ID of the title to iterate on
+      - `-i` (optional, default `1`): The number of iterations to perform
+    - Outputs
+      - A file with the improved title in `<config.yt.operating_dir>/drafts/titles.json`
+  - `idt yt titles finalize -t <title_id>`
+    - Finalize a title for a youtube video
+    - Inputs
+      - `-t`: The ID of the title to finalize
+    - Outputs
+      - The finalized title is marked as ready in `<config.yt.operating_dir>/drafts/titles.json`
+  - `idt yt titles list`
+    - List all generated titles for a youtube video
+    - Outputs
+      - A list of all titles with their IDs and status in `<config.yt.operating_dir>/drafts/titles.json`
 
 #### Application Flow Diagram
 

@@ -4,6 +4,37 @@
 > Applications: 
 >   - Youtube Metadata Generation
 
+
+## Table of Contents
+- [IndyDevTools](#indydevtools)
+  - [Table of Contents](#table-of-contents)
+  - [Principles](#principles)
+    - [\> USE THE RIGHT TOOL (AGENT) FOR THE JOB](#-use-the-right-tool-agent-for-the-job)
+    - [\> EVERYTHING IS A FUNCTION](#-everything-is-a-function)
+    - [\> GREAT QUESTIONS YIELD GREAT ANSWERS](#-great-questions-yield-great-answers)
+    - [\> CREATE REUSABLE BUILDING BLOCKS](#-create-reusable-building-blocks)
+  - [Tools](#tools)
+    - [Youtube Metadata Generation (`idt yt`)](#youtube-metadata-generation-idt-yt)
+      - [Get Started](#get-started)
+      - [`yt` Commands](#yt-commands)
+        - [`yt titles` Commands](#yt-titles-commands)
+        - [`yt script` Commands](#yt-script-commands)
+        - [`yt desc` Commands](#yt-desc-commands)
+        - [`yt hashtags` Commands](#yt-hashtags-commands)
+        - [`yt refs` Commands](#yt-refs-commands)
+        - [`yt thumb` Commands](#yt-thumb-commands)
+      - [Application Flow Diagram](#application-flow-diagram)
+  - [The Configuration File](#the-configuration-file)
+    - [Structure](#structure)
+  - [Improvements](#improvements)
+  - [Guidelines \& Sub Principles](#guidelines--sub-principles)
+  - [*Start From Gold* CLI API](#start-from-gold-cli-api)
+    - [Youtube Generate Metadata `idt yt generate-meta`](#youtube-generate-metadata-idt-yt-generate-meta)
+  - [Questions to answer](#questions-to-answer)
+  - [Local Dev Commands (excluded from dist)](#local-dev-commands-excluded-from-dist)
+  - [Resources](#resources)
+
+
 ## Principles
 > Principles drive decisions, decisions drive actions, actions drive results.
 > Understanding the principles behind a tool will help you understand how to use it, and how to use it effectively.
@@ -130,45 +161,16 @@ yt:
 
 
 ## Improvements
-[] Create 'Trending' agents to find topics that are trending based on a few keywords
+- [] Create 'Trending' agents to find topics that are trending based on a few keywords
   - `idt yt trending -k <keywords> -n <number of results>`
-[] Create SEO Keyword Agent that can generate SEO keywords for a video based on a topic or the script
+- [] Create SEO Keyword Agent that can generate SEO keywords for a video based on a topic or the script
   - `idt yt script research -t <topic> -s <script file> -n <number of results>`
-[] Add logging so we can see where the log is coming from (what file + function)
+- [] Add logging so we can see where the log is coming from (what file + function)
   - https://chat.openai.com/c/d2ae52f4-0706-4cec-b047-3364bea3bd05
-[] Add 'tone' to description to reduce buzzwordyness
-[] Implement `thumb iterate` to improve an image
+- [] Add 'tone' to description to reduce buzzwordyness
+- [] Implement `thumb iterate` to improve an image
 
 
-
-## Table of Contents
-- [IndyDevTools](#indydevtools)
-  - [Principles](#principles)
-    - [\> USE THE RIGHT TOOL (AGENT) FOR THE JOB](#-use-the-right-tool-agent-for-the-job)
-    - [\> EVERYTHING IS A FUNCTION](#-everything-is-a-function)
-    - [\> GREAT QUESTIONS YIELD GREAT ANSWERS](#-great-questions-yield-great-answers)
-    - [\> CREATE REUSABLE BUILDING BLOCKS](#-create-reusable-building-blocks)
-  - [Tools](#tools)
-    - [Youtube Metadata Generation (`idt yt`)](#youtube-metadata-generation-idt-yt)
-      - [Get Started](#get-started)
-      - [`yt` Commands](#yt-commands)
-        - [`yt titles` Commands](#yt-titles-commands)
-        - [`yt script` Commands](#yt-script-commands)
-        - [`yt desc` Commands](#yt-desc-commands)
-        - [`yt hashtags` Commands](#yt-hashtags-commands)
-        - [`yt refs` Commands](#yt-refs-commands)
-        - [`yt thumb` Commands](#yt-thumb-commands)
-      - [Application Flow Diagram](#application-flow-diagram)
-  - [The Configuration File](#the-configuration-file)
-    - [Structure](#structure)
-  - [Improvements](#improvements)
-  - [Table of Contents](#table-of-contents)
-  - [Guidelines \& Sub Principles](#guidelines--sub-principles)
-  - [*Start From Gold* CLI API](#start-from-gold-cli-api)
-    - [Youtube Generate Metadata `idt yt generate-meta`](#youtube-generate-metadata-idt-yt-generate-meta)
-  - [Questions to answer](#questions-to-answer)
-  - [Local Dev Commands (excluded from dist)](#local-dev-commands-excluded-from-dist)
-  - [Resources](#resources)
 
 ## Guidelines & Sub Principles
 - **Heavy Agentic Engineering Bias**

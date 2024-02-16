@@ -4,6 +4,7 @@
 > Applications: 
 >   - Youtube Metadata Generation
 
+![IndyDevTools Logo](/imgs/indydevtools.png)
 
 ## Table of Contents
 - [IndyDevTools](#indydevtools)
@@ -15,7 +16,7 @@
     - [\> CREATE REUSABLE BUILDING BLOCKS](#-create-reusable-building-blocks)
     - [\> Prompts (Agents) are THE new fundamental unit of programming](#-prompts-agents-are-the-new-fundamental-unit-of-programming)
   - [Tools](#tools)
-    - [📹 Youtube Metadata Generation (`idt yt`)](#-youtube-metadata-generation-idt-yt)
+    - [📹 Multi Agent Youtube Metadata Generation (`idt yt`)](#-multi-agent-youtube-metadata-generation-idt-yt)
       - [Use case](#use-case)
       - [Get Started](#get-started)
       - [`yt` Commands](#yt-commands)
@@ -29,8 +30,6 @@
       - [`idt yt` Improvements / What's Next](#idt-yt-improvements--whats-next)
   - [The Configuration File](#the-configuration-file)
     - [Structure](#structure)
-  - [Guidelines \& Sub Principles](#guidelines--sub-principles)
-  - [Questions to answer](#questions-to-answer)
   - [Developer Commands](#developer-commands)
     - [Deploy](#deploy)
     - [Install](#install)
@@ -67,7 +66,7 @@
 - They should be treated with the same level of respect (as time goes on, even more) and care as any other fundamental unit of programming.
 
 ## Tools
-### 📹 Youtube Metadata Generation (`idt yt`)
+### 📹 Multi Agent Youtube Metadata Generation (`idt yt`)
 - This tool generates the metadata for a youtube video.
 
 #### Use case
@@ -306,36 +305,8 @@ Q --> S
 yt:
   config_file_path: <path to this config file for you to open and edit>
   openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
-  operating_dir: <Path to your rendered video/audio, also the output path where the assets that will be generated>
+  operating_dir: <Path to your rendered video/audio, also the output path where the /draft and /final assets that will be generated>
 ```
-
-
-## Guidelines & Sub Principles
-- **Heavy Agentic Engineering Bias**
-  - Every tool asks and answers the question: *how can AI agents do this for me?*
-  - Every tool utilizes an intuitive, step by step CLI that asks for the minimum amount of information to get started.
-  - Every tool in this toolbox is an app that creates on your behalf.
-  - Every tool will boost your productivity by utilize great design and the incredible generation abilities of LLMs.
-  - Every tool is powered by LLM technology.
-- **Do one thing and do it well**
-  - Every function and cli command will do one thing and do it well.
-  - Every function is composable and has concrete inputs and outputs for use in different contexts.
-- **Simple, single configuration file**
-  - One config file to control all the tools.
-- **Many agentic tools, one top level command**
-  - Every user will have a single command to run all the tools.
-- **Best CLI documentation ever**
-  - Visit a single, simple, agent controlled and generated website that has all the documentation for all the tools.
-- **Open-Core Business Model**
-  - Free Version
-    - Open Source
-    - Limited Features
-  - Paid Version
-    - Closed Source
-    - Full Features
-
-## Questions to answer
-- Using the open-core business model - how can I separate the paid version from the free version without leaking pro functionality?
 
 ## Developer Commands
 (deploy, publish)

@@ -1,3 +1,4 @@
+import os
 from indy_dev_tools.models import (
     HashTagItems,
     HighQualityDescriptions,
@@ -23,9 +24,13 @@ def compose_description():
     with open(config_file.yt.hashtags_file_path, "r") as file:
         hashtags = HashTagItems.model_validate_json(file.read())
 
-    # references
-    with open(config_file.yt.formatted_references_file_path, "r") as file:
-        references = file.read()
+    # references - see if reference file exists first
+    if not os.path.exists(config_file.yt.formatted_references_file_path):
+        print("No references found.")
+        references = ""
+    else:
+        with open(config_file.yt.formatted_references_file_path, "r") as file:
+            references = file.read()
 
     hook_options = [desc.hook for desc in descriptions.high_quality_descriptions]
     first_para_options = [
@@ -78,3 +83,5 @@ def compose_description():
     # write the final description to the file
     with open(config_file.yt.final_description_file_path, "w") as file:
         file.write(final_description)
+
+    print(f"Description copied to /final directory.")

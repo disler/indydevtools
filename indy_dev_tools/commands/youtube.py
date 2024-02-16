@@ -50,7 +50,7 @@ def gen_meta_auto(
     ),
 ):
 
-    operating_dir = config_file.yt.output_dir
+    operating_dir = config_file.yt.operating_dir
 
     # Generate the list of audio or video files
     path_to_movie_or_audio_files = get_path_to_files_with_sound(operating_dir)
@@ -92,7 +92,7 @@ def gen_meta_auto(
 
     path_to_audio_or_video = answers.get("file_path")
     rough_draft_title = answers.get("rough_draft_title")
-    references = answers.get("references")
+    references = answers.get("references", "")
     seo_keywords = answers.get("seo_keywords")
     count = int(answers.get("count", 0) or 0)
     skip_transcription = answers.get("skip_transcription", False)

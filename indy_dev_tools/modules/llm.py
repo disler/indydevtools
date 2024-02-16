@@ -63,8 +63,8 @@ Example bash command:
 
 def prompt_image(
     prompt: str,
-    file_path: str,
     openai_key: str,
+    file_path: str,
     model: str = "dall-e-3",
     size: str = "1792x1024",
     quality: str = "standard",

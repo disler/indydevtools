@@ -13,7 +13,7 @@ load_dotenv()
 
 # Determine the user data directory using platformdirs
 config_dir = Path(user_data_dir(APP_NAME, APP_AUTHOR))
-output_dir = Path(user_desktop_dir())
+operating_dir = Path(user_desktop_dir())
 config_file_path = config_dir / "config.yml"
 
 # Load the OpenAI API key from environment variables
@@ -22,7 +22,7 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 DEFAULT_CONFIGURATION = IdtConfig(
     yt=IdtYoutube(
         openai_api_key=openai_api_key,
-        output_dir=str(output_dir),
+        operating_dir=str(operating_dir),
         config_file_path=str(config_file_path),
     )
 )
@@ -69,10 +69,11 @@ def load_config() -> IdtConfig:
 
 def generate_directories(yt_config: IdtYoutube):
     """Generates the draft and final directories based on the configuration."""
-    draft_dir = Path(yt_config.output_dir) / yt_config.draft_sub_dir
-    final_dir = Path(yt_config.output_dir) / yt_config.final_sub_dir
+    draft_dir = Path(yt_config.operating_dir) / yt_config.draft_sub_dir
+    final_dir = Path(yt_config.operating_dir) / yt_config.final_sub_dir
     draft_dir.mkdir(parents=True, exist_ok=True)
     final_dir.mkdir(parents=True, exist_ok=True)
+
 
 def write_config(data: IdtConfig):
     """Writes (or updates) the YAML configuration file."""

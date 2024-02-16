@@ -5,7 +5,9 @@ from indy_dev_tools.modules.create_title import create_title
 app = typer.Typer()
 
 
-@app.command(help="Compose the final title for a video.")
+@app.command(
+    help="Select titles from 'draft/titles.json' for the final title for a video."
+)
 def compose():
     compose_titles()
 

@@ -36,6 +36,8 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
             input_data.rough_draft_title,
             input_data.seo_keywords,
         )
+    else:
+        print("No references provided.")
 
     # Generate titles
     create_title.create_title(

@@ -88,7 +88,6 @@ def create_title(
         instructions=ULTIMATE_YT_CREATOR_INSTRUCTION,
     )
 
-    # dump response to file using config.yt.output_dir
     if config.yt.title_file_path:
         with open(config.yt.title_file_path, "w") as file:
             print(f"Writing response to {config.yt.title_file_path}")

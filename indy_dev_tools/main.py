@@ -15,11 +15,9 @@ def main():
         typer.echo("No OpenAI API key configured.")
         raise typer.Exit(code=1)
 
-    if config.yt.output_dir is None:
+    if config.yt.operating_dir is None:
         typer.echo("No output directory configured.")
         raise typer.Exit(code=1)
-
-    print(f"Loaded config")
 
     app()
 

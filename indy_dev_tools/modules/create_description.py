@@ -64,7 +64,6 @@ def create_description(
         instructions="Create a compelling video description",
     )
 
-    # dump response to file using config.yt.output_dir
     if config.yt.description_file_path:
         with open(config.yt.description_file_path, "w") as file:
             print(f"Writing response to {config.yt.description_file_path}")

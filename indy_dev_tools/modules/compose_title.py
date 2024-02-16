@@ -29,3 +29,5 @@ def compose_titles():
 
     with open(config_file.yt.final_title_file_path, "w") as file:
         file.write(final_titles)
+
+    print(f"Title copied to /final directory.")

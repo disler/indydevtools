@@ -65,7 +65,7 @@ def create(
     ),
 ):
     print(f"Creating {count} image(s) with prompt: {prompt}")
-    create_thumbnail(prompt, count)
+    create_thumbnail(count, prompt)
 
 
 @app.command(

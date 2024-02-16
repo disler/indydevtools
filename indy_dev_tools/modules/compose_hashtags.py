@@ -17,3 +17,5 @@ def compose_hashtags():
 
     with open(config_file.yt.final_hashtags_file_path, "w") as file:
         file.write(hashtags.hashtags)
+
+    print(f"Hashtags copied to /final directory.")

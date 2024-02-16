@@ -1,26 +1,68 @@
 # IndyDevTools
 > An Agentic Engineering toolbox for developers powered by LLM Agents to solve problems autonomously.
 >
-> Applications: Youtube Metadata Generation
+> Applications: 
+>   - Youtube Metadata Generation
 
 ## Principles
 1. > USE THE RIGHT TOOL (AGENT) FOR THE JOB
 2. > EVERYTHING IS A FUNCTION
 3. > GREAT QUESTIONS YIELD GREAT ANSWERS
-4. > Create reusable building blocks
+4. > CREATE REUSABLE BUILDING BLOCKS
 
+## Setup
+1. Install IndyDevTools
+    ```bash
+    pip install indydevtools
+    ```
+2. Create the configuration file
+    ```bash
+    idt yt config
+    ```
+    - Should print something like
+      ```yml
+      yt:
+        config_file_path: <path to this config file for you to open and edit>
+        openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
+        operating_dir: <Path to your rendered video/audio, also the output path where the assets that will be generated>
+      ```
+3. Edit the configuration file to add your openai key and path to your audio/video files
+4. Run a test command
+    ```bash
+    idt yt thumb create -p "bird writing code"
+    ```
+5. Make sure the thumbnail was created in the `<config.yt.operating_dir>/drafts` directory
+6. Run the full metadata generation command
+    ```bash
+    idt yt gen-meta-auto
+    ```
+7. See [Commands](#commands) for more information
 
+## Commands
+### Youtube Metadata Generation (`idt yt`)
+  - `idt yt --help` 
+    - view all available commands
+  - `idt yt config`
+    - Dump the configuration file to the console, creates the file if it doesn't exist
+  - `idt yt titles create -r <rough_draft_title> -s? <script_file.txt> -c? <count> -k? <seo_keywords>`
+    - Generate a title for a youtube video
+    - Inputs
+      - `-r`: The rough draft title
+      - `-s` (optional): The script file to use
+      - `-c` (optional, default `1`): The number of titles to generate
+      - `-k` (optional): The SEO keywords
+    - Outputs
+      - A file with the generated titles in `<config.yt.operating_dir>/drafts/titles.json`
+  - qqq
 
+****
 ## What's left?
-[] test flow
-[] revamp readme, with clean simple setup guide (talk about dumping config file to change base search dir)
-[] productionization
-[] deploy to pypi
+- [] add 'requires' errors for commands that require draft/* file to already exist. 
+- [] test flow
+- [] revamp readme, with clean simple setup guide (talk about dumping config file to change base search dir)
+- [] productionization
+- [] deploy to pypi
 
-
-## Potential Improvements
-- Implement 'iterate' functions to improve on existing titles, description, and thumbnails
-- Solid logging framework
 
 ## New Gen Prompt Command for testing
 ```
@@ -137,8 +179,10 @@ graph LR
 ## Table of Contents
 - [IndyDevTools](#indydevtools)
   - [Principles](#principles)
+  - [Setup](#setup)
+  - [Commands](#commands)
+    - [Youtube Metadata Generation (`idt yt`)](#youtube-metadata-generation-idt-yt)
   - [What's left?](#whats-left)
-  - [Potential Improvements](#potential-improvements)
   - [New Gen Prompt Command for testing](#new-gen-prompt-command-for-testing)
   - [Capabilities](#capabilities)
   - [Production](#production)
@@ -222,18 +266,10 @@ graph LR
 
 ### Structure
 ```yaml
-- idt:
-    - models:
-        - openai:
-            - model: "gpt-4-turbo"
-            - api_key: "sk-1234..."
-- yt:
-    - generate_meta:
-        # Locations to look for newly renderered videos
-        - source_dirs: ["~/Videos", "~/Downloads", "~/Desktop"]
-        # Where to save the generated meta
-        - output_dir: "~/Videos/yt-meta"
-        - 
+yt:
+  config_file_path: <path to this config file for you to open and edit>
+  openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
+  operating_dir: <Path to your rendered video/audio, also the output path where the assets that will be generated>
 ```
 
 
@@ -270,7 +306,7 @@ graph LR
 
 
 ## Questions to answer
-- Using the open-core business model - how can I separate the paid version from the free version without leaking the pro code?
+- Using the open-core business model - how can I separate the paid version from the free version without leaking pro functionality?
 
 ## Local Dev Commands (excluded from dist)
 - run locally

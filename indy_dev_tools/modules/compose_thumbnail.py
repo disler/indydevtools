@@ -37,4 +37,6 @@ def compose_thumbnail():
         final_thumbnail_file_path = os.path.join(final_dir, thumbnail)
         shutil.copyfile(thumbnail_file_path, final_thumbnail_file_path)
 
+    print(f"Thumbnails copied to /final directory.")
+
     pass

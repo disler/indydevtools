@@ -116,6 +116,19 @@
     - Outputs
       - A transcript of the video's audio. If `-j` is used, a JSON file with the transcript will be created in the `<config.yt.operating_dir>/transcripts` directory.
 ##### `yt desc` Commands
+  - `idt yt desc compose`
+    - Compose a description given a completed draft directory.
+  - `idt yt desc create -s <script_file> -r? <rough_draft_title> -c? <count> -k? <seo_keywords>`
+    - Create a new description for a video.
+    - Inputs
+      - `-s`: The path to the script file.
+      - `-r` (optional): The rough draft title of the video.
+      - `-c` (optional, default `3`): The number of descriptions to generate.
+      - `-k` (optional): SEO keywords to be included in the description.
+    - Outputs
+      - A file with the generated descriptions in `<config.yt.operating_dir>/drafts/descriptions.json`
+  - `idt yt desc iterate <prompt> <description>`
+    - Iterate over the description to improve it. (Note: This command is currently not implemented.)
 ##### `yt hashtags` Commands
 ##### `yt refs` Commands
 ##### `yt thumb` Commands

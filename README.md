@@ -159,6 +159,43 @@
     - Outputs
       - Formatted references output to `/draft/references.txt`.
 ##### `yt thumb` Commands
+  - `idt yt thumb compose`
+    - Compose the final thumbnail for a video.
+    - Inputs
+        - `/draft/thumbnail_<count>.png`
+    - Outputs
+        - Finalized `/final/thumbnail.png` thumbnail to use in the video.
+  - `idt yt thumb create_from_prompt -c <count>`
+    - Create thumbnails from a generated prompt.
+    - Inputs
+        - `-c`: The number of thumbnails to create from a selected prompt.
+    - Outputs
+        - `/drafts/thumbnail_<count>.png` thumbnail drafts to potentially use in the video.
+  - `idt yt thumb create_prompt -r <rough_draft_title> -k <seo_keywords> -c <count> -a <art_style>`
+    - Create a prompt for generating a thumbnail.
+    - Inputs
+        - `-r`: The rough draft title of the video.
+        - `-k`: The SEO keywords for the video.
+        - `-c`: The number of thumbnail prompts to create.
+        - `-a`: The art style to be used in the thumbnail.
+    - Outputs
+        - `/draft/thumbnail_prompt.json` with the generated thumbnail prompts.
+  - `idt yt thumb create -p <prompt> -c <count>`
+    - Create an image with the specified prompt and download it.
+    - Inputs
+        - `-p`: The prompt to create thumbnail with.
+        - `-c`: The number of thumbnails to create.
+    - Outputs
+        - `/draft/thumbnail_<count>.png` thumbnail drafts to potentially use in the video.
+  - `idt yt thumb rescale -f <image_file_path> -w <width> -h <height> -o <output_file>`
+    - Rescale an image to the specified width and height. Defaults to youtube thumbnail size.
+    - Inputs
+        - `-f`: The path to the input image file.
+        - `-w` (default 1280): The width to rescale the image to.
+        - `-h` (default 720): The height to rescale the image to.
+        - `-o` (default input file path): The path to the output image file.
+    - Outputs
+        - The rescaled image saved to the specified output file.
 
 #### Application Flow Diagram
 

@@ -24,7 +24,9 @@ def create_transcription(
         duration_limit_in_seconds (int, optional): The maximum duration in seconds to process. Defaults to None.
     """
 
-    print(f"create_transcription()")
+    print(
+        f"create_transcription(video_path={video_path}, duration_limit_in_seconds={duration_limit_in_seconds}, create_json_file={create_json_file})"
+    )
 
     model_size = "large-v3"
     # model_size = "medium.en"
@@ -71,9 +73,9 @@ def create_transcription(
         entire_script += text + " "
 
         processed_duration = end
-        if (
-            duration_limit_in_seconds is not None
-            and processed_duration > duration_limit_in_seconds
+
+        if duration_limit_in_seconds is not None and processed_duration > int(
+            duration_limit_in_seconds
         ):
             print(
                 f"Duration limit of {duration_limit_in_seconds} seconds reached. Stopping transcription."

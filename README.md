@@ -31,7 +31,7 @@
     - [Structure](#structure)
   - [Guidelines \& Sub Principles](#guidelines--sub-principles)
   - [Questions to answer](#questions-to-answer)
-  - [Developer Commands (excluded from dist)](#developer-commands-excluded-from-dist)
+  - [Developer Commands](#developer-commands)
     - [Deploy](#deploy)
     - [Install](#install)
   - [Resources](#resources)
@@ -90,7 +90,7 @@
     ```bash
     pip install indydevtools
     ```
-2. View the configuration file
+2. View and initialize the configuration file
     ```bash
     idt yt config
     ```
@@ -101,10 +101,15 @@
         openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
         operating_dir: <Path to your rendered video/audio, also the output path where the assets that will be generated>
       ```
+    - This will create the configuration file if it doesn't exist and the `/drafts` and `/final` directories in the operating directory.
 3. Edit the configuration file to add your openai key and path to your audio/video files
 4. Run a test command
     ```bash
     idt yt thumb create -p "bird writing code"
+    ```
+    or
+    ```bash
+    idt yt titles create -r "Using AI Coding Assistants to code faster than ever"
     ```
 5. Make sure the thumbnail was created in the `<config.yt.operating_dir>/drafts` directory
 6. Run the full metadata generation command
@@ -132,9 +137,9 @@
   - `idt yt script transcribe --file <video_file> --json? <create_json_file> --seconds? <duration_limit_in_sec>`
     - Transcribe the audio of a video file into text.
     - Inputs
-      - `--file`: The path to the video file to transcribe.
-      - `--json` (optional, default `False`): Create an additional JSON file of the transcript with segments and word timestamps.
-      - `--seconds` (optional, default `120`): The maximum seconds to process.
+      - `-f`: The path to the video file to transcribe.
+      - `-j` (optional, default `False`): Create an additional JSON file of the transcript with segments and word timestamps.
+      - `-s` (optional, default `120`): The maximum seconds to process.
     - Outputs
       - A transcript of the video's audio. If `-j` is used, a JSON file with the transcript will be created in the `<config.yt.operating_dir>/transcripts` directory.
 ##### `yt desc` Commands
@@ -332,7 +337,7 @@ yt:
 ## Questions to answer
 - Using the open-core business model - how can I separate the paid version from the free version without leaking pro functionality?
 
-## Developer Commands (excluded from dist)
+## Developer Commands
 (deploy, publish)
 
 ### Deploy

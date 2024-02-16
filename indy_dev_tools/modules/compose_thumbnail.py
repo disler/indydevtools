@@ -19,7 +19,11 @@ def compose_thumbnail():
     final_dir = config_file.yt.final_dir_path
 
     # get thumbnail*.png files
-    thumbnail_files = [f for f in os.listdir(draft_dir) if f.startswith("thumbnail")]
+    thumbnail_files = [
+        f
+        for f in os.listdir(draft_dir)
+        if f.startswith("thumbnail") and f.endswith(".png")
+    ]
 
     # use inquirer to prompt user to select a thumbnail
     thumbnail_question = [

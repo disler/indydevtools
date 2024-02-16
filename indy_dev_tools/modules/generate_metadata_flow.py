@@ -83,3 +83,9 @@ def generate_metadata_flow(input_data: GenerateMetadataInput):
 
     # Compose the final thumbnail from generated assets
     compose_thumbnail.compose_thumbnail()
+
+    final_dir = config_file.yt.final_dir_path
+
+    print(
+        f"🎉 Youtube Metadata Generation Complete 🎉\n\n Open your {final_dir} to view your finalized metadata."
+    )

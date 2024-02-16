@@ -19,8 +19,17 @@ app = typer.Typer()
 config: IdtConfig = load_config()
 
 
-@app.command(help="Compose the final thumbnail for a video.")
+@app.command(
+    help="Compose the final thumbnail for a video. Requires the drafts to be created."
+)
 def compose():
+    """
+    Compose the final thumbnail for a video.
+    - inputs
+        - `/draft/thumbnail_<count>.png`
+    - outputs
+        - Finalized `/final/thumbnail.png` thumbnail to use in the video.
+    """
     compose_thumbnail()
 
 
@@ -33,6 +42,13 @@ def create_from_prompt(
         help="The number of thumbnails to create from a selected prompt.",
     ),
 ):
+    """
+    Create thumbnails from a generated prompt.
+    - inputs
+        - `/draft/thumbnail_prompt.json`
+    - outputs
+        - `/drafts/thumbnail_<count>.png` thumbnail drafts to potentially use in the video.
+    """
     create_thumbnail_from_generated_prompt(count)
 
 
@@ -52,6 +68,15 @@ def create_prompt(
         None, "--art-style", "-a", help="The art style to be used in the thumbnail."
     ),
 ):
+    """
+    Create a prompt for generating a thumbnail.
+    - inputs
+        - `-r`: The rough draft title of the video.
+        - `-k`: The SEO keywords for the video.
+        - `-c`: The number of thumbnail prompts to create.
+        - `-a`: The art style to be used in the thumbnail.
+    - outputs
+        - `/draft/thumbnail_prompt.json` with the generated thumbnail prompts."""
     create_thumbnail_prompt(count, rough_draft_title, seo_keywords, art_style)
 
 
@@ -64,6 +89,14 @@ def create(
         1, "--count", "-c", help="The number of thumbnails to create."
     ),
 ):
+    """
+    Create an image with the specified prompt and download it.
+    - inputs
+        - `-p`: The prompt to create thumbnail with.
+        - `-c`: The number of thumbnails to create.
+    - outputs
+        - `/draft/thumbnail_<count>.png` thumbnail drafts to potentially use in the video.
+    """
     print(f"Creating {count} image(s) with prompt: {prompt}")
     create_thumbnail(count, prompt)
 
@@ -85,6 +118,16 @@ def rescale(
         None, "--output", "-o", help="The path to the output image file."
     ),
 ):
+    """
+    Rescale an image to the specified width and height. Defaults to youtube thumbnail size.
+    - inputs
+        - `-f`: The path to the input image file.
+        - `-w` (default 1280): The width to rescale the image to.
+        - `-h` (default 720): The height to rescale the image to.
+        - `-o` (default input file path): The path to the output image file.
+    - outputs
+        - The rescaled image saved to the specified output file.
+    """
     if not output_file:
         base, ext = os.path.splitext(image_file_path)
         output_file = f"{base}_resized{ext}"

@@ -5,8 +5,19 @@ from indy_dev_tools.modules.compose_description import compose_description
 app = typer.Typer()
 
 
-@app.command(help="Compose a description given a completed draft directory.")
+@app.command(
+    help="Combine various /draft/* assets and generates a finalized /final/description.txt"
+)
 def compose():
+    """
+    - Compose a description given a completed draft directory.
+    - Inputs
+      - `<config.yt.operating_dir>/draft/descriptions.json`
+      - `<config.yt.operating_dir>/draft/hashtags.json`
+      - `<config.yt.operating_dir>/draft/references.txt` (optional)
+    - Outputs
+      - The finalized description ready for youtube in `<config.yt.operating_dir>/final/description.txt`
+    """
     compose_description()
 
 

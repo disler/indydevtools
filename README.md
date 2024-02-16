@@ -13,8 +13,10 @@
     - [\> EVERYTHING IS A FUNCTION](#-everything-is-a-function)
     - [\> GREAT QUESTIONS YIELD GREAT ANSWERS](#-great-questions-yield-great-answers)
     - [\> CREATE REUSABLE BUILDING BLOCKS](#-create-reusable-building-blocks)
+    - [\> Prompts (Agents) are THE new fundamental unit of programming](#-prompts-agents-are-the-new-fundamental-unit-of-programming)
   - [Tools](#tools)
-    - [Youtube Metadata Generation (`idt yt`)](#youtube-metadata-generation-idt-yt)
+    - [📹 Youtube Metadata Generation (`idt yt`)](#-youtube-metadata-generation-idt-yt)
+      - [Use case](#use-case)
       - [Get Started](#get-started)
       - [`yt` Commands](#yt-commands)
         - [`yt titles` Commands](#yt-titles-commands)
@@ -24,12 +26,10 @@
         - [`yt refs` Commands](#yt-refs-commands)
         - [`yt thumb` Commands](#yt-thumb-commands)
       - [Application Flow Diagram](#application-flow-diagram)
+      - [`idt yt` Improvements / What's Next](#idt-yt-improvements--whats-next)
   - [The Configuration File](#the-configuration-file)
     - [Structure](#structure)
-  - [Improvements](#improvements)
   - [Guidelines \& Sub Principles](#guidelines--sub-principles)
-  - [*Start From Gold* CLI API](#start-from-gold-cli-api)
-    - [Youtube Generate Metadata `idt yt generate-meta`](#youtube-generate-metadata-idt-yt-generate-meta)
   - [Questions to answer](#questions-to-answer)
   - [Local Dev Commands (excluded from dist)](#local-dev-commands-excluded-from-dist)
   - [Resources](#resources)
@@ -59,9 +59,29 @@
 - In the age of AI where code, data, and models are becoming a commodity, the most valuable thing you can create is a reusable building block that can be used to solve many problems.
 - Build small, composable, and reusable functions that can be used together, or only one at a time.
 
+### > Prompts (Agents) are THE new fundamental unit of programming
+- Just like loops, variables, and functions, we treat prompts as a fundamental unit of programming.
+- In the age of AI, prompts are the most powerful way to design, build, and engineer systems that can solve problems autonomously on your behalf.
+- They should be treated with the same level of respect (as time goes on, even more) and care as any other fundamental unit of programming.
+
 ## Tools
-### Youtube Metadata Generation (`idt yt`)
+### 📹 Youtube Metadata Generation (`idt yt`)
 - This tool generates the metadata for a youtube video.
+
+#### Use case
+- You've just finished rendering a video to upload to youtube, and you need to generate the metadata for the video. This tool will help you generate the title, description, tags, and thumbnail for the video.
+- It's not meant to be a 100% replacement for your metadata, but it's meant to jump start you to 80% completion.
+- The best command to run is `idt yt gen-meta-auto` which will walk you through key steps to generate the metadata for your video. It will
+  - Transcribe the video
+  - Prompt you for key information like
+    - Rough Draft Title
+    - SEO Keywords
+    - How many iterations of the title, description, and thumbnail you want to generate
+  - Generate multiple titles, descriptions, and thumbnails for you to choose from
+  - The description will combine the hashtags, references, and the description
+  - Generate the final metadata for you to upload to youtube
+  - In addition to outputting these assets to the `final/` directory, it will also output the drafts to the `drafts/` directory so you can review them and make any changes if necessary.
+- The goal is to make it as easy as possible to generate the metadata for your video, and to make it as easy as possible to make changes to the metadata if necessary.
 
 #### Get Started
 1. Install IndyDevTools
@@ -199,45 +219,64 @@
 
 #### Application Flow Diagram
 
-```mermaid CURRENT GRAPH
+```mermaid 
 graph LR
-    Z[Rendered YouTube Video] --> A[Generate Youtube Metadata]
+Z[Rendered YouTube Video]
+
+subgraph Youtube Metadata Automation Tool
+    A[Generate Youtube Metadata]
     B(Transcribe - CODE)
-    B --> C{Script Ready}
-    C --> D(Generate Title - LLM AGENT)
-    C --> E(Generate Description - LLM AGENT)
-    A --> F(Generate Thumbnails - LLM AGENT)
-    F --> G(Resize Thumbnails - CODE)
-    A --> B
-    D -->  H{Title Ready}
-    E --> I{Description Ready}
-    F --> J{Thumbnails Ready}
-    G --> K{Resized Thumbnails Ready}
+    C{Script Ready}
+    D(Generate Title - LLM AGENT)
+    E(Generate Description - LLM AGENT)
+    F(Generate Thumbnails - LLM AGENT)
+    G(Resize Thumbnails - CODE)
+    H{Title Ready}
+    I{Description Ready}
+    K{Resized Thumbnails Ready}
     L[[Review for Upload - MANUAL INPUT]]
-    H --> L
-    I --> L
-    J --> L
-    K --> L
-    L --> M[Upload to YouTube]
+    N(Format References - CODE)
+    O{References Ready}
+    P(Generate Hashtags - LLM AGENT)
+    Q{Hashtags Ready}
+    R(Compose Hashtags - CODE)
+    S(Compose Description - CODE)
+    T(Compose Title - CODE)
+    U(Compose Thumbnail - CODE)
+end
+
+M[Upload to YouTube]
+
+Z --> A
+A --> B
+B --> C
+C --> D
+C --> E
+A --> F
+F --> G
+A --> B
+D --> H
+E --> I
+G --> K
+L --> M
+A --> N
+N --> O
+A --> P
+P --> Q
+O --> S
+R --> L
+S --> L
+T --> L
+U --> L
+I --> S
+H --> T
+K --> U
+Q --> R
+Q --> S
+
 ```
 
-****
-
-## The Configuration File
-> The configuration file is the primary source of truth for all the tools in the IndyDevTools suite.
-
-### Structure
-```yaml
-yt:
-  config_file_path: <path to this config file for you to open and edit>
-  openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
-  operating_dir: <Path to your rendered video/audio, also the output path where the assets that will be generated>
-```
-
-
-
-
-## Improvements
+#### `idt yt` Improvements / What's Next
 - [] Add support for Gemini models
 - [] Create 'Trending' agents to find topics that are trending based on a few keywords
   - `idt yt trending -k <keywords> -n <number of results>`
@@ -249,7 +288,18 @@ yt:
 - [] Implement `thumb iterate` to improve an image
 - [] Implement `desc iterate` to improve a description
 - [] Implement `titles iterate` to improve a description
+- [] Make the code run in parallel, right now it's running one by one, this is inefficient
 
+## The Configuration File
+> The configuration file is the primary source of truth for all the tools in the IndyDevTools suite.
+
+### Structure
+```yaml
+yt:
+  config_file_path: <path to this config file for you to open and edit>
+  openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
+  operating_dir: <Path to your rendered video/audio, also the output path where the assets that will be generated>
+```
 
 
 ## Guidelines & Sub Principles
@@ -275,41 +325,6 @@ yt:
   - Paid Version
     - Closed Source
     - Full Features
-
-## *Start From Gold* CLI API
-
-### Youtube Generate Metadata `idt yt generate-meta`
-- Description
-  - This tool generates the metadata for a youtube video.
-- The simple idea is that, you don't need to give any information if you don't want to. The AI agents will do it for you by transcribing the video and generating the metadata. But the more information you give, the better the AI agents can do their job, and the more processes you can work on in parallel.
-- This process outputs a few files, the premetadata generation and the combined, finalized youtube title, description, and thumbnail.
-- Over each generation, the AI Agents will have more information to work with, and the output will be better and better.
-- Every prompt will optionally include each section of the metadata, and include whatever is available in their respective prompts.
-- The metadata file looks like this.
-  ```yaml
-  title: "The Final Title"
-  description: "The Final Description"
-  thumbnail: "The Final Thumbnail"
-  resources: "The Final Resources"
-  chapters: "The Final Chapters"
-  seo_keywords: "The Final SEO Keywords"
-  ```
-- `idt yt generate-meta`
-  - System Flow
-    - scans every dir in `yt.generate_meta.source_dirs` for new videos (last 24 hours)
-    - prompts user to select video -> `video_file, video_file_title`
-    - prompts user for rough draft title (skippable but highly recommended) -> `rough_draft_title?`
-    - prompts user for SEO keywords comma sep (skippable but highly recommended) -> `seo_keywords?`
-    - prompts user for thumbnail prompt (skippable but highly recommended) -> `thumbnail_prompt?`
-      - with no initial prompt, we only have the `video_file_title` to work with
-    - start transcribing video -> `transcription`
-    - start generating thumbnails -> `thumbnails`
-    - if there's nothing to do the cli will say 'loading... <"transcribing video": go between everything thats happening over a 2s interval>'
-      - We'll probably want a loader here for the transcription that will show a rough percentage of completion based on current position of the transcription and the length of the video - if possible.
-  - AI Agents
-    - Title generator(video_file_title, rough_draft_title) -> `titles`
-    - SEO keyword generator(seo_keywords,) -> `seo_keywords`
-
 
 ## Questions to answer
 - Using the open-core business model - how can I separate the paid version from the free version without leaking pro functionality?

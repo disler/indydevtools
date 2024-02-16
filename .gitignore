@@ -1,5 +1,5 @@
 .aider*
 .venv
-.env*
+.env
 *.pyc
 mock_yt_content

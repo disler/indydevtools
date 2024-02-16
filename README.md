@@ -145,8 +145,8 @@
   - `idt yt tags create --title <rough_draft_title> --keywords <seo_keywords>`
     - Generate hashtags for a video (list of 10 comma sep, and top three).
     - Inputs
-      - `--title`: The rough draft title of the video.
-      - `--keywords`: The SEO keywords for the video.
+      - `--r`: The rough draft title of the video.
+      - `--k`: The SEO keywords for the video.
     - Outputs
       - Tags and top three hashtags for the video output to `/draft/hashtags.json`.
 ##### `yt refs` Commands

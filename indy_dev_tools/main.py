@@ -9,6 +9,9 @@ app.add_typer(youtube.app, name="yt")
 
 
 def main():
+    """
+    Main entry point for the CLI.
+    """
     config: IdtConfig = idt_config.load_config()
 
     if config.yt.openai_api_key is None:

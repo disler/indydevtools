@@ -45,7 +45,7 @@ config: IdtConfig = load_config()
 
 def create_title(
     count: int,
-    draft_title: Optional[str],
+    draft_title: str,
     path_to_script: Optional[str],
     seo_keywords: Optional[str] = None,
 ):
@@ -59,13 +59,12 @@ def create_title(
 
     cap_refs = {}
 
+    print(f"Using draft title: {draft_title}")
+    cap_refs["draft_title"] = draft_title
+
     if seo_keywords:
         print(f"Using SEO keywords: {seo_keywords}")
         cap_refs["seo_keywords"] = seo_keywords
-
-    if draft_title:
-        print(f"Using draft title: {draft_title}")
-        cap_refs["draft_title"] = draft_title
 
     if path_to_script:
         print(f"Using script file: {path_to_script}")
@@ -80,7 +79,7 @@ def create_title(
 
     prompt = make_cap_refs(prompt, cap_refs)
 
-    print(f"Running prompt: {prompt}")
+    # print(f"Running prompt: {prompt}")
 
     response = prompt_json_response(
         prompt,

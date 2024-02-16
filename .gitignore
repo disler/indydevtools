@@ -3,3 +3,4 @@
 .env
 *.pyc
 mock_yt_content
+dist/*

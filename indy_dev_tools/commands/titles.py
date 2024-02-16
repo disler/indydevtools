@@ -15,7 +15,7 @@ def compose():
 @app.command(help="Create a new title for a video.")
 def create(
     rough_draft_title: str = typer.Option(
-        None, "-r", "--rough-draft-title", help="The rough draft title of the video."
+        "", "-r", "--rough-draft-title", help="The rough draft title of the video."
     ),
     script_file: str = typer.Option(
         None,

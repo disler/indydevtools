@@ -56,7 +56,7 @@ def create_description(
 
     prompt = make_cap_refs(prompt, cap_refs)
 
-    print(f"Running prompt: {prompt}")
+    # print(f"Running prompt: {prompt}")
 
     response = prompt_json_response(
         prompt,

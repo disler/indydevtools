@@ -31,7 +31,9 @@
     - [Structure](#structure)
   - [Guidelines \& Sub Principles](#guidelines--sub-principles)
   - [Questions to answer](#questions-to-answer)
-  - [Local Dev Commands (excluded from dist)](#local-dev-commands-excluded-from-dist)
+  - [Developer Commands (excluded from dist)](#developer-commands-excluded-from-dist)
+    - [Deploy](#deploy)
+    - [Install](#install)
   - [Resources](#resources)
 
 
@@ -273,10 +275,10 @@ H --> T
 K --> U
 Q --> R
 Q --> S
-
 ```
 
 #### `idt yt` Improvements / What's Next
+- [] Stream text responses and print them to the console as they come in.
 - [] Add support for Gemini models
 - [] Create 'Trending' agents to find topics that are trending based on a few keywords
   - `idt yt trending -k <keywords> -n <number of results>`
@@ -289,6 +291,7 @@ Q --> S
 - [] Implement `desc iterate` to improve a description
 - [] Implement `titles iterate` to improve a description
 - [] Make the code run in parallel, right now it's running one by one, this is inefficient
+- [] Add a loader to let users know which state the application is in
 
 ## The Configuration File
 > The configuration file is the primary source of truth for all the tools in the IndyDevTools suite.
@@ -329,11 +332,21 @@ yt:
 ## Questions to answer
 - Using the open-core business model - how can I separate the paid version from the free version without leaking pro functionality?
 
-## Local Dev Commands (excluded from dist)
+## Developer Commands (excluded from dist)
+(deploy, publish)
+
+### Deploy
+- Bump version in `pyproject.toml: version`
 - publish to test pypi
   - `poetry run python scripts/publish_testpypi.py`
 - publish to pypi
   - `poetry run python scripts/publish_pypi.py`
+
+### Install
+- Install bleeding edge test version from [TestPyPi](https://test.pypi.org/)
+  - `pip install --upgrade --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple indydevtools`
+- Install public version from [PyPi](https://pypi.org/)
+  - `pip install indydevtools`
 
 ## Resources
 - Chat with async + parralelzation + threading

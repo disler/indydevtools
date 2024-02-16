@@ -150,6 +150,14 @@
     - Outputs
       - Tags and top three hashtags for the video output to `/draft/hashtags.json`.
 ##### `yt refs` Commands
+  - `idt yt refs format -r <references> -t <rough_draft_title> -k? <seo_keywords>`
+    - Format the references for a video.
+    - Inputs
+      - `-r`: The references (links) to format.
+      - `-t`: The rough draft title of the video.
+      - `-k` (optional): The SEO keywords for the video.
+    - Outputs
+      - Formatted references output to `/draft/references.txt`.
 ##### `yt thumb` Commands
 
 #### Application Flow Diagram

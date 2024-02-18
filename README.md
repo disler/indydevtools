@@ -1,21 +1,21 @@
 # IndyDevTools
-> An Opinionated Agentic Engineering toolbox for developers powered by LLM Agents to solve problems autonomously.
->
-> Applications: 
->   - Youtube Metadata Generation
+> An opinionated, Agentic Engineering toolbox powered by LLM Agents to solve problems autonomously.
 
 ![IndyDevTools Logo](/imgs/indydevtools.png)
 
 ## Table of Contents
 - [IndyDevTools](#indydevtools)
   - [Table of Contents](#table-of-contents)
+  - [Usage, maintenance plan, and usage guide of this tool](#usage-maintenance-plan-and-usage-guide-of-this-tool)
+  - [Tool Overview](#tool-overview)
   - [Principles](#principles)
     - [\> USE THE RIGHT TOOL (AGENT) FOR THE JOB](#-use-the-right-tool-agent-for-the-job)
     - [\> EVERYTHING IS A FUNCTION](#-everything-is-a-function)
     - [\> GREAT QUESTIONS YIELD GREAT ANSWERS](#-great-questions-yield-great-answers)
     - [\> CREATE REUSABLE BUILDING BLOCKS](#-create-reusable-building-blocks)
     - [\> Prompts (Agents) are THE new fundamental unit of programming](#-prompts-agents-are-the-new-fundamental-unit-of-programming)
-  - [Tools](#tools)
+  - [Tool Guide](#tool-guide)
+    - [Directory Structure](#directory-structure)
     - [📹 Multi Agent Youtube Metadata Generation (`idt yt`)](#-multi-agent-youtube-metadata-generation-idt-yt)
       - [Use case](#use-case)
       - [Get Started](#get-started)
@@ -33,8 +33,20 @@
   - [Developer Commands](#developer-commands)
     - [Deploy](#deploy)
     - [Install](#install)
+  - [Video Series](#video-series)
   - [Resources](#resources)
 
+## Usage, maintenance plan, and usage guide of this tool
+- IndyDevTools is a suite of tools focused on solving problems using AI agents.
+- The each tool, down to the code is designed to be highly modular, and composable, so you can use the tools in combination with each other, or use them on their own to solve specific problems.
+- This tool was created to solve problems utilizing agents, and to share ideas, principles, and patterns that can help you thrive in the rapidly expanding age of AI.
+- This repo is highly opinionated, as it's a principle driven project designed to solve specific problems that I run into on a consistent basis.
+  - If you have a solution to a problem that you think should be included, feel free to crack open a PR.
+  - If you see, or think of a tool that's missing that would be beneficial to all users, feel free to crack open an issue.
+  - Feel free to fork it and make it your own.
+
+## Tool Overview
+- [Youtube Metadata Generation](#📹-multi-agent-youtube-metadata-generation-idt-yt)
 
 ## Principles
 > Principles drive decisions, decisions drive actions, actions drive results.
@@ -43,7 +55,7 @@
 ### > USE THE RIGHT TOOL (AGENT) FOR THE JOB
 - Every tool in this toolbox consists of one or more agents designed to solve a specific set of problems.
 - Agent > Code > Manual Input
-- CRUD/2 -> Prefer Create, Read over Update, Delete when using AI Agents
+- `CRUD[:2]` -> Prefer Create, and Read over Update, and Delete when using AI Agents
 
 ### > EVERYTHING IS A FUNCTION
 - Every tool in this toolbox is a function that takes inputs and returns outputs.
@@ -65,7 +77,11 @@
 - In the age of AI, prompts are the most powerful way to design, build, and engineer systems that can solve problems autonomously on your behalf.
 - They should be treated with the same level of respect (as time goes on, even more) and care as any other fundamental unit of programming.
 
-## Tools
+## Tool Guide
+
+### Directory Structure
+![models > modules/ > commands/ > main](/imgs/idt-app-structure.png)
+
 ### 📹 Multi Agent Youtube Metadata Generation (`idt yt`)
 - This tool generates the metadata for a youtube video.
 
@@ -282,18 +298,22 @@ Q --> S
 ```
 
 #### `idt yt` Improvements / What's Next
-- [] Stream text responses and print them to the console as they come in.
+- [] Stream text responses and print them to the console/logs as they come in.
 - [] Add support for Gemini models
+- [] Add support for local models (start w apis/ollama)
 - [] Create 'Trending' agents to find topics that are trending based on a few keywords
   - `idt yt trending -k <keywords> -n <number of results>`
-- [] Create SEO Keyword Agent that can generate SEO keywords for a video based on a topic or the script
-  - `idt yt script research -t <topic> -s <script file> -n <number of results>`
+- [] Script SEO keyword extraction 
+  - `idt yt script extract-seo -s <script_file>`
+- [] Create SEO Keyword Agent that researches related SEO keywords based on a topic or the script
+  - `idt yt script research-seo -t <topic> -s <script file> -n <number of results>`
 - [] Add logging so we can see where the log is coming from (what file + function)
   - https://chat.openai.com/c/d2ae52f4-0706-4cec-b047-3364bea3bd05
 - [] Add 'tone' to description to reduce buzzwordyness
 - [] Implement `thumb iterate` to improve an image
 - [] Implement `desc iterate` to improve a description
 - [] Implement `titles iterate` to improve a description
+- [] Improved 'inquirer' prompts that hold terminal scroll position
 - [] Make the code run in parallel, right now it's running one by one, this is inefficient
 - [] Add a loader to let users know which state the application is in
 
@@ -323,6 +343,12 @@ yt:
   - `pip install --upgrade --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple indydevtools`
 - Install public version from [PyPi](https://pypi.org/)
   - `pip install indydevtools`
+
+## Video Series
+> Join the discussion - watch the videos that created this tool.
+- Part 1: [How to Engineer Multi-Agent Tools: LLM Principles](https://youtu.be/q3Ld-MxlXmA)
+- Part 2: [Apple Vision Pro & LLMs: Proof Of Concept](https://youtu.be/9kS1atYieaU)
+- Part 3: [Sora + Gemini: Building Adaptive LLM apps](https://youtu.be/zRt0EmeGeCM)
 
 ## Resources
 - IndyDevTools PyPi

@@ -14,6 +14,7 @@
     - [\> GREAT QUESTIONS YIELD GREAT ANSWERS](#-great-questions-yield-great-answers)
     - [\> CREATE REUSABLE BUILDING BLOCKS](#-create-reusable-building-blocks)
     - [\> Prompts (Agents) are THE new fundamental unit of programming](#-prompts-agents-are-the-new-fundamental-unit-of-programming)
+  - [Upcoming Tool (Live, Planned, Maybe)](#upcoming-tool-live-planned-maybe)
   - [Tool Guide](#tool-guide)
     - [Directory Structure](#directory-structure)
     - [📹 Multi Agent Youtube Metadata Generation (`idt yt`)](#-multi-agent-youtube-metadata-generation-idt-yt)
@@ -76,6 +77,11 @@
 - Just like loops, variables, and functions, we treat prompts as a fundamental unit of programming.
 - In the age of AI, prompts are the most powerful way to design, build, and engineer systems that can solve problems autonomously on your behalf.
 - They should be treated with the same level of respect (as time goes on, even more) and care as any other fundamental unit of programming.
+
+## Upcoming Tool (Live, Planned, Maybe)
+- [Live ✅] Multi Agent Youtube Metadata Generation (`idt yt`)
+- [Planned 📆] Sora video generation tool (`idt sora`)
+- [Maybe 🟡] OpenAI Assistant tool (`idt oass`)
 
 ## Tool Guide
 

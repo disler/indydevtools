@@ -49,6 +49,8 @@ def load_config() -> IdtConfig:
                 config_data = yaml.safe_load(file)
                 if config_data:
                     config_in_memory = IdtConfig.model_validate(config_data)
+                    if config_in_memory.yt.openai_api_key is None:
+                        raise ValueError("OpenAI API key is not set.")
                     generate_directories(config_in_memory.yt)
                     return config_in_memory
                 else:

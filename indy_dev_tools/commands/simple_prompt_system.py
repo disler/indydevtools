@@ -8,9 +8,12 @@ from indy_dev_tools.models import IdtConfig, IdtSimplePromptSystem
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.models import IdtConfig, IdtSimplePromptSystem
 
+app = typer.Typer()
+
 config_file: IdtConfig = load_config()
 
 
+@app.command()
 @app.command()
 def config():
     """
@@ -19,6 +22,7 @@ def config():
     print(config_file.json(indent=2))
 
 
+@app.command()
 @app.command()
 def prompt(
     alias: str = typer.Option(..., "-a", help="The alias for the prompt template"),
@@ -36,6 +40,7 @@ def prompt(
     except ValueError as e:
         typer.echo(f"Error: {e}")
 
+@app.command()
 
 @app.command()
 def list():
@@ -48,6 +53,7 @@ def list():
         typer.echo("No Simple Prompt System configuration found.")
 
 
+@app.command()
 @app.command()
 def view(
     alias: str = typer.Option(..., "-a", help="The alias for the prompt template")
@@ -69,3 +75,6 @@ def view(
         typer.echo("---")
     else:
         typer.echo("No Simple Prompt System configuration found.")
+
+if __name__ == "__main__":
+    app()

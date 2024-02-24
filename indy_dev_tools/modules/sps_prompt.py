@@ -2,7 +2,6 @@ from typing import Optional
 import openai
 from indy_dev_tools.models import IdtSimplePromptSystem, IdtSimplePromptTemplate
 from indy_dev_tools.modules.idt_config import load_config
-from indy_dev_tools.modules.sps_get import sps_get
 from indy_dev_tools.modules.llm import prompt as llm_prompt
 
 
@@ -15,7 +14,14 @@ def sps_prompt(alias: str, prompt: str, vars: Optional[str] = None) -> str:
             "OpenAI API key not found in Simple Prompt System configuration."
         )
 
-    template = sps_get(config.sps, alias)
+    template = None
+    for tmpl in config.sps.templates:
+        if tmpl.alias == alias:
+            template = tmpl
+            break
+    if template is None:
+        raise ValueError(f"Template with alias '{alias}' not found.")
+
     template_content = template.prompt_template
 
     # Set default values for variables

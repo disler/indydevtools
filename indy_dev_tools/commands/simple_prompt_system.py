@@ -14,7 +14,7 @@ def config():
     """
     Dump the config file for the Simple Prompt System so you can view it, open it, and edit it to add your own prompt templates.
     """
-    print(config_file.json(indent=2))
+    sps_config()
 
 @app.command()
 def prompt(
@@ -36,10 +36,7 @@ def list():
     """
     List all available prompt templates.
     """
-    if config_file.sps:
-        list_prompt_templates(config_file.sps)
-    else:
-        typer.echo("No Simple Prompt System configuration found.")
+    sps_list()
 
 @app.command()
 def view(
@@ -48,15 +45,4 @@ def view(
     """
     View the prompt template.
     """
-    if config_file.sps:
-        template = get_prompt_template_by_alias(config_file.sps, alias)
-        typer.echo(f"Alias: {template.alias}")
-        typer.echo(f"Name: {template.name}")
-        typer.echo(f"Description: {template.description}")
-        typer.echo(f"Template: {template.prompt_template}")
-        typer.echo("Variables:")
-        for variable in template.variables:
-            typer.echo(f"  {variable.name} (default: {variable.default}) - {variable.description}")
-        typer.echo("---")
-    else:
-        typer.echo("No Simple Prompt System configuration found.")
+    sps_view(alias)

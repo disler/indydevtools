@@ -1,6 +1,6 @@
 import typer
 from typing import Optional
-from indy_dev_tools.modules.sps_get import get_prompt_template_by_alias
+from indy_dev_tools.modules.sps_get import sps_get
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.sps_list import list_prompt_templates
 from indy_dev_tools.modules.sps_prompt import sps_prompt
@@ -56,7 +56,7 @@ def view(
     """
     View the prompt template.
     """
-    get_prompt_template_by_alias(config_file.sps, alias)
+    sps_get(config_file.sps, alias)
 
 
 if __name__ == "__main__":

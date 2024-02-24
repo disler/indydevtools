@@ -28,6 +28,63 @@ sps:
     - default: '6'
       description: The version of midjourney to use
       name: version
+  - alias: vuec
+    description: Create a prompt for a vue component
+    name: Vue Component Prompt
+    prompt_template: "You're a Senior Vue 3 developer. You build new Vue components using the {{type}} component style.
+      Your current assignment is to build a new vue component fulfilling the following requirements: 
+
+      {{prompt}}
+
+      Return strictly the code for the Vue component including <template>, <script setup lang='ts'>, and <style> sections.
+
+      Example component:
+
+      <template>
+          <div class='(filename)-w'>
+            <h1>{{ name }}</h1>
+            <h2>{{ age }}</h2>
+            <h2>{{ doubleAge }}</h2>
+            <input type='text' :value='name' @input='updateName($event.target.value)' />
+          </div>
+        </template>
+        
+        <script lang='ts' setup>
+        import { toRefs, ref, defineProps, computed, onMounted } from 'vue'
+        
+        // ---------------------------- Props / Emit ----------------------------
+        
+        interface Props {
+          name: string
+          lastName?: string
+        }
+        
+        const props = defineProps<Props>()
+        const { name } = toRefs(props)
+        
+        const emit = defineEmits(['update'])
+        
+        // ---------------------------- State / Getters ----------------------------
+        
+        const age = ref(30)
+        
+        const doubleAge = computed(_ => age.value * 2)
+        
+        // ---------------------------- Methods ----------------------------
+        
+        function updateName(value: string) {
+          emit('update', value)
+        }
+        
+        // ---------------------------- Lifecycle Hooks ----------------------------
+        
+        onMounted(() => {
+          console.log('mounted')
+      })"
+    variables:
+    - default: "Composition API with <script setup lang='ts'>"
+      description: The vue component type
+      name: component_type
 yt:
   config_file_path: <path to your config file>
   openai_api_key: <your openai api key>

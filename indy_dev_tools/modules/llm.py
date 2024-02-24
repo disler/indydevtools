@@ -90,3 +90,31 @@ def prompt_image(
         with open(file_path, "wb") as f:
             for chunk in r.iter_content(chunk_size=8192):
                 f.write(chunk)
+def build_prompt(prompt: str, openai_key: str, model: str, instructions: str) -> str:
+    """
+    Generate a response from a prompt using the OpenAI API without specifying a response format.
+    """
+    if not openai_key:
+        sys.exit(
+            """
+ERORR: OpenAI API key not found. Please export your key to OPENAI_API_KEY
+Example bash command:
+    export OPENAI_API_KEY=<your openai apikey>
+            """
+        )
+
+    openai.api_key = openai_key
+    response = openai.chat.completions.create(
+        model=model,
+        messages=[
+            {
+                "role": "system",
+                "content": instructions,
+            },
+            {
+                "role": "user",
+                "content": prompt,
+            },
+        ],
+    )
+    return response.choices[0].message.content

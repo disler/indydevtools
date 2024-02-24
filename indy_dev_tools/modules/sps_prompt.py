@@ -21,8 +21,12 @@ def sps_prompt(alias: str, prompt: str, vars: Optional[str] = None) -> str:
     # Set default values for variables
     variables = {var.name: var.default for var in template.variables}
     # Override defaults with provided values
-    if vars:
-        variables.update(dict(var.split("=") for var in vars.split(",")))
+    if vars: 
+        custom_vars = dict(var.split("=") for var in vars.split(","))
+        for key, value in custom_vars.items():
+            if key in variables:
+                variables[key] = value
+
     for key, value in variables.items():
         if value is not None:
             template_content = template_content.replace(f"{{{{ {key} }}}}", value)

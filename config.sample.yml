@@ -1,0 +1,34 @@
+sps:
+  config_file_path: <path to your config file>
+  openai_api_key: <your openai api key>
+  templates:
+  - alias: bash
+    description: Ask a question about bash
+    name: Bash Prompt
+    prompt_template: 'mac: bash: how do I: '
+    variables: []
+  - alias: pyq
+    description: Ask a question about python
+    name: Python Question
+    prompt_template: 'How do I: {{prompt}} in python?'
+    variables: []
+  - alias: midj
+    description: Create a prompt for text to imagine tool midjourney
+    name: Midjourney Prompt
+    prompt_template: 'Create a prompt for text to imagine tool midjourney.
+
+      Take the prompt below and the ideas in them in a dense, verbose, vivid one paragraph
+      describing an imagine that midjourney will create.
+
+      End the prompt with ''--ar {{ratio}} --v {{version}}''. Prompt: {{prompt}}'
+    variables:
+    - default: '16:9'
+      description: The ratio of the image
+      name: ratio
+    - default: '6'
+      description: The version of midjourney to use
+      name: version
+yt:
+  config_file_path: <path to your config file>
+  openai_api_key: <your openai api key>
+  operating_dir: /Users/ravix/Desktop

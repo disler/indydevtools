@@ -29,6 +29,7 @@
         - [`yt thumb` Commands](#yt-thumb-commands)
       - [Application Flow Diagram](#application-flow-diagram)
       - [`idt yt` Improvements / What's Next](#idt-yt-improvements--whats-next)
+    - [✍️ Simple Prompt System (`idt sps`)](#️-simple-prompt-system-idt-sps)
   - [The Configuration File](#the-configuration-file)
     - [Structure](#structure)
   - [Developer Commands](#developer-commands)
@@ -322,6 +323,10 @@ Q --> S
 - [] Improved 'inquirer' prompts that hold terminal scroll position
 - [] Make the code run in parallel, right now it's running one by one, this is inefficient
 - [] Add a loader to let users know which state the application is in
+
+### ✍️ Simple Prompt System (`idt sps`)
+- The Simple Prompt System is a simple wrapper around your prompts, it will swap out variables you have if any, and run the prompt.
+- qqq finish docs here
 
 ## The Configuration File
 > The configuration file is the primary source of truth for all the tools in the IndyDevTools suite.

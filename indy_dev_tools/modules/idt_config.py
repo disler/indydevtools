@@ -49,7 +49,9 @@ DEFAULT_CONFIGURATION = IdtConfig(
             ),
             IdtSimplePromptTemplate(
                 alias="midj",
-                prompt_template="Create a prompt for text to imagine tool midjourney. Take the prompt below and the ideas in them in a dense, verbose, vivid one paragraph describing an imagine that midjourney will create. End the prompt with '--ar {{ratio}} --v {{version}}'. Prompt: {{prompt}}",
+                prompt_template="""Create a prompt for text to imagine tool midjourney.
+Take the prompt below and the ideas in them in a dense, verbose, vivid one paragraph describing an imagine that midjourney will create.
+End the prompt with '--ar {{ratio}} --v {{version}}'. Prompt: {{prompt}}""",
                 description="Create a prompt for text to imagine tool midjourney",
                 name="Midjourney Prompt",
                 variables=[

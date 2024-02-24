@@ -33,6 +33,10 @@ def sps_prompt(alias: str, prompt: str, vars: Optional[str] = None) -> str:
             placeholder = "{{" + variable_name + "}}"
             template_content = template_content.replace(placeholder, variable_value)
 
-    final_prompt = template_content.replace("{{prompt}}", prompt)
+    if "{{prompt}}" in template_content:
+        final_prompt = template_content.replace("{{prompt}}", prompt)
+    else:
+        final_prompt = template_content + " " + prompt
+
     # Call the llm.prompt() function with the OpenAI key from the config and return its result
     return llm_prompt(prompt=final_prompt, openai_key=config.sps.openai_api_key)

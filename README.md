@@ -89,8 +89,91 @@
 ### Directory Structure
 ![models > modules/ > commands/ > main](/imgs/idt-app-structure.png)
 
+### ✍️ Simple Prompt System (`idt sps`)
+- This tool is a simple wrapper around your prompts, allowing you to run prompts with custom variables using predefined templates.
+
+#### Use case
+- You have a set of prompts that you use frequently and want to streamline the process of running these prompts with different variables.
+- The Simple Prompt System (`idt sps`) allows you to define templates for these prompts and quickly execute them with custom variables, saving you time and ensuring consistency.
+
+#### Get Started
+1. Install IndyDevTools
+    ```bash
+    pip install indydevtools
+    ```
+2. View and initialize the configuration file for the Simple Prompt System
+    ```bash
+    idt sps config
+    ```
+    - This will print the current configuration file to the console, allowing you to view and edit your prompt templates.
+3. Add or edit prompt templates in the configuration file as needed.
+4. Run a test command to execute a prompt
+    ```bash
+    idt sps prompt -a "alias" -p "Your prompt here" -v "variable1=value1,variable2=value2"
+    ```
+5. Verify the output of the prompt in the console.
+
+#### `sps` Commands
+  - `idt sps --help`
+    - View all available commands for the Simple Prompt System.
+  - `idt sps config`
+    - Dump the configuration file to the console, creates the file if it doesn't exist.
+  - `idt sps prompt -a <alias> -p <prompt> -v? <vars>`
+    - Run a prompt using a template with custom variables.
+    - Inputs
+      - `-a`: The alias for the prompt template.
+      - `-p`: The prompt to run.
+      - `-v` (optional): Custom variables in key=value format separated by commas.
+    - Outputs
+      - The result of the prompt printed to the console.
+  - `idt sps list`
+    - List all available prompt templates.
+    - Outputs
+      - The list of all available prompt templates.
+  - `idt sps get -a <alias>`
+    - Get the prompt template for the given alias.
+    - Inputs
+      - `-a`: The alias for the prompt template.
+    - Outputs
+      - The prompt template.
+
+#### Application Flow Diagram
+
+```mermaid
+graph LR
+A[User with a Prompt Need]
+
+subgraph Simple Prompt System
+    B[Run Prompt with Template]
+    C{Template Ready}
+    D[Select Template - MANUAL INPUT]
+    E[Input Variables - MANUAL INPUT]
+    F[Execute Prompt - CODE]
+    G{Prompt Result Ready}
+    H[[Review Result - MANUAL INPUT]]
+end
+
+A --> B
+B --> C
+C --> D
+D --> E
+E --> F
+F --> G
+G --> H
+```
+
+#### `idt sps` Improvements / What's Next
+- [] Add support for more complex variable types (e.g., lists, dictionaries).
+- [] Implement a GUI for managing prompt templates and running prompts.
+- [] Add integration with other IndyDevTools commands to allow for seamless use of prompts in larger workflows.
+- [] Improve error handling and user feedback when running prompts.
+- [] Add a feature to save prompt results to a file or database for future reference.
+
+![models > modules/ > commands/ > main](/imgs/idt-app-structure.png)
+
 ### 📹 Multi Agent Youtube Metadata Generation (`idt yt`)
-- This tool generates the metadata for a youtube video.
+-#### Use case
+...
 
 #### Use case
 - You've just finished rendering a video to upload to youtube, and you need to generate the metadata for the video. This tool will help you generate the title, description, tags, and thumbnail for the video.

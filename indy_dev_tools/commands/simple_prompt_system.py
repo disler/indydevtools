@@ -1,15 +1,18 @@
 import typer
 from typing import Optional
+from indy_dev_tools.modules.idt_config import load_config
+from indy_dev_tools.models import IdtConfig
 
 app = typer.Typer()
+
+config_file: IdtConfig = load_config()
 
 @app.command()
 def config():
     """
     Dump the config file for the Simple Prompt System so you can view it, open it, and edit it to add your own prompt templates.
     """
-    # TODO: Implement the logic to dump the SPS config file
-    raise NotImplementedError("The 'config' command is not yet implemented.")
+    print(config_file.json(indent=2))
 
 @app.command()
 def prompt(

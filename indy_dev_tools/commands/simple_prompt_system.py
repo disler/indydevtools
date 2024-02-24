@@ -2,7 +2,7 @@ import typer
 from typing import Optional
 from indy_dev_tools.modules.sps_get import sps_get
 from indy_dev_tools.modules.idt_config import load_config
-from indy_dev_tools.modules.sps_list import list_prompt_templates
+from indy_dev_tools.modules.sps_list import sps_list
 from indy_dev_tools.modules.sps_prompt import sps_prompt
 from indy_dev_tools.models import IdtConfig, IdtSimplePromptSystem
 from indy_dev_tools.modules.idt_config import load_config
@@ -44,7 +44,7 @@ def list():
     List all available prompt templates.
     """
     if config_file.sps:
-        list_prompt_templates(config_file.sps)
+        sps_list(config_file.sps)
     else:
         typer.echo("No Simple Prompt System configuration found.")
 

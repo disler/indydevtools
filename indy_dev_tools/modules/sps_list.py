@@ -1,7 +1,7 @@
 from indy_dev_tools.models import IdtSimplePromptSystem
 import typer
 
-def list_prompt_templates(sps_config: IdtSimplePromptSystem):
+def sps_list(sps_config: IdtSimplePromptSystem):
     for template in sps_config.templates:
         typer.echo(f"Alias: {template.alias}")
         typer.echo(f"Name: {template.name}")
@@ -14,7 +14,7 @@ def list_prompt_templates(sps_config: IdtSimplePromptSystem):
 from indy_dev_tools.models import IdtSimplePromptSystem
 import typer
 
-def list_prompt_templates(sps_config: IdtSimplePromptSystem):
+def sps_list(sps_config: IdtSimplePromptSystem):
     for template in sps_config.templates:
         typer.echo(f"Alias: {template.alias}")
         typer.echo(f"Name: {template.name}")

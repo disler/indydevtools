@@ -43,6 +43,23 @@ class HighQualityTitles(BaseModel):
     high_quality_titles: List[TitleItems]
 
 
+class IdtSimplePromptVariable(BaseModel):
+    name: str
+    description: Optional[str] = None
+    default: Optional[str] = None
+
+class IdtSimplePromptTemplate(BaseModel):
+    alias: str
+    prompt_template: str
+    description: Optional[str] = None
+    name: Optional[str] = None
+    variables: List[IdtSimplePromptVariable] = []
+
+class IdtSimplePromptSystem(BaseModel):
+    config_file_path: str
+    openai_api_key: Optional[str]
+    templates: List[IdtSimplePromptTemplate]
+
 class IdtYoutube(BaseModel):
     openai_api_key: Optional[str]
     operating_dir: Optional[str]
@@ -120,6 +137,7 @@ class IdtYoutube(BaseModel):
 
 class IdtConfig(BaseModel):
     yt: Optional[IdtYoutube]
+    sps: Optional[IdtSimplePromptSystem]
 
 
 class TranscriptWord(BaseModel):

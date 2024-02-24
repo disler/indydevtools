@@ -3,7 +3,13 @@ from platformdirs import user_data_dir, user_desktop_dir
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-from indy_dev_tools.models import IdtConfig, IdtYoutube
+from indy_dev_tools.models import (
+    IdtConfig,
+    IdtSimplePromptSystem,
+    IdtSimplePromptTemplate,
+    IdtSimplePromptVariable,
+    IdtYoutube,
+)
 
 APP_NAME = "indy_dev_tools"
 APP_AUTHOR = "indy_dev_dan"
@@ -33,25 +39,13 @@ DEFAULT_CONFIGURATION = IdtConfig(
                 alias="bash",
                 prompt_template="mac: bash: how do I: ",
                 description="Ask a question about bash",
-                name="Bash Prompt"
-            ),
-            IdtSimplePromptTemplate(
-                alias="pyfn",
-                prompt_template="generate a python function that fulfills this function def {{prompt}}",
-                description="Generate a python function",
-                name="Python Function"
+                name="Bash Prompt",
             ),
             IdtSimplePromptTemplate(
                 alias="pyq",
                 prompt_template="How do I: {{prompt}} in python?",
                 description="Ask a question about python",
-                name="Python Question"
-            ),
-            IdtSimplePromptTemplate(
-                alias="vuecomp",
-                prompt_template="/Users/ravix/Library/Application Support/indy_dev_tools/vue_component_prompt.txt",
-                description="Generate a vue component",
-                name="Vue Component"
+                name="Python Question",
             ),
             IdtSimplePromptTemplate(
                 alias="midj",
@@ -62,17 +56,17 @@ DEFAULT_CONFIGURATION = IdtConfig(
                     IdtSimplePromptVariable(
                         name="ratio",
                         description="The ratio of the image",
-                        default="16:9"
+                        default="16:9",
                     ),
                     IdtSimplePromptVariable(
                         name="version",
                         description="The version of midjourney to use",
-                        default="1.0"
-                    )
-                ]
+                        default="6",
+                    ),
+                ],
             ),
-        ]
-    )
+        ],
+    ),
 )
 
 config_in_memory = None
@@ -86,7 +80,7 @@ def load_config() -> IdtConfig:
     if config_in_memory:
         return config_in_memory
 
-    print(f"Loading configuration file")
+    # print(f"Loading configuration file")
     # print(f"Loading configuration from {config_file_path}...")
 
     try:
@@ -96,7 +90,9 @@ def load_config() -> IdtConfig:
             with open(config_file, "r") as file:
                 config_data = yaml.safe_load(file)
                 if config_data:
-                    config_in_memory = IdtConfig.model_validate(config_data)
+                    merge_model = DEFAULT_CONFIGURATION.model_dump()
+                    merge_model.update(config_data)
+                    config_in_memory = IdtConfig.model_validate(merge_model)
                     if config_in_memory.yt.openai_api_key is None:
                         raise ValueError("OpenAI API key is not set.")
                     generate_directories(config_in_memory.yt)

@@ -90,7 +90,14 @@ def prompt_image(
         with open(file_path, "wb") as f:
             for chunk in r.iter_content(chunk_size=8192):
                 f.write(chunk)
-def build_prompt(prompt: str, openai_key: str, model: str, instructions: str) -> str:
+
+
+def prompt(
+    prompt: str,
+    openai_key: str,
+    model: str = "gpt-4-0125-preview",
+    instructions: str = "You are a helpful assistant.",
+) -> str:
     """
     Generate a response from a prompt using the OpenAI API without specifying a response format.
     """

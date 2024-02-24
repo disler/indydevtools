@@ -17,7 +17,7 @@ def config():
     """
     Dump the config file for the Simple Prompt System so you can view it, open it, and edit it to add your own prompt templates.
     """
-    print(config_file.json(indent=2))
+    print(config_file.model_dump_json(indent=2))
 
 
 @app.command()
@@ -50,11 +50,9 @@ def list():
 
 
 @app.command()
-def view(
-    alias: str = typer.Option(..., "-a", help="The alias for the prompt template")
-):
+def get(alias: str = typer.Option(..., "-a", help="The alias for the prompt template")):
     """
-    View the prompt template.
+    Get the prompt template.
     """
     sps_get(config_file.sps, alias)
 

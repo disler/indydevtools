@@ -1,11 +1,15 @@
 import typer
 
 from .commands import youtube
+from .commands import playground
+from .commands import simple_prompt_system
 from .modules import idt_config
 from .models import IdtConfig
 
 app = typer.Typer()
 app.add_typer(youtube.app, name="yt")
+app.add_typer(playground.app, name="pg")
+app.add_typer(simple_prompt_system.app, name="sps")
 
 
 def main():

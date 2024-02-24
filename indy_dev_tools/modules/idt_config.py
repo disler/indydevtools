@@ -24,6 +24,54 @@ DEFAULT_CONFIGURATION = IdtConfig(
         openai_api_key=openai_api_key,
         operating_dir=str(operating_dir),
         config_file_path=str(config_file_path),
+    ),
+    sps=IdtSimplePromptSystem(
+        config_file_path=str(config_file_path),
+        openai_api_key=openai_api_key,
+        templates=[
+            IdtSimplePromptTemplate(
+                alias="bash",
+                prompt_template="mac: bash: how do I: ",
+                description="Ask a question about bash",
+                name="Bash Prompt"
+            ),
+            IdtSimplePromptTemplate(
+                alias="pyfn",
+                prompt_template="generate a python function that fulfills this function def {{prompt}}",
+                description="Generate a python function",
+                name="Python Function"
+            ),
+            IdtSimplePromptTemplate(
+                alias="pyq",
+                prompt_template="How do I: {{prompt}} in python?",
+                description="Ask a question about python",
+                name="Python Question"
+            ),
+            IdtSimplePromptTemplate(
+                alias="vuecomp",
+                prompt_template="/Users/ravix/Library/Application Support/indy_dev_tools/vue_component_prompt.txt",
+                description="Generate a vue component",
+                name="Vue Component"
+            ),
+            IdtSimplePromptTemplate(
+                alias="midj",
+                prompt_template="Create a prompt for text to imagine tool midjourney. Take the prompt below and the ideas in them in a dense, verbose, vivid one paragraph describing an imagine that midjourney will create. End the prompt with '--ar {{ratio}} --v {{version}}'. Prompt: {{prompt}}",
+                description="Create a prompt for text to imagine tool midjourney",
+                name="Midjourney Prompt",
+                variables=[
+                    IdtSimplePromptVariable(
+                        name="ratio",
+                        description="The ratio of the image",
+                        default="16:9"
+                    ),
+                    IdtSimplePromptVariable(
+                        name="version",
+                        description="The version of midjourney to use",
+                        default="1.0"
+                    )
+                ]
+            ),
+        ]
     )
 )
 

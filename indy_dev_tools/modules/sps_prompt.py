@@ -21,9 +21,6 @@ def sps_prompt(alias: str, prompt: str, vars: Optional[str] = None) -> str:
     # Override defaults with provided values
     if vars:
         variables.update(dict(var.split('=') for var in vars.split(',')))
-    for key, value in variables.items():
-        if value is not None:
-        for key, value in variables.items():
             template_content = template_content.replace(f"{{{{ {key} }}}}", value)
 
     final_prompt = template_content.replace("{{prompt}}", prompt)

@@ -3,6 +3,7 @@ from typing import Optional
 from indy_dev_tools.modules.sps_get import get_prompt_template_by_alias
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.sps_list import list_prompt_templates
+from indy_dev_tools.modules.sps_prompt import sps_prompt
 from indy_dev_tools.models import IdtConfig, IdtSimplePromptSystem
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.models import IdtConfig, IdtSimplePromptSystem
@@ -24,8 +25,11 @@ def prompt(
     """
     Run a prompt using your favorite template with custom variables.
     """
-    # TODO: Implement the logic to run a prompt using a template and custom variables
-    raise NotImplementedError("The 'prompt' command is not yet implemented.")
+    try:
+        result = sps_prompt(alias=alias, prompt=prompt, vars=vars)
+        typer.echo(result)
+    except ValueError as e:
+        typer.echo(f"Error: {e}")
 
 @app.command()
 def list():

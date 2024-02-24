@@ -1,7 +1,9 @@
 import typer
 from typing import Optional
+from indy_dev_tools.modules.sps_get import get_prompt_template_by_alias
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.sps_list import list_prompt_templates
+from indy_dev_tools.models import IdtConfig, IdtSimplePromptSystem
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.models import IdtConfig, IdtSimplePromptSystem
 config_file: IdtConfig = load_config()
@@ -42,5 +44,15 @@ def view(
     """
     View the prompt template.
     """
-    # TODO: Implement the logic to view a specific prompt template
-    raise NotImplementedError("The 'view' command is not yet implemented.")
+    if config_file.sps:
+        template = get_prompt_template_by_alias(config_file.sps, alias)
+        typer.echo(f"Alias: {template.alias}")
+        typer.echo(f"Name: {template.name}")
+        typer.echo(f"Description: {template.description}")
+        typer.echo(f"Template: {template.prompt_template}")
+        typer.echo("Variables:")
+        for variable in template.variables:
+            typer.echo(f"  {variable.name} (default: {variable.default}) - {variable.description}")
+        typer.echo("---")
+    else:
+        typer.echo("No Simple Prompt System configuration found.")

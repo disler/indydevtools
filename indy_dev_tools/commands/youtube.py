@@ -10,7 +10,7 @@ from indy_dev_tools.commands import (
 from indy_dev_tools.models import IdtConfig, GenerateMetadataInput
 from indy_dev_tools.modules.file_util import get_path_to_files_with_sound
 from indy_dev_tools.modules.generate_metadata_flow import generate_metadata_flow
-from indy_dev_tools.modules.idt_config import load_config
+from indy_dev_tools.modules.idt_config import load_config, view_config
 import inquirer
 
 
@@ -35,9 +35,24 @@ app.add_typer(
 )
 
 
-@app.command(help="Dump your config file to console.")
-def config():
-    print(config_file.model_dump_json(indent=2))
+@app.command(help="Open the indydevtools config file so you can view it, and edit it.")
+def config(
+    only_print: bool = typer.Option(
+        False,
+        "--only-print",
+        "-p",
+        help="Only print the configuration file to the console, do not open in editor",
+    )
+):
+    """
+    Open the indydevtools config file so you can view it, and edit it.
+
+    Inputs:
+        -p: Only print the configuration file to the console, do not open in editor
+    Outputs:
+        - The config file in your default editor
+    """
+    view_config(only_print)
 
 
 @app.command(help="Generate youtube metadata using a step by step interface")

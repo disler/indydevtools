@@ -5,3 +5,4 @@
 mock_yt_content
 dist/*
 agent_specs/
+private/

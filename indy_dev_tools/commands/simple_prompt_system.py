@@ -5,24 +5,33 @@ from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.sps_list import sps_list
 from indy_dev_tools.modules.sps_prompt import sps_prompt
 from indy_dev_tools.models import IdtConfig, IdtSimplePromptSystem
-from indy_dev_tools.modules.idt_config import load_config
+from indy_dev_tools.modules.idt_config import load_config, view_config
 
 app = typer.Typer()
 
 config_file: IdtConfig = load_config()
 
 
-@app.command()
-def config():
+@app.command(
+    help="Dump the config file for the Simple Prompt System so you can view it, open it, and edit it to add your own prompt templates."
+)
+def config(
+    only_print: bool = typer.Option(
+        False,
+        "--only-print",
+        "-p",
+        help="Only print the configuration file to the console, do not open in editor",
+    )
+):
     """
     Dump the config file for the Simple Prompt System so you can view it, open it, and edit it to add your own prompt templates.
 
     Inputs:
-        - None
+        -p: Only print the configuration file to the console, do not open in editor
     Outputs:
-        - The config file for the Simple Prompt System
+        - The config file in your default editor
     """
-    print(config_file.model_dump_json(indent=2))
+    view_config(only_print)
 
 
 @app.command()

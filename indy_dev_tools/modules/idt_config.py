@@ -1,4 +1,5 @@
 from typing import Dict
+import typer
 import yaml
 from platformdirs import user_data_dir, user_desktop_dir
 from pathlib import Path
@@ -11,6 +12,7 @@ from indy_dev_tools.models import (
     IdtSimplePromptVariable,
     IdtYoutube,
 )
+from indy_dev_tools.modules import dict_util
 
 APP_NAME = "indy_dev_tools"
 APP_AUTHOR = "indy_dev_dan"
@@ -76,24 +78,28 @@ config_in_memory = None
 
 
 def merge_new_configs(
-    existing_config: IdtConfig, default_config: IdtConfig
+    existing_config_dict: Dict, default_config: IdtConfig
 ) -> IdtConfig:
     """Merges the existing configuration with the default configuration, adding any missing keys."""
-    for key, value in default_config.dict().items():
-        if key not in existing_config:
-            existing_config[key] = value
-    return IdtConfig(**existing_config)
+    config_updated = False
+    for key, value in default_config.model_dump().items():
+        if key not in existing_config_dict:
+            existing_config_dict[key] = value
+            config_updated = True
 
+    # if no openaikey is set, set it to the environment variable - this is not scalable - but it's a start
+    if not dict_util.safe_get(existing_config_dict, "yt.openai_api_key"):
+        existing_config_dict["yt"]["openai_api_key"] = openai_api_key
+        config_updated = True
+    if not dict_util.safe_get(existing_config_dict, "sps.openai_api_key"):
+        existing_config_dict["sps"]["openai_api_key"] = openai_api_key
+        config_updated = True
 
-def load_config() -> IdtConfig:
-    """Loads the YAML configuration file."""
+    merged_config = IdtConfig(**existing_config_dict)
+    if config_updated:
+        write_config(merged_config)
+    return merged_config
 
-    global config_in_memory
-
-    if config_in_memory:
-        return config_in_memory
-
-    try:
 
 def load_config() -> IdtConfig:
     """Loads the YAML configuration file."""
@@ -106,37 +112,43 @@ def load_config() -> IdtConfig:
             with open(config_file, "r") as file:
                 config_data = yaml.safe_load(file)
                 if config_data:
-                    # when rolling out new config options, we need to merge the old and new and save the new
-                    existing_config = config_data or {}
-                    merge_model = merge_new_configs(existing_config, DEFAULT_CONFIGURATION)
-                    config_in_memory = merge_model
+                    existing_config_dict = config_data or {}
 
+                    merge_model = merge_new_configs(
+                        existing_config_dict, DEFAULT_CONFIGURATION
+                    )
                     config_in_memory = IdtConfig.model_validate(merge_model)
+
                     if config_in_memory.yt.openai_api_key is None:
-                        raise ValueError("OpenAI API key is not set.")
-                    generate_directories(config_in_memory.yt)
+                        raise ValueError(
+                            "OpenAI API key is not set. Export your OpenAI API key as OPENAI_API_KEY."
+                        )
+
+                    generate_directories(config_in_memory)
+
                     return config_in_memory
                 else:
+
                     config_in_memory = DEFAULT_CONFIGURATION
-                    generate_directories(config_in_memory.yt)
+
+                    generate_directories(config_in_memory)
+
+                    write_config(config_in_memory)
+
                     return config_in_memory
         else:
             write_config(DEFAULT_CONFIGURATION)
             config_in_memory = DEFAULT_CONFIGURATION
-            generate_directories(config_in_memory.yt)
+            generate_directories(config_in_memory)
             return config_in_memory
     except Exception as e:
-        print(f"Error loading configuration: {e}")
         raise e
-        config_in_memory = DEFAULT_CONFIGURATION
-        generate_directories(config_in_memory.yt)
-        return config_in_memory
 
 
-def generate_directories(yt_config: IdtYoutube):
+def generate_directories(config: IdtConfig):
     """Generates the draft and final directories based on the configuration."""
-    draft_dir = Path(yt_config.operating_dir) / yt_config.draft_sub_dir
-    final_dir = Path(yt_config.operating_dir) / yt_config.final_sub_dir
+    draft_dir = Path(config.yt.operating_dir) / config.yt.draft_sub_dir
+    final_dir = Path(config.yt.operating_dir) / config.yt.final_sub_dir
     draft_dir.mkdir(parents=True, exist_ok=True)
     final_dir.mkdir(parents=True, exist_ok=True)
 
@@ -150,3 +162,12 @@ def write_config(data: IdtConfig):
             yaml.safe_dump(data.model_dump(), file)
     except Exception as e:
         print(f"Error writing configuration: {e}")
+
+
+def view_config(only_print: bool = False):
+    """View the configuration file in the console."""
+    config = load_config()
+    if not only_print and config.yt and config.yt.config_file_path:
+        typer.launch(config.yt.config_file_path)
+    else:
+        typer.echo(config.model_dump_json(indent=2))

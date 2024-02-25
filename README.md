@@ -14,12 +14,18 @@
     - [\> GREAT QUESTIONS YIELD GREAT ANSWERS](#-great-questions-yield-great-answers)
     - [\> CREATE REUSABLE BUILDING BLOCKS](#-create-reusable-building-blocks)
     - [\> Prompts (Agents) are THE new fundamental unit of programming](#-prompts-agents-are-the-new-fundamental-unit-of-programming)
+  - [Directory Structure](#directory-structure)
   - [Upcoming Tool (Live, Planned, Maybe)](#upcoming-tool-live-planned-maybe)
   - [Tool Guide](#tool-guide)
-    - [Directory Structure](#directory-structure)
-    - [📹 Multi Agent Youtube Metadata Generation (`idt yt`)](#-multi-agent-youtube-metadata-generation-idt-yt)
+    - [✍️ Simple Prompt System (`idt sps`)](#️-simple-prompt-system-idt-sps)
       - [Use case](#use-case)
       - [Get Started](#get-started)
+      - [`sps` Commands](#sps-commands)
+      - [Application Flow Diagram](#application-flow-diagram)
+      - [`idt sps` Improvements / What's Next](#idt-sps-improvements--whats-next)
+    - [📹 Multi Agent Youtube Metadata Generation (`idt yt`)](#-multi-agent-youtube-metadata-generation-idt-yt)
+      - [Use case](#use-case-1)
+      - [Get Started](#get-started-1)
       - [`yt` Commands](#yt-commands)
         - [`yt titles` Commands](#yt-titles-commands)
         - [`yt script` Commands](#yt-script-commands)
@@ -27,15 +33,10 @@
         - [`yt tags` Commands](#yt-tags-commands)
         - [`yt refs` Commands](#yt-refs-commands)
         - [`yt thumb` Commands](#yt-thumb-commands)
-      - [Application Flow Diagram](#application-flow-diagram)
-      - [`idt yt` Improvements / What's Next](#idt-yt-improvements--whats-next)
-    - [✍️ Simple Prompt System (`idt sps`)](#️-simple-prompt-system-idt-sps)
-      - [Use case](#use-case-1)
-      - [Get Started](#get-started-1)
-      - [`sps` Commands](#sps-commands)
       - [Application Flow Diagram](#application-flow-diagram-1)
-      - [`idt sps` Improvements / What's Next](#idt-sps-improvements--whats-next)
+      - [`idt yt` Improvements / What's Next](#idt-yt-improvements--whats-next)
   - [The Configuration File](#the-configuration-file)
+    - [`config` Commands](#config-commands)
     - [Structure](#structure)
   - [Developer Commands](#developer-commands)
     - [Deploy](#deploy)
@@ -53,6 +54,7 @@
   - Feel free to fork it and make it your own.
 
 ## Tool Overview
+- [Simple Prompt System](#✍️-simple-prompt-system-idt-sps)
 - [Youtube Metadata Generation](#📹-multi-agent-youtube-metadata-generation-idt-yt)
 
 ## Principles
@@ -84,15 +86,130 @@
 - In the age of AI, prompts are the most powerful way to design, build, and engineer systems that can solve problems autonomously on your behalf.
 - They should be treated with the same level of respect (as time goes on, even more) and care as any other fundamental unit of programming.
 
+## Directory Structure
+![models > modules/ > commands/ > main](/imgs/idt-app-structure.png)
+
 ## Upcoming Tool (Live, Planned, Maybe)
 - [Live ✅] Multi Agent Youtube Metadata Generation (`idt yt`)
+- [Live ✅] Simple Prompt System (`idt sps`)
 - [Planned 📆] Sora video generation tool (`idt sora`)
 - [Maybe 🟡] OpenAI Assistant tool (`idt oass`)
+- [Maybe 🟡] Git Diff AI Peer Review (port [diffbro](https://github.com/disler/diffbro)) (`idt dbro`)
+- [Maybe 🟡] Midjourney Image Generator
+- [Maybe 🟡] Fast Notion Idea Dump
 
 ## Tool Guide
 
-### Directory Structure
-![models > modules/ > commands/ > main](/imgs/idt-app-structure.png)
+### ✍️ Simple Prompt System (`idt sps`)
+- This tool is a simple system to help you reuse and run your prompts.
+
+#### Use case
+- If you've created a great prompt and proceeded to lose track of it or forget it this tool is for you. Maybe you built a prompt that debugs code for you, writes tests, generates docs, generates marketing content, helps you ask questions about a topic, or helps you generate ideas. This tool will help you save, edit, run and reuse your prompts.
+- You have a set of prompts that you use frequently and want to streamline the process of running these prompts with different variables.
+- The Simple Prompt System (`idt sps`) allows you to define templates for these prompts and quickly execute them with custom variables, saving you time by reusing your favorite prompts.
+- The best way to get started is to run `idt sps prompt -a "pyq" -p "reverse a string"` to see how the system works.
+- Then you can run `idt sps config` to view the configuration file and add your own prompt templates.
+- Since this is a CLI app, you can pipe the output of the prompt to a file, or to your clipboard, or right into another command. For example, you can run `idt sps prompt -a "pyq" -p "reverse a string" | pbcopy` to copy the output of the prompt to your clipboard and throw it into your code editor.
+
+#### Get Started
+1. Install IndyDevTools
+    ```bash
+    pip install indydevtools
+    ```
+2. Initialize and view the configuration file for the Simple Prompt System
+    ```bash
+    idt sps config
+    ```
+    - This will print open your configuration file in your default editor based on the file type, allowing you to view, open and edit your prompt templates.
+3. Add or edit prompt templates in the configuration file as needed.
+4. Run a test command to execute a prompt
+    ```bash
+    idt sps prompt -a "pyq" -p "reverse a string"
+    ```
+5. Verify the output of the prompt in the console.
+6. Open the config and add your own prompt templates for rapid reuse.
+
+#### `sps` Commands
+  - `idt sps --help`
+    - View all available commands for the Simple Prompt System.
+  - `idt sps config -p?`
+    - Open the configuration file to the console, creates the file if it doesn't exist.
+    - Inputs
+      - `-p` (optional): A flag to only print the configuration file to the console.
+    - Outputs
+      - The configuration file content printed to the console or opened in the default editor.
+  - `idt sps prompt -a <alias> -p <prompt> -v? <vars>`
+    - Run a prompt using a template with custom variables.
+    - Inputs
+      - `-a`: The alias for the prompt template.
+      - `-p`: The prompt to run.
+      - `-v` (optional): Custom variables in key=value format separated by commas.
+    - Outputs
+      - The result of the prompt printed to the console.
+  - `idt sps list`
+    - List all available prompt templates.
+    - Outputs
+      - The list of all available prompt templates.
+  - `idt sps get -a <alias>`
+    - Get the prompt template for the given alias.
+    - Inputs
+      - `-a`: The alias for the prompt template.
+    - Outputs
+      - The prompt template.
+
+#### Application Flow Diagram
+
+```mermaid
+graph LR
+A["I want to call one of my prompts"]
+AV["I want to call one of my prompts with variables"]
+AA["I want to save/edit this prompt for reuse"]
+AAA["I want to list my existing prompts"]
+AAAA["I want to view one of my prompts"]
+B["I need help with the commands"]
+C["I want to view the configuration file"]
+
+subgraph Simple Prompt System
+    API1["idt sps prompt 'alias' -p 'prompt'"]
+    API1V["idt sps prompt 'alias' -p 'prompt' -v? 'key1=value1,key2=value2'"]
+    API2["idt sps --help"]
+    API3["idt sps list"]
+    API4["idt sps get -a 'alias'"]
+    API5["idt sps config"]
+    API6["idt config view"]
+end
+
+subgraph Output
+    OUTPUT1["Response of your prompt"]
+    OUTPUT2["Help information"]
+    OUTPUT3["List of all available prompt templates"]
+    OUTPUT4["Prompt template for the given alias"]
+    OUTPUT5["Configuration file content"]
+end
+
+A --> API1
+AV --> API1V
+API1V --> OUTPUT1
+AA --> API6
+AAA --> API3
+AAAA --> API4
+B --> API2
+C --> API5
+
+API1 --> OUTPUT1
+API2 --> OUTPUT2
+API3 --> OUTPUT3
+API4 --> OUTPUT4
+API5 --> OUTPUT5
+API6 --> OUTPUT5
+
+
+```
+
+#### `idt sps` Improvements / What's Next
+- [] Add `idt sps new -a 'alias' -pt 'prompt template' -n? 'name' -d? 'description'` feature to save a new prompt template into the configuration file.
+
+---
 
 ### 📹 Multi Agent Youtube Metadata Generation (`idt yt`)
 - This tool generates the metadata for a youtube video.
@@ -119,15 +236,8 @@
     ```
 2. View and initialize the configuration file
     ```bash
-    idt yt config
+    idt yt config (or idt config view)
     ```
-    - Should print something like
-      ```yml
-      yt:
-        config_file_path: <path to this config file for you to open and edit>
-        openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
-        operating_dir: <Path to your rendered video/audio, also the output path where the assets that will be generated>
-      ```
     - This will create the configuration file if it doesn't exist and the `/drafts` and `/final` directories in the operating directory.
 3. Edit the configuration file to add your openai key and path to your audio/video files
 4. Run a test command
@@ -330,112 +440,10 @@ Q --> S
 - [] Add a loader to let users know which state the application is in
 
 
-### ✍️ Simple Prompt System (`idt sps`)
-- This tool is a simple system to help you reuse and run your prompts.
-
-#### Use case
-- If you've created a great prompt and proceeded to lose track of it or forget it this tool is for you. Maybe you built a prompt that debugs code for you, writes tests, generates docs, generates marketing content, helps you ask questions about a topic, or helps you generate ideas. This tool will help you save, edit, run and reuse your prompts.
-- You have a set of prompts that you use frequently and want to streamline the process of running these prompts with different variables.
-- The Simple Prompt System (`idt sps`) allows you to define templates for these prompts and quickly execute them with custom variables, saving you time by reusing your favorite prompts.
-- The best way to get started is to run `idt sps prompt -a "pyq" -p "reverse a string"` to see how the system works.
-- Then you can run `idt sps config` to view the configuration file and add your own prompt templates.
-- Since this is a CLI app, you can pipe the output of the prompt to a file, or to your clipboard, or right into another command. For example, you can run `idt sps prompt -a "pyq" -p "reverse a string" | pbcopy` to copy the output of the prompt to your clipboard and throw it into your code editor.
-
-#### Get Started
-1. Install IndyDevTools
-    ```bash
-    pip install indydevtools
-    ```
-2. View and initialize the configuration file for the Simple Prompt System
-    ```bash
-    idt sps config
-    ```
-    - This will print the current configuration file to the console, allowing you to view, open and edit your prompt templates.
-3. Add or edit prompt templates in the configuration file as needed.
-4. Run a test command to execute a prompt
-    ```bash
-    idt sps prompt -a "pyq" -p "reverse a string"
-    ```
-5. Verify the output of the prompt in the console.
-
-#### `sps` Commands
-  - `idt sps --help`
-    - View all available commands for the Simple Prompt System.
-  - `idt sps config`
-    - Dump the configuration file to the console, creates the file if it doesn't exist.
-  - `idt sps prompt -a <alias> -p <prompt> -v? <vars>`
-    - Run a prompt using a template with custom variables.
-    - Inputs
-      - `-a`: The alias for the prompt template.
-      - `-p`: The prompt to run.
-      - `-v` (optional): Custom variables in key=value format separated by commas.
-    - Outputs
-      - The result of the prompt printed to the console.
-  - `idt sps list`
-    - List all available prompt templates.
-    - Outputs
-      - The list of all available prompt templates.
-  - `idt sps get -a <alias>`
-    - Get the prompt template for the given alias.
-    - Inputs
-      - `-a`: The alias for the prompt template.
-    - Outputs
-      - The prompt template.
-
-#### Application Flow Diagram
-
-```mermaid
-graph LR
-A["I want to call one of my prompts"]
-AV["I want to call one of my prompts with variables"]
-AA["I want to save/edit this prompt for reuse"]
-AAA["I want to list my existing prompts"]
-AAAA["I want to view one of my prompts"]
-B["I need help with the commands"]
-C["I want to view the configuration file"]
-API7["'your editor' 'path to config file'"]
-
-subgraph Simple Prompt System
-    API1["idt sps prompt 'alias' -p 'prompt'"]
-    API1V["idt sps prompt 'alias' -p 'prompt' -v? 'key1=value1,key2=value2'"]
-    API2["idt sps --help"]
-    API3["idt sps list"]
-    API4["idt sps get -a 'alias'"]
-    API5["idt sps config"]
-    API6["idt sps config"]
-end
-
-subgraph Output
-    OUTPUT1["Response of your prompt"]
-    OUTPUT2["Help information"]
-    OUTPUT3["List of all available prompt templates"]
-    OUTPUT4["Prompt template for the given alias"]
-    OUTPUT5["Configuration file content"]
-end
-
-A --> API1
-AV --> API1V
-API1V --> OUTPUT1
-AA --> API6
-API6 --> API7
-AAA --> API3
-AAAA --> API4
-B --> API2
-C --> API5
-
-API1 --> OUTPUT1
-API2 --> OUTPUT2
-API3 --> OUTPUT3
-API4 --> OUTPUT4
-API5 --> OUTPUT5
-```
-
-#### `idt sps` Improvements / What's Next
-- [] Add `idt sps new -a 'alias' -pt 'prompt template' -n? 'name' -d? 'description'` feature to save a new prompt template into the configuration file.
-
 ## The Configuration File
 > The configuration file is the primary source of truth for all the tools in the IndyDevTools suite.
-#### `config` Commands
+
+### `config` Commands
   - `idt config view [--only-print|-p]`
     - View the configuration file. Use the `--only-print` or `-p` option to only print the configuration file to the console without opening it in the editor.
     - Inputs
@@ -444,18 +452,25 @@ API5 --> OUTPUT5
       - The configuration file content printed to the console or opened in the default editor.
 
 ### Structure
+See each tool's documentation for the structure of the configuration file for that tool.
+
 ```yaml
 yt:
   config_file_path: <path to this config file for you to open and edit>
   openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
   operating_dir: <Path to your rendered video/audio, also the output path where the /draft and /final assets that will be generated>
-```
-
-```yaml
 sps:
   config_file_path: <path to this config file for you to open and edit>
   openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
-  templates: <List of your saved prompt templates>
+  templates: 
+  - alias: <alias>
+    description: <description>
+    name: <name>
+    prompt_template: <prompt_template>
+    variables:
+    - default: <default>
+      description: <description>
+      name: <name>
 ```
 
 ## Developer Commands
@@ -488,6 +503,8 @@ sps:
   - https://test.pypi.org/project/indydevtools/
 - IndyDevTools Repo
   - https://github.com/disler/indydevtools
+- Aider AI Coding Assistant
+  - https://aider.chat/
 - Chat with async + parallelization + threading
   - https://chat.openai.com/c/73d1859d-fb3a-430e-9e04-be68b4d8a7bd
 - Typer Docs For Multi Sub Commands

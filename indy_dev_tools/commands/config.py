@@ -5,7 +5,8 @@ from ..models import IdtConfig
 app = typer.Typer()
 
 @app.command()
-def show():
+@app.command(name="")
+def main():
     """
     Display the current configuration.
     """

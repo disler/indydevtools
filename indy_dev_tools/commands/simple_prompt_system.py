@@ -16,6 +16,11 @@ config_file: IdtConfig = load_config()
 def config():
     """
     Dump the config file for the Simple Prompt System so you can view it, open it, and edit it to add your own prompt templates.
+
+    Inputs:
+        - None
+    Outputs:
+        - The config file for the Simple Prompt System
     """
     print(config_file.model_dump_json(indent=2))
 
@@ -30,6 +35,13 @@ def prompt(
 ):
     """
     Run a prompt using your favorite template with custom variables.
+
+    Inputs:
+        -a: The alias for the prompt template
+        -p: The prompt to run
+        -v: Custom variables in key=value format separated by commas
+    Outputs:
+        - The result of the prompt printed to the console
     """
     try:
         result = sps_prompt(alias=alias, prompt=prompt, vars=vars)
@@ -42,6 +54,11 @@ def prompt(
 def list():
     """
     List all available prompt templates.
+
+    Inputs:
+        - None
+    Outputs:
+        - The list of all available prompt templates
     """
     if config_file.sps:
         sps_list(config_file.sps)
@@ -53,6 +70,11 @@ def list():
 def get(alias: str = typer.Option(..., "-a", help="The alias for the prompt template")):
     """
     Get the prompt template.
+
+    Inputs:
+        -a: The alias for the prompt template
+    Outputs:
+        - The prompt template
     """
     sps_get(config_file.sps, alias)
 

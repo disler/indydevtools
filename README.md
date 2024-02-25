@@ -30,6 +30,11 @@
       - [Application Flow Diagram](#application-flow-diagram)
       - [`idt yt` Improvements / What's Next](#idt-yt-improvements--whats-next)
     - [✍️ Simple Prompt System (`idt sps`)](#️-simple-prompt-system-idt-sps)
+      - [Use case](#use-case-1)
+      - [Get Started](#get-started-1)
+      - [`sps` Commands](#sps-commands)
+      - [Application Flow Diagram](#application-flow-diagram-1)
+      - [`idt sps` Improvements / What's Next](#idt-sps-improvements--whats-next)
   - [The Configuration File](#the-configuration-file)
     - [Structure](#structure)
   - [Developer Commands](#developer-commands)
@@ -89,91 +94,8 @@
 ### Directory Structure
 ![models > modules/ > commands/ > main](/imgs/idt-app-structure.png)
 
-### ✍️ Simple Prompt System (`idt sps`)
-- This tool is a simple wrapper around your prompts, allowing you to run prompts with custom variables using predefined templates.
-
-#### Use case
-- You have a set of prompts that you use frequently and want to streamline the process of running these prompts with different variables.
-- The Simple Prompt System (`idt sps`) allows you to define templates for these prompts and quickly execute them with custom variables, saving you time and ensuring consistency.
-
-#### Get Started
-1. Install IndyDevTools
-    ```bash
-    pip install indydevtools
-    ```
-2. View and initialize the configuration file for the Simple Prompt System
-    ```bash
-    idt sps config
-    ```
-    - This will print the current configuration file to the console, allowing you to view and edit your prompt templates.
-3. Add or edit prompt templates in the configuration file as needed.
-4. Run a test command to execute a prompt
-    ```bash
-    idt sps prompt -a "alias" -p "Your prompt here" -v "variable1=value1,variable2=value2"
-    ```
-5. Verify the output of the prompt in the console.
-
-#### `sps` Commands
-  - `idt sps --help`
-    - View all available commands for the Simple Prompt System.
-  - `idt sps config`
-    - Dump the configuration file to the console, creates the file if it doesn't exist.
-  - `idt sps prompt -a <alias> -p <prompt> -v? <vars>`
-    - Run a prompt using a template with custom variables.
-    - Inputs
-      - `-a`: The alias for the prompt template.
-      - `-p`: The prompt to run.
-      - `-v` (optional): Custom variables in key=value format separated by commas.
-    - Outputs
-      - The result of the prompt printed to the console.
-  - `idt sps list`
-    - List all available prompt templates.
-    - Outputs
-      - The list of all available prompt templates.
-  - `idt sps get -a <alias>`
-    - Get the prompt template for the given alias.
-    - Inputs
-      - `-a`: The alias for the prompt template.
-    - Outputs
-      - The prompt template.
-
-#### Application Flow Diagram
-
-```mermaid
-graph LR
-A[User with a Prompt Need]
-
-subgraph Simple Prompt System
-    B[Run Prompt with Template]
-    C{Template Ready}
-    D[Select Template - MANUAL INPUT]
-    E[Input Variables - MANUAL INPUT]
-    F[Execute Prompt - CODE]
-    G{Prompt Result Ready}
-    H[[Review Result - MANUAL INPUT]]
-end
-
-A --> B
-B --> C
-C --> D
-D --> E
-E --> F
-F --> G
-G --> H
-```
-
-#### `idt sps` Improvements / What's Next
-- [] Add support for more complex variable types (e.g., lists, dictionaries).
-- [] Implement a GUI for managing prompt templates and running prompts.
-- [] Add integration with other IndyDevTools commands to allow for seamless use of prompts in larger workflows.
-- [] Improve error handling and user feedback when running prompts.
-- [] Add a feature to save prompt results to a file or database for future reference.
-
-![models > modules/ > commands/ > main](/imgs/idt-app-structure.png)
-
 ### 📹 Multi Agent Youtube Metadata Generation (`idt yt`)
--#### Use case
-...
+- This tool generates the metadata for a youtube video.
 
 #### Use case
 - You've just finished rendering a video to upload to youtube, and you need to generate the metadata for the video. This tool will help you generate the title, description, tags, and thumbnail for the video.
@@ -407,9 +329,105 @@ Q --> S
 - [] Make the code run in parallel, right now it's running one by one, this is inefficient
 - [] Add a loader to let users know which state the application is in
 
+
 ### ✍️ Simple Prompt System (`idt sps`)
-- The Simple Prompt System is a simple wrapper around your prompts, it will swap out variables you have if any, and run the prompt.
-- qqq finish docs here
+- This tool is a simple wrapper around your prompts, allowing you to run prompts with custom variables using predefined templates.
+
+#### Use case
+- You have a set of prompts that you use frequently and want to streamline the process of running these prompts with different variables.
+- The Simple Prompt System (`idt sps`) allows you to define templates for these prompts and quickly execute them with custom variables, saving you time and ensuring consistency.
+
+#### Get Started
+1. Install IndyDevTools
+    ```bash
+    pip install indydevtools
+    ```
+2. View and initialize the configuration file for the Simple Prompt System
+    ```bash
+    idt sps config
+    ```
+    - This will print the current configuration file to the console, allowing you to view, open and edit your prompt templates.
+3. Add or edit prompt templates in the configuration file as needed.
+4. Run a test command to execute a prompt
+    ```bash
+    idt sps prompt -a "pyq" -p "reverse a string"
+    ```
+5. Verify the output of the prompt in the console.
+
+#### `sps` Commands
+  - `idt sps --help`
+    - View all available commands for the Simple Prompt System.
+  - `idt sps config`
+    - Dump the configuration file to the console, creates the file if it doesn't exist.
+  - `idt sps prompt -a <alias> -p <prompt> -v? <vars>`
+    - Run a prompt using a template with custom variables.
+    - Inputs
+      - `-a`: The alias for the prompt template.
+      - `-p`: The prompt to run.
+      - `-v` (optional): Custom variables in key=value format separated by commas.
+    - Outputs
+      - The result of the prompt printed to the console.
+  - `idt sps list`
+    - List all available prompt templates.
+    - Outputs
+      - The list of all available prompt templates.
+  - `idt sps get -a <alias>`
+    - Get the prompt template for the given alias.
+    - Inputs
+      - `-a`: The alias for the prompt template.
+    - Outputs
+      - The prompt template.
+
+#### Application Flow Diagram
+
+```mermaid
+graph LR
+A["I want to call one of my prompts"]
+AV["I want to call one of my prompts with variables"]
+AA["I want to save/edit this prompt for reuse"]
+AAA["I want to list my existing prompts"]
+AAAA["I want to view one of my prompts"]
+B["I need help with the commands"]
+C["I want to view the configuration file"]
+API7["'your editor' 'path to config file'"]
+
+subgraph Simple Prompt System
+    API1["idt sps prompt 'alias' -p 'prompt'"]
+    API1V["idt sps prompt 'alias' -p 'prompt' -v? 'key1=value1,key2=value2'"]
+    API2["idt sps --help"]
+    API3["idt sps list"]
+    API4["idt sps get -a 'alias'"]
+    API5["idt sps config"]
+    API6["idt sps config"]
+end
+
+subgraph Output
+    OUTPUT1["Response of your prompt"]
+    OUTPUT2["Help information"]
+    OUTPUT3["List of all available prompt templates"]
+    OUTPUT4["Prompt template for the given alias"]
+    OUTPUT5["Configuration file content"]
+end
+
+A --> API1
+AV --> API1V
+API1V --> OUTPUT1
+AA --> API6
+API6 --> API7
+AAA --> API3
+AAAA --> API4
+B --> API2
+C --> API5
+
+API1 --> OUTPUT1
+API2 --> OUTPUT2
+API3 --> OUTPUT3
+API4 --> OUTPUT4
+API5 --> OUTPUT5
+```
+
+#### `idt sps` Improvements / What's Next
+- [] Add `idt sps new -a 'alias' -pt 'prompt template' -n? 'name' -d? 'description'` feature to save a new prompt template into the configuration file.
 
 ## The Configuration File
 > The configuration file is the primary source of truth for all the tools in the IndyDevTools suite.
@@ -443,6 +461,7 @@ yt:
 - Part 1: [How to Engineer Multi-Agent Tools: LLM Principles](https://youtu.be/q3Ld-MxlXmA)
 - Part 2: [Apple Vision Pro & LLMs: Proof Of Concept](https://youtu.be/9kS1atYieaU)
 - Part 3: [Sora + Gemini: Building Adaptive LLM apps](https://youtu.be/zRt0EmeGeCM)
+- Part 4: [Let Your AI Coding Assistant Write Your Docs](https://youtu.be/T963c-2-COk)
 
 ## Resources
 - IndyDevTools PyPi

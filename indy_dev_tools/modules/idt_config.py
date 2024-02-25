@@ -37,7 +37,7 @@ DEFAULT_CONFIGURATION = IdtConfig(
         templates=[
             IdtSimplePromptTemplate(
                 alias="bash",
-                prompt_template="mac: bash: how do I: ",
+                prompt_template="bash: how do I: ",
                 description="Ask a question about bash",
                 name="Bash Prompt",
             ),
@@ -81,9 +81,6 @@ def load_config() -> IdtConfig:
 
     if config_in_memory:
         return config_in_memory
-
-    # print(f"Loading configuration file")
-    # print(f"Loading configuration from {config_file_path}...")
 
     try:
 

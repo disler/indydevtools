@@ -78,12 +78,11 @@ config_in_memory = None
 def merge_new_configs(
     existing_config: IdtConfig, default_config: IdtConfig
 ) -> IdtConfig:
-    """Merges the existing_config configuration file with the default IF there are new options in the default on the base level."""
-    merged = default_config.model_dump()
-    for k, v in existing_config.model_dump().items():
-        if k not in merged:
-            merged[k] = v
-    return IdtConfig.model_validate(merged)
+    """Merges the existing configuration with the default configuration, adding any missing keys."""
+    for key, value in default_config.dict().items():
+        if key not in existing_config:
+            existing_config[key] = value
+    return IdtConfig(**existing_config)
 
 
 def load_config() -> IdtConfig:
@@ -96,15 +95,21 @@ def load_config() -> IdtConfig:
 
     try:
 
+def load_config() -> IdtConfig:
+    """Loads the YAML configuration file."""
+    global config_in_memory
+    if config_in_memory:
+        return config_in_memory
+    try:
         config_file = Path(config_file_path)
         if config_file.exists():
             with open(config_file, "r") as file:
                 config_data = yaml.safe_load(file)
                 if config_data:
                     # when rolling out new config options, we need to merge the old and new and save the new
-                    merge_model = merge_new_configs(
-                        IdtConfig.model_validate(config_data), DEFAULT_CONFIGURATION
-                    )
+                    existing_config = config_data or {}
+                    merge_model = merge_new_configs(existing_config, DEFAULT_CONFIGURATION)
+                    config_in_memory = merge_model
 
                     config_in_memory = IdtConfig.model_validate(merge_model)
                     if config_in_memory.yt.openai_api_key is None:
@@ -121,6 +126,7 @@ def load_config() -> IdtConfig:
             generate_directories(config_in_memory.yt)
             return config_in_memory
     except Exception as e:
+        print(f"Error loading configuration: {e}")
         raise e
         config_in_memory = DEFAULT_CONFIGURATION
         generate_directories(config_in_memory.yt)

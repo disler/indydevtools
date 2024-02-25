@@ -22,13 +22,12 @@ def edit():
 
 
 @app.command()
-def view(
-    open_in_editor: bool = typer.Option(
-        False,
-        "--open-in-editor",
-        "-o",
-        help="Open the configuration file in the default editor",
-    )
+def view(only_print: bool = typer.Option(
+    False,
+    "--only-print",
+    "-p",
+    help="Only print the configuration file to the console, do not open in editor",
+)
 ):
     """
     View the configuration file in the console.
@@ -39,7 +38,7 @@ def view(
         - The configuration file is printed to the console.
     """
     config: IdtConfig = idt_config.load_config()
-    if open_in_editor and config.yt and config.yt.config_file_path:
+    if not only_print and config.yt and config.yt.config_file_path:
         typer.launch(config.yt.config_file_path)
     else:
         typer.echo(config.model_dump_json(indent=2))

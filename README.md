@@ -435,10 +435,13 @@ API5 --> OUTPUT5
 
 ## The Configuration File
 > The configuration file is the primary source of truth for all the tools in the IndyDevTools suite.
-
-#### Commands
-- `idt config view [--only-print|-p]`
-  - View the configuration file. Use the `--only-print` or `-p` option to only print the configuration file to the console without opening it in the editor.
+#### `config` Commands
+  - `idt config view [--only-print|-p]`
+    - View the configuration file. Use the `--only-print` or `-p` option to only print the configuration file to the console without opening it in the editor.
+    - Inputs
+      - `--only-print` or `-p` (optional): A flag to only print the configuration file to the console.
+    - Outputs
+      - The configuration file content printed to the console or opened in the default editor.
 
 ### Structure
 ```yaml

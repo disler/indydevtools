@@ -436,12 +436,23 @@ API5 --> OUTPUT5
 ## The Configuration File
 > The configuration file is the primary source of truth for all the tools in the IndyDevTools suite.
 
+#### Commands
+- `idt config view [--only-print|-p]`
+  - View the configuration file. Use the `--only-print` or `-p` option to only print the configuration file to the console without opening it in the editor.
+
 ### Structure
 ```yaml
 yt:
   config_file_path: <path to this config file for you to open and edit>
   openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
   operating_dir: <Path to your rendered video/audio, also the output path where the /draft and /final assets that will be generated>
+```
+
+```yaml
+sps:
+  config_file_path: <path to this config file for you to open and edit>
+  openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
+  templates: <List of your saved prompt templates>
 ```
 
 ## Developer Commands

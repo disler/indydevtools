@@ -136,10 +136,10 @@
 
 #### `sps` Commands
   ##### `idt sps help`
-     - `idt sps --help`
-       - View all available commands for the Simple Prompt System.
+  - `idt sps --help`
+    - View all available commands for the Simple Prompt System.
   ##### `idt sps config`
-    - `idt sps config -p?`
+  - `idt sps config -p?`
      - Open the configuration file to the console, creates the file if it doesn't exist.
      - Inputs
        - `-p` (optional): A flag to only print the configuration file to the console.

@@ -3,6 +3,7 @@ import typer
 from .commands import youtube
 from .commands import playground
 from .commands import simple_prompt_system
+from .commands import config as config_module
 from .modules import idt_config
 from .models import IdtConfig
 
@@ -10,15 +11,9 @@ app = typer.Typer()
 app.add_typer(youtube.app, name="yt")
 app.add_typer(playground.app, name="pg")
 app.add_typer(simple_prompt_system.app, name="sps")
+app.add_typer(config_module.app, name="config")
 
 
-@app.command()
-def config():
-    """
-    Display the current configuration.
-    """
-    config: IdtConfig = idt_config.load_config()
-    typer.echo(config.model_dump_json(indent=2))
 
 
 def main():

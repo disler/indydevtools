@@ -22,7 +22,7 @@ def edit():
 
 
 @app.command()
-def view():
+def view(open_in_editor: bool = typer.Option(False, "--open-in-editor", "-o", help="Open the configuration file in the default editor")):
     """
     View the configuration file in the console.
 
@@ -32,11 +32,14 @@ def view():
         - The configuration file is printed to the console.
     """
     config: IdtConfig = idt_config.load_config()
-    typer.echo(config.model_dump_json(indent=2))
+    if open_in_editor and config.yt and config.yt.config_file_path:
+        typer.launch(config.yt.config_file_path)
+    else:
+        typer.echo(config.model_dump_json(indent=2))
 
 
 @app.callback(invoke_without_command=True)
-def main(ctx: typer.Context):
+def main(ctx: typer.Context, open_in_editor: bool = typer.Option(False, "--open-in-editor", "-o", help="Open the configuration file in the default editor")):
     """
     Print the configuration file to the console.
 
@@ -47,4 +50,7 @@ def main(ctx: typer.Context):
     """
     if ctx.invoked_subcommand is None:
         config: IdtConfig = idt_config.load_config()
-        typer.echo(config.model_dump_json(indent=2))
+        if open_in_editor and config.yt and config.yt.config_file_path:
+            typer.launch(config.yt.config_file_path)
+        else:
+            typer.echo(config.model_dump_json(indent=2))

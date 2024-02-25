@@ -12,6 +12,15 @@ app.add_typer(playground.app, name="pg")
 app.add_typer(simple_prompt_system.app, name="sps")
 
 
+@app.command()
+def config():
+    """
+    Display the current configuration.
+    """
+    config: IdtConfig = idt_config.load_config()
+    typer.echo(config.model_dump_json(indent=2))
+
+
 def main():
     """
     Main entry point for the CLI.

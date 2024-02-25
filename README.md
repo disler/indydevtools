@@ -21,6 +21,11 @@
       - [Use case](#use-case)
       - [Get Started](#get-started)
       - [`sps` Commands](#sps-commands)
+        - [`idt sps help`](#idt-sps-help)
+        - [`idt sps config`](#idt-sps-config)
+        - [`idt sps prompt`](#idt-sps-prompt)
+        - [`idt sps list`](#idt-sps-list)
+        - [`idt sps get`](#idt-sps-get)
       - [Application Flow Diagram](#application-flow-diagram)
       - [`idt sps` Improvements / What's Next](#idt-sps-improvements--whats-next)
     - [📹 Multi Agent Youtube Metadata Generation (`idt yt`)](#-multi-agent-youtube-metadata-generation-idt-yt)
@@ -130,14 +135,17 @@
 6. Open the config and add your own prompt templates for rapid reuse.
 
 #### `sps` Commands
-  - `idt sps --help`
-    - View all available commands for the Simple Prompt System.
-  - `idt sps config -p?`
-    - Open the configuration file to the console, creates the file if it doesn't exist.
-    - Inputs
-      - `-p` (optional): A flag to only print the configuration file to the console.
-    - Outputs
-      - The configuration file content printed to the console or opened in the default editor.
+  ##### `idt sps help`
+     - `idt sps --help`
+       - View all available commands for the Simple Prompt System.
+  ##### `idt sps config`
+    - `idt sps config -p?`
+     - Open the configuration file to the console, creates the file if it doesn't exist.
+     - Inputs
+       - `-p` (optional): A flag to only print the configuration file to the console.
+     - Outputs
+       - The configuration file content printed to the console or opened in the default editor.
+  ##### `idt sps prompt`
   - `idt sps prompt -a <alias> -p <prompt> -v? <vars>`
     - Run a prompt using a template with custom variables.
     - Inputs
@@ -146,10 +154,14 @@
       - `-v` (optional): Custom variables in key=value format separated by commas.
     - Outputs
       - The result of the prompt printed to the console.
+  ##### `idt sps list`
   - `idt sps list`
     - List all available prompt templates.
+    - Inputs
+      - None
     - Outputs
       - The list of all available prompt templates.
+  ##### `idt sps get`
   - `idt sps get -a <alias>`
     - Get the prompt template for the given alias.
     - Inputs

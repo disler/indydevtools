@@ -1,3 +1,4 @@
+from typing import Dict
 import yaml
 from platformdirs import user_data_dir, user_desktop_dir
 from pathlib import Path
@@ -74,6 +75,17 @@ End the prompt with '--ar {{ratio}} --v {{version}}'. Prompt: {{prompt}}""",
 config_in_memory = None
 
 
+def merge_new_configs(
+    existing_config: IdtConfig, default_config: IdtConfig
+) -> IdtConfig:
+    """Merges the existing_config configuration file with the default IF there are new options in the default on the base level."""
+    merged = default_config.model_dump()
+    for k, v in existing_config.model_dump().items():
+        if k not in merged:
+            merged[k] = v
+    return IdtConfig.model_validate(merged)
+
+
 def load_config() -> IdtConfig:
     """Loads the YAML configuration file."""
 
@@ -89,8 +101,11 @@ def load_config() -> IdtConfig:
             with open(config_file, "r") as file:
                 config_data = yaml.safe_load(file)
                 if config_data:
-                    merge_model = DEFAULT_CONFIGURATION.model_dump()
-                    merge_model.update(config_data)
+                    # when rolling out new config options, we need to merge the old and new and save the new
+                    merge_model = merge_new_configs(
+                        IdtConfig.model_validate(config_data), DEFAULT_CONFIGURATION
+                    )
+
                     config_in_memory = IdtConfig.model_validate(merge_model)
                     if config_in_memory.yt.openai_api_key is None:
                         raise ValueError("OpenAI API key is not set.")
@@ -106,7 +121,7 @@ def load_config() -> IdtConfig:
             generate_directories(config_in_memory.yt)
             return config_in_memory
     except Exception as e:
-        print(f"Error loading configuration: {e}")
+        raise e
         config_in_memory = DEFAULT_CONFIGURATION
         generate_directories(config_in_memory.yt)
         return config_in_memory

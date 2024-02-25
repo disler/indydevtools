@@ -331,11 +331,15 @@ Q --> S
 
 
 ### ✍️ Simple Prompt System (`idt sps`)
-- This tool is a simple wrapper around your prompts, allowing you to run prompts with custom variables using predefined templates.
+- This tool is a simple system to help you reuse and run your prompts.
 
 #### Use case
+- If you've created a great prompt and proceeded to lose track of it or forget it this tool is for you. Maybe you built a prompt that debugs code for you, writes tests, generates docs, generates marketing content, helps you ask questions about a topic, or helps you generate ideas. This tool will help you save, edit, run and reuse your prompts.
 - You have a set of prompts that you use frequently and want to streamline the process of running these prompts with different variables.
-- The Simple Prompt System (`idt sps`) allows you to define templates for these prompts and quickly execute them with custom variables, saving you time and ensuring consistency.
+- The Simple Prompt System (`idt sps`) allows you to define templates for these prompts and quickly execute them with custom variables, saving you time by reusing your favorite prompts.
+- The best way to get started is to run `idt sps prompt -a "pyq" -p "reverse a string"` to see how the system works.
+- Then you can run `idt sps config` to view the configuration file and add your own prompt templates.
+- Since this is a CLI app, you can pipe the output of the prompt to a file, or to your clipboard, or right into another command. For example, you can run `idt sps prompt -a "pyq" -p "reverse a string" | pbcopy` to copy the output of the prompt to your clipboard and throw it into your code editor.
 
 #### Get Started
 1. Install IndyDevTools

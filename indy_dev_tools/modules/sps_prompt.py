@@ -5,7 +5,7 @@ from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.llm import prompt as llm_prompt, prompt_stream
 
 
-def sps_prompt(alias: str, prompt: str, vars: Optional[str] = None) -> str:
+def sps_prompt(alias: str, prompt: str, vars: Optional[str] = None, stream_response: bool = True) -> str:
     config = load_config()
     if not config.sps:
         raise ValueError("Simple Prompt System configuration not found.")
@@ -45,4 +45,8 @@ def sps_prompt(alias: str, prompt: str, vars: Optional[str] = None) -> str:
         final_prompt = template_content + " " + prompt
 
     # Call the llm.prompt() function with the OpenAI key from the config and return its result
-    llm_prompt(prompt=final_prompt, openai_key=config.sps.openai_api_key)
+    if stream_response:
+        for response_part in prompt_stream(prompt=final_prompt, openai_key=config.sps.openai_api_key):
+            print(response_part)
+    else:
+        print(llm_prompt(prompt=final_prompt, openai_key=config.sps.openai_api_key))

@@ -41,6 +41,9 @@ def prompt(
     vars: Optional[str] = typer.Option(
         None, "-v", help="Custom variables in key=value format separated by commas"
     ),
+    stream_response: bool = typer.Option(
+        True, "-s", help="Stream the response, printing each part as it's received"
+    ),
 ):
     """
     Run a prompt using your favorite template with custom variables.
@@ -53,6 +56,7 @@ def prompt(
         - The result of the prompt printed to the console
     """
     sps_prompt(alias=alias, prompt=prompt, vars=vars)
+    sps_prompt(alias=alias, prompt=prompt, vars=vars, stream_response=stream_response)
 
 
 @app.command()

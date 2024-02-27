@@ -146,14 +146,15 @@
      - Outputs
        - The configuration file content printed to the console or opened in the default editor.
   ##### `idt sps prompt`
-  - `idt sps prompt -a <alias> -p <prompt> -v? <vars>`
+  - `idt sps prompt -a <alias> -p <prompt> -v? <vars> -ns?`
     - Run a prompt using a template with custom variables.
     - Inputs
       - `-a`: The alias for the prompt template.
       - `-p`: The prompt to run.
       - `-v` (optional): Custom variables in key=value format separated by commas.
+      - '-ns' (optional): No stream, dont stream the output of the prompt to the console.
     - Outputs
-      - The result of the prompt printed to the console.
+      - The result of the prompt streamed to the console.
   ##### `idt sps list`
   - `idt sps list`
     - List all available prompt templates.

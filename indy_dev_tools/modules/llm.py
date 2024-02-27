@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Generator
 import openai
 import sys
 
@@ -125,3 +125,41 @@ Example bash command:
         ],
     )
     return response.choices[0].message.content
+
+
+def prompt_stream(
+    prompt: str,
+    openai_key: str,
+    model: str = "gpt-4-0125-preview",
+    # model: str = "gpt-3.5-turbo-0125",
+    instructions: str = "You are a helpful assistant.",
+) -> openai.Stream:
+    """
+    Generate a response from a prompt using the OpenAI API without specifying a response format.
+    """
+    if not openai_key:
+        sys.exit(
+            """
+ERORR: OpenAI API key not found. Please export your key to OPENAI_API_KEY
+Example bash command:
+    export OPENAI_API_KEY=<your openai apikey>
+            """
+        )
+
+    openai.api_key = openai_key
+    response = openai.chat.completions.create(
+        model=model,
+        messages=[
+            {
+                "role": "system",
+                "content": instructions,
+            },
+            {
+                "role": "user",
+                "content": prompt,
+            },
+        ],
+        stream=True,
+    )
+
+    return response

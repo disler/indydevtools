@@ -152,7 +152,7 @@
       - `-a`: The alias for the prompt template.
       - `-p`: The prompt to run.
       - `-v` (optional): Custom variables in key=value format separated by commas.
-      - '-ns' (optional): No stream, dont stream the output of the prompt to the console.
+      - `-ns` (optional): No stream, don't stream the output of the prompt to the console.
     - Outputs
       - The result of the prompt streamed to the console.
   ##### `idt sps list`

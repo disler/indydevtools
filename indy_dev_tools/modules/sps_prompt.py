@@ -2,7 +2,7 @@ from typing import Optional
 import openai
 from indy_dev_tools.models import IdtSimplePromptSystem, IdtSimplePromptTemplate
 from indy_dev_tools.modules.idt_config import load_config
-from indy_dev_tools.modules.llm import prompt as llm_prompt
+from indy_dev_tools.modules.llm import prompt as llm_prompt, prompt_stream
 
 
 def sps_prompt(alias: str, prompt: str, vars: Optional[str] = None) -> str:
@@ -45,4 +45,4 @@ def sps_prompt(alias: str, prompt: str, vars: Optional[str] = None) -> str:
         final_prompt = template_content + " " + prompt
 
     # Call the llm.prompt() function with the OpenAI key from the config and return its result
-    return llm_prompt(prompt=final_prompt, openai_key=config.sps.openai_api_key)
+    llm_prompt(prompt=final_prompt, openai_key=config.sps.openai_api_key)

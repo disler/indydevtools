@@ -52,11 +52,7 @@ def prompt(
     Outputs:
         - The result of the prompt printed to the console
     """
-    try:
-        result = sps_prompt(alias=alias, prompt=prompt, vars=vars)
-        typer.echo(result)
-    except ValueError as e:
-        typer.echo(f"Error: {e}")
+    sps_prompt(alias=alias, prompt=prompt, vars=vars)
 
 
 @app.command()

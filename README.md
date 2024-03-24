@@ -271,6 +271,7 @@ API6 --> OUTPUT5
 
 #### `idt sps` Improvements / What's Next
 - [+] Add ability to make prompt_template variable a path to a text file that contains your prompt
+- [] Ability to specify which openai model to use for the prompt
 - [] Add `idt sps new -a 'alias' -pt 'prompt template' -n? 'name' -d? 'description'` feature to save a new prompt template into the configuration file.
 
 ---

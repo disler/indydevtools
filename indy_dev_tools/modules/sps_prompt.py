@@ -1,8 +1,25 @@
 from typing import Optional
-import openai
 from indy_dev_tools.models import IdtSimplePromptSystem, IdtSimplePromptTemplate
 from indy_dev_tools.modules.idt_config import load_config
 from indy_dev_tools.modules.llm import prompt as llm_prompt, prompt_stream
+import os
+
+
+def _parse_prompt_template(template: IdtSimplePromptTemplate) -> str:
+    template_content = ""
+
+    # Check if the string is a path to a file that exists
+    if os.path.isfile(template.prompt_template):
+        try:
+            with open(template.prompt_template, "r") as file:
+                template_content = file.read()
+        except (FileNotFoundError, OSError) as e:
+            # Fallback to using the string directly if there's an error reading the file
+            template_content = template.prompt_template
+    else:
+        # If the path does not point to a file, use the string as is
+        template_content = template.prompt_template
+    return template_content
 
 
 def sps_prompt(
@@ -16,7 +33,7 @@ def sps_prompt(
             "OpenAI API key not found in Simple Prompt System configuration."
         )
 
-    template = None
+    template: Optional[IdtSimplePromptTemplate] = None
     for tmpl in config.sps.templates:
         if tmpl.alias == alias:
             template = tmpl
@@ -24,7 +41,11 @@ def sps_prompt(
     if template is None:
         raise ValueError(f"Template with alias '{alias}' not found.")
 
-    template_content = template.prompt_template
+    # Attempt to read the prompt template from a file, if it exists
+    template_content = _parse_prompt_template(template)
+
+    if not template_content:
+        raise ValueError("Prompt template is empty.")
 
     # Set default values for variables
     variables = {var.name: var.default for var in template.variables}
@@ -52,7 +73,8 @@ def sps_prompt(
             prompt=final_prompt, openai_key=config.sps.openai_api_key
         )
         for response_part in response_stream:
-            print(response_part.choices[0].delta.content, end="", flush=True)
+            if response_part.choices[0].delta.content is not None:
+                print(response_part.choices[0].delta.content, end="", flush=True)
     else:
         result = llm_prompt(prompt=final_prompt, openai_key=config.sps.openai_api_key)
         print(result)

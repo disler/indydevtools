@@ -26,6 +26,10 @@
         - [`idt sps prompt`](#idt-sps-prompt)
         - [`idt sps list`](#idt-sps-list)
         - [`idt sps get`](#idt-sps-get)
+      - [`sps` Example Config File Example \& Prompt Calls](#sps-example-config-file-example--prompt-calls)
+        - [Example Configuration File](#example-configuration-file)
+        - [Example `/Users/ravix/Library/Application Support/indy_dev_tools/bash_prompt.txt` File](#example-usersravixlibraryapplication-supportindy_dev_toolsbash_prompttxt-file)
+        - [Calls](#calls)
       - [Application Flow Diagram](#application-flow-diagram)
       - [`idt sps` Improvements / What's Next](#idt-sps-improvements--whats-next)
     - [📹 Multi Agent Youtube Metadata Generation (`idt yt`)](#-multi-agent-youtube-metadata-generation-idt-yt)
@@ -98,9 +102,9 @@
 - [Live ✅] Multi Agent Youtube Metadata Generation (`idt yt`)
 - [Live ✅] Simple Prompt System (`idt sps`)
 - [Planned 📆] Sora video generation tool (`idt sora`)
+- [Planned 📆] Add `idt yt desc chapters` to generate chapters
 - [Maybe 🟡] OpenAI Assistant tool (`idt oass`)
 - [Maybe 🟡] Git Diff AI Peer Review (port [diffbro](https://github.com/disler/diffbro)) (`idt dbro`)
-- [Maybe 🟡] Midjourney Image Generator
 - [Maybe 🟡] Fast Notion Idea Dump
 
 ## Tool Guide
@@ -115,6 +119,7 @@
 - The best way to get started is to run `idt sps prompt -a "pyq" -p "reverse a string"` to see how the system works.
 - Then you can run `idt sps config` to view the configuration file and add your own prompt templates.
 - Since this is a CLI app, you can pipe the output of the prompt to a file, or to your clipboard, or right into another command. For example, you can run `idt sps prompt -a "pyq" -p "reverse a string" | pbcopy` to copy the output of the prompt to your clipboard and throw it into your code editor.
+- I recommend you setup .bashrc or .zshrc aliases to make it easier to run your favorite prompts after you've added them to the configuration file.
 
 #### Get Started
 1. Install IndyDevTools
@@ -132,7 +137,9 @@
     idt sps prompt -a "pyq" -p "reverse a string"
     ```
 5. Verify the output of the prompt in the console.
-6. Open the config and add your own prompt templates for rapid reuse.
+6. Open the config with `idt sps config` and add your own prompt templates for rapid reuse.
+   - I recommend using the `prompt_template: <absolute path to .txt file>` feature to store your prompts in a text file.
+   - Use the `idt config dir` to open the directory where the configuration file is stored. You can store your prompt templates (`*.txt`) in this directory.
 
 #### `sps` Commands
   ##### `idt sps help`
@@ -169,6 +176,49 @@
       - `-a`: The alias for the prompt template.
     - Outputs
       - The prompt template.
+
+#### `sps` Example Config File Example & Prompt Calls
+
+
+##### Example Configuration File
+```yaml
+sps:
+  config_file_path: <path to this config file for you to open and edit>
+  openai_api_key: <your openai api key will fallback to env var OPENAI_API_KEY>
+  templates:
+  - alias: bash
+    description: Ask a question about bash
+    name: Bash Prompt
+    prompt_template: 'mac: bash: how do I: '
+    variables: []
+  - alias: bf
+    prompt_template: /Users/ravix/Library/Application Support/indy_dev_tools/bash_prompt.txt
+  - alias: pyq
+    description: Ask a question about python
+    name: Python Question
+    prompt_template: 'How do I: {{prompt}} in python?'
+    variables: []
+  - alias: midj
+    description: Create a prompt for text to imagine tool midjourney
+    name: Midjourney Prompt
+    prompt_template: "Create a prompt for text to imagine tool midjourney.
+
+      Take the prompt below and the ideas in them in a dense, verbose, vivid one paragraph
+      describing an imagine that midjourney will create.
+
+      End the prompt with '--ar {{ratio}} --v {{version}}'. Prompt: {{prompt}}"
+```
+
+##### Example `/Users/ravix/Library/Application Support/indy_dev_tools/bash_prompt.txt` File
+```txt
+How do I: {{prompt}} in bash?
+```
+
+##### Calls
+- `idt sps prompt -a bash -p "explain the ping command"`
+- `idt sps prompt -a bf -p "get last 10 lines of a file"`
+- `idt sps prompt -a pyq -p "reverse a string"`
+- `idt sps prompt -a midj -p "write a story about a cat" -v "ratio=16:9,version=1.0"`
 
 #### Application Flow Diagram
 
@@ -220,6 +270,7 @@ API6 --> OUTPUT5
 ```
 
 #### `idt sps` Improvements / What's Next
+- [+] Add ability to make prompt_template variable a path to a text file that contains your prompt
 - [] Add `idt sps new -a 'alias' -pt 'prompt template' -n? 'name' -d? 'description'` feature to save a new prompt template into the configuration file.
 
 ---
@@ -433,6 +484,7 @@ Q --> S
 ```
 
 #### `idt yt` Improvements / What's Next
+- [] Add ability to [generate chapters](https://github.com/disler/indydevtools/issues/2) for the video
 - [] Stream text responses and print them to the console/logs as they come in.
 - [] Add support for Gemini models
 - [] Add support for local models (start w apis/ollama)
@@ -463,6 +515,11 @@ Q --> S
       - `--only-print` or `-p` (optional): A flag to only print the configuration file to the console.
     - Outputs
       - The configuration file content printed to the console or opened in the default editor.
+  - `idt config edit [--only-print|-p]`
+    - Same as `idt config view`
+  - `idt config dir`
+    - Open the directory where the configuration file is stored.
+    - Useful for storing prompt templates for `idt sps` in the same directory as the configuration file.
 
 ### Structure
 See each tool's documentation for the structure of the configuration file for that tool.
@@ -479,7 +536,7 @@ sps:
   - alias: <alias>
     description: <description>
     name: <name>
-    prompt_template: <prompt_template>
+    prompt_template: <prompt_template or absolute file path>
     variables:
     - default: <default>
       description: <description>

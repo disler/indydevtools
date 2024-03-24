@@ -171,3 +171,14 @@ def view_config(only_print: bool = False):
         typer.launch(config.yt.config_file_path)
     else:
         typer.echo(config.model_dump_json(indent=2))
+
+
+def view_config_dir():
+    """Open the directory where the configuration file is stored."""
+    config = load_config()
+
+    # get the dir
+    dir = Path(config.yt.config_file_path).parent
+
+    # open the dir
+    typer.launch(str(dir))

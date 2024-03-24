@@ -29,7 +29,7 @@
       - [`sps` Example Config File Example \& Prompt Calls](#sps-example-config-file-example--prompt-calls)
         - [Example Configuration File](#example-configuration-file)
         - [Example `/Users/ravix/Library/Application Support/indy_dev_tools/bash_prompt.txt` File](#example-usersravixlibraryapplication-supportindy_dev_toolsbash_prompttxt-file)
-        - [Calls](#calls)
+        - [Example Calls for the Configuration File](#example-calls-for-the-configuration-file)
       - [Application Flow Diagram](#application-flow-diagram)
       - [`idt sps` Improvements / What's Next](#idt-sps-improvements--whats-next)
     - [📹 Multi Agent Youtube Metadata Generation (`idt yt`)](#-multi-agent-youtube-metadata-generation-idt-yt)
@@ -214,7 +214,7 @@ sps:
 How do I: {{prompt}} in bash?
 ```
 
-##### Calls
+##### Example Calls for the Configuration File
 - `idt sps prompt -a bash -p "explain the ping command"`
 - `idt sps prompt -a bf -p "get last 10 lines of a file"`
 - `idt sps prompt -a pyq -p "reverse a string"`
